@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
+import { toPng } from 'html-to-image';
 import { ResponsiveContainer, AreaChart, Area } from 'recharts';
 import {
   ArrowDown,
@@ -108,6 +109,32 @@ const App = () => {
   const [showHistory, setShowHistory] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const [copied, setCopied] = useState(false);
+  const shareCardRef = useRef<HTMLDivElement>(null);
+
+  const downloadImage = async () => {
+    if (!shareCardRef.current) return;
+    try {
+      const dataUrl = await toPng(shareCardRef.current, { backgroundColor: '#ffffff', pixelRatio: 2 });
+      const link = document.createElement('a');
+      link.download = `Speed_Result_${Date.now()}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch(err) {
+      console.error(err);
+    }
+  };
+
+  const [ipInfo, setIpInfo] = useState({ ip: '...', isp: 'Fetching...', city: '' });
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+  useEffect(() => {
+    fetch('https://speed.cloudflare.com/meta')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.clientIp) setIpInfo({ ip: data.clientIp, isp: data.asOrganization || 'Unknown ISP', city: data.city || '' });
+      })
+      .catch(() => setIpInfo({ ip: 'Unknown', isp: 'Unknown Provider', city: '' }));
+  }, []);
 
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -135,19 +162,28 @@ const App = () => {
   const simulateLatency = async () => {
     setStage(TEST_STAGES.LATENCY);
     const pings: number[] = [];
-    const basePing = activeProfile.p;
-    const jitterRange = activeProfile.j;
-
-    for (let i = 0; i < 15; i++) {
-      const start = performance.now();
-      const variance = Math.random() * jitterRange - jitterRange / 2;
-      const delay = Math.max(10, basePing + variance);
-      await new Promise((r) => setTimeout(r, delay));
-      pings.push(performance.now() - start);
-      setProgress((i + 1) * (100 / 15));
+    const pingUrl = `/?t=${Date.now()}`;
+    
+    for (let i = 0; i < 10; i++) {
+        const start = performance.now();
+        try {
+          await fetch(pingUrl, { method: 'HEAD', cache: 'no-store' });
+        } catch (e) {
+          // ignore
+        }
+        pings.push(performance.now() - start);
+        setProgress((i + 1) * (100 / 10));
     }
-    const avgPing = pings.reduce((a, b) => a + b, 0) / pings.length;
-    const jitter = Math.max(...pings) - Math.min(...pings);
+    const validPings = pings.filter(p => p > 0);
+    const avgPing = validPings.length ? validPings.reduce((a, b) => a + b, 0) / validPings.length : 0;
+    let jitter = 0;
+    if (validPings.length > 1) {
+        let jitterSum = 0;
+        for (let i = 1; i < validPings.length; i++) {
+            jitterSum += Math.abs(validPings[i] - validPings[i - 1]);
+        }
+        jitter = jitterSum / (validPings.length - 1);
+    }
     setResults((prev) => ({ ...prev, ping: avgPing.toFixed(0), jitter: jitter.toFixed(1) }));
   };
 
@@ -156,41 +192,125 @@ const App = () => {
     setProgress(0);
     setGraphData([]);
 
-    let currentChunkIndex = 0;
-    const localGraphData: GraphPoint[] = [];
-    const testDuration = 6000;
-    const startTime = performance.now();
-    const targetSpeed = type === 'download' ? activeProfile.dl : activeProfile.ul;
+    return new Promise<string>((resolve) => {
+      const testDuration = 10000; // 10 seconds
+      const startTime = performance.now();
+      const localGraphData: GraphPoint[] = [];
 
-    while (performance.now() - startTime < testDuration) {
-      const chunkMB = CHUNK_SIZES[currentChunkIndex];
-      const noiseIntensity = activeProfile.id === 'real' ? 0.5 : 0.1;
-      const noise = 1 - noiseIntensity / 2 + Math.random() * noiseIntensity;
-      const actualMbps = targetSpeed * noise;
-      const transferTimeMs = (chunkMB * 8 / actualMbps) * 1000;
+      let totLoaded = 0;
+      let prevLoadedMap = new Map<number, number>();
+      
+      const xhrs: XMLHttpRequest[] = [];
+      const streamsCount = type === 'download' ? 4 : 2;
+      let isDone = false;
+      let smoothedSpeed = 0;
 
-      const steps = 4;
-      for (let s = 0; s < steps; s++) {
-        await new Promise((r) => setTimeout(r, transferTimeMs / steps));
-        setCurrentSpeed(actualMbps * (0.98 + Math.random() * 0.04));
+      const finish = () => {
+        if (isDone) return;
+        isDone = true;
+        xhrs.forEach((xhr) => {
+          try {
+            xhr.onload = null;
+            xhr.onerror = null;
+            if(xhr.upload) xhr.upload.onprogress = null;
+            xhr.onprogress = null;
+            xhr.abort();
+          } catch (e) {}
+        });
+        
+        const recent = localGraphData.slice(-5);
+        const avg = recent.length ? (recent.reduce((a, b) => a + b.speed, 0) / recent.length) : 0;
+        const finalSpeed = avg.toFixed(1);
+        setResults((prev) => ({ ...prev, [type]: finalSpeed }));
+        setCurrentSpeed(0);
+        resolve(finalSpeed);
+      };
+
+      const startStream = (id: number) => {
+        if (isDone) return;
+        const xhr = new XMLHttpRequest();
+        xhrs[id] = xhr;
+        prevLoadedMap.set(id, 0);
+
+        if (type === 'download') {
+          xhr.onprogress = (e) => {
+            if (isDone) return;
+            const prev = prevLoadedMap.get(id) || 0;
+            const diff = e.loaded - prev;
+            if (diff > 0) totLoaded += diff;
+            prevLoadedMap.set(id, e.loaded);
+          };
+          const dlUrl = `/garbage.dat?t=${Math.random()}`;
+          xhr.onload = () => startStream(id);
+          xhr.onerror = () => startStream(id);
+          xhr.responseType = 'arraybuffer';
+          xhr.open('GET', dlUrl, true);
+          xhr.send();
+        } else {
+          xhr.upload.onprogress = (e) => {
+            if (isDone) return;
+            const prev = prevLoadedMap.get(id) || 0;
+            const diff = e.loaded - prev;
+            if (diff > 0) totLoaded += diff;
+            prevLoadedMap.set(id, e.loaded);
+          };
+          const upUrl = `/api/upload?t=${Math.random()}`;
+          xhr.onload = () => startStream(id);
+          xhr.onerror = () => startStream(id);
+          xhr.open('POST', upUrl, true);
+          
+          const blobSize = 3.5 * 1024 * 1024;
+          const buffer = new ArrayBuffer(blobSize);
+          const view = new Uint32Array(buffer);
+          view[0] = Math.random() * 0xFFFFFFFF;
+          const blob = new Blob([buffer], { type: 'text/plain' });
+          xhr.send(blob);
+        }
+      };
+
+      for (let i = 0; i < streamsCount; i++) {
+        setTimeout(() => startStream(i), i * 200);
       }
 
-      const chunkEndTime = performance.now();
-      const durationSec = (chunkEndTime - startTime) / 1000;
-      localGraphData.push({ time: durationSec.toFixed(1), speed: actualMbps });
-      setGraphData([...localGraphData]);
-      setProgress((durationSec / (testDuration / 1000)) * 100);
+      let lastTime = startTime;
+      let lastLoaded = 0;
 
-      if (transferTimeMs < 300 && currentChunkIndex < CHUNK_SIZES.length - 1) currentChunkIndex++;
-    }
+      const interval = setInterval(() => {
+        if (isDone) {
+          clearInterval(interval);
+          return;
+        }
+        const now = performance.now();
+        const durationSec = (now - startTime) / 1000;
+        
+        if (durationSec > (testDuration / 1000)) {
+          clearInterval(interval);
+          finish();
+          return;
+        }
 
-    const recent = localGraphData.slice(-5);
-    const avg = recent.reduce((a, b) => a + b.speed, 0) / Math.max(1, recent.length);
-    const finalSpeed = avg.toFixed(1);
+        setProgress((durationSec / (testDuration / 1000)) * 100);
 
-    setResults((prev) => ({ ...prev, [type]: finalSpeed }));
-    setCurrentSpeed(0);
-    return finalSpeed;
+        const loadedSinceLast = totLoaded - lastLoaded;
+        const timeSinceLast = (now - lastTime) / 1000;
+        
+        if (timeSinceLast > 0 && totLoaded > 0) {
+          const overhead = 1.05; 
+          let speedMbps = ((loadedSinceLast * 8 * overhead) / timeSinceLast) / 1000000;
+          
+          speedMbps = speedMbps / 100;
+          
+          if (speedMbps > 0) {
+              smoothedSpeed = smoothedSpeed > 0 ? (smoothedSpeed * 0.4 + speedMbps * 0.6) : speedMbps;
+              setCurrentSpeed(smoothedSpeed);
+              localGraphData.push({ time: durationSec.toFixed(1), speed: smoothedSpeed });
+              setGraphData([...localGraphData]);
+          }
+        }
+        lastTime = now;
+        lastLoaded = totLoaded;
+      }, 200);
+    });
   };
 
   const startFullTest = async () => {
@@ -259,7 +379,7 @@ const App = () => {
               </div>
               <div>
                 <h1 className="text-lg font-black tracking-tighter leading-none italic uppercase">
-                  Zahid <span className="text-indigo-600">Speed Pro</span>
+                  Ishrak <span className="text-indigo-600">Speed Pro</span>
                 </h1>
                 <p className="text-[9px] font-bold text-slate-400 tracking-[0.2em] uppercase mt-0.5">
                   V5.1 Adaptive
@@ -426,13 +546,13 @@ const App = () => {
                   </div>
                   <div>
                     <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">Your Provider</p>
-                    <p className="text-sm font-bold">ICC Communication Ltd</p>
+                    <p className="text-sm font-bold">{ipInfo.isp.split(',')[0]} {ipInfo.city ? `(${ipInfo.city})` : ''}</p>
                   </div>
                 </div>
                 <div className="text-right">
                   <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">External IP</p>
                   <p className="text-[11px] font-mono font-bold bg-white px-2 py-1 rounded border border-slate-100">
-                    116.204.228.111
+                    {ipInfo.ip}
                   </p>
                 </div>
               </div>
@@ -565,37 +685,54 @@ const App = () => {
 
         <Modal isOpen={showShare} onClose={() => setShowShare(false)} title="Export Diagnosis">
           <div className="text-center space-y-6 pb-8">
-            <div className="bg-white rounded-[2.5rem] p-10 text-slate-900 border-2 border-slate-200 shadow-lg">
+            <div ref={shareCardRef} className="bg-white rounded-[2.5rem] p-10 text-slate-900 border-2 border-slate-200 shadow-lg relative">
+              <div className="absolute top-6 right-8 opacity-20">
+                 <Zap size={40} className="fill-indigo-600 text-indigo-600" />
+              </div>
               <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-4">Zahid Speed Pro</p>
               <div className="text-7xl font-black italic tracking-tighter mb-2 text-indigo-600">{results.download}</div>
               <div className="text-indigo-600 font-black uppercase text-xs tracking-widest mb-10">Mbps Download</div>
-              <div className="grid grid-cols-2 gap-4 pt-8 border-t border-slate-100">
+              
+              <div className="grid grid-cols-3 gap-2 pt-8 border-t border-slate-100">
                 <div className="text-left">
-                  <p className="text-[10px] text-slate-400 uppercase font-black">Upload</p>
-                  <p className="font-black">{results.upload} Mbps</p>
+                  <p className="text-[9px] text-slate-400 uppercase font-black">Upload</p>
+                  <p className="font-black text-[13px]">{results.upload} Mbps</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-[9px] text-slate-400 uppercase font-black">Latency</p>
+                  <p className="font-black text-[13px]">{results.ping} ms</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[10px] text-slate-400 uppercase font-black">Latency</p>
-                  <p className="font-black">{results.ping} ms</p>
+                  <p className="text-[9px] text-slate-400 uppercase font-black">Provider</p>
+                  <p className="font-black text-[11px] truncate" title={ipInfo.isp}>{ipInfo.isp.split(' ')[0]}</p>
                 </div>
               </div>
             </div>
-            <button
-              onClick={copyToClipboard}
-              className={`w-full py-5 rounded-[1.5rem] font-black flex items-center justify-center gap-3 transition-all ${
-                copied ? 'bg-emerald-500 text-white' : 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20'
-              }`}
-            >
-              {copied ? (
-                <>
-                  <Check size={20} /> Result Copied
-                </>
-              ) : (
-                <>
-                  <Copy size={20} /> Copy Report Text
-                </>
-              )}
-            </button>
+            
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                onClick={downloadImage}
+                className="w-full py-4 rounded-2xl font-black flex items-center justify-center gap-2 bg-slate-900 text-white shadow-lg shadow-slate-900/20 transition-all hover:scale-[0.98]"
+              >
+                Download Image
+              </button>
+              <button
+                onClick={copyToClipboard}
+                className={`w-full py-4 rounded-2xl font-black flex items-center justify-center gap-2 transition-all hover:scale-[0.98] ${
+                  copied ? 'bg-emerald-500 text-white' : 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20'
+                }`}
+              >
+                {copied ? (
+                  <>
+                    <Check size={18} /> Copied
+                  </>
+                ) : (
+                  <>
+                    <Copy size={18} /> Copy Text
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </Modal>
       </div>
