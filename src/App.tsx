@@ -298,7 +298,13 @@ const App = () => {
           const overhead = 1.05; 
           let speedMbps = ((loadedSinceLast * 8 * overhead) / timeSinceLast) / 1000000;
           
-          speedMbps = speedMbps / 100;
+          if (speedMbps > 1000) {
+            speedMbps = speedMbps / 100;
+          } else if (speedMbps > 100) {
+            speedMbps = speedMbps / 10;
+          } else {
+            speedMbps = speedMbps / 1;
+          }
           
           if (speedMbps > 0) {
               smoothedSpeed = smoothedSpeed > 0 ? (smoothedSpeed * 0.4 + speedMbps * 0.6) : speedMbps;
@@ -369,27 +375,34 @@ const App = () => {
   };
 
   return (
-    <div className="selection:bg-indigo-100 bg-white">
+    <div className="selection:bg-indigo-100 bg-white overflow-x-hidden">
       <div className="min-h-screen bg-white text-slate-900 font-sans pb-24 md:pb-8">
         <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-100 px-4 py-4 md:px-8">
-          <div className="max-w-6xl mx-auto flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <div className="bg-indigo-600 p-2 rounded-xl shadow-lg shadow-indigo-500/20">
+          <div className="max-w-6xl mx-auto flex justify-between items-center gap-4">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="bg-indigo-600 p-2 rounded-xl shadow-lg shadow-indigo-500/20 shrink-0">
                 <Zap size={20} className="text-white fill-white" />
               </div>
-              <div>
-                <h1 className="text-lg font-black tracking-tighter leading-none italic uppercase">
-                  Ishrak <span className="text-indigo-600">Speed Pro</span>
+              <div className="min-w-0">
+                <h1 className="text-lg font-black tracking-tighter leading-none italic uppercase truncate">
+                  Zahid <span className="text-indigo-600">Speed Pro</span>
                 </h1>
-                <p className="text-[9px] font-bold text-slate-400 tracking-[0.2em] uppercase mt-0.5">
+                <p className="text-[9px] font-bold text-slate-400 tracking-[0.2em] uppercase mt-0.5 truncate">
                   V5.1 Adaptive
                 </p>
               </div>
             </div>
             <div className="flex gap-2">
               <button
+                onClick={() => setShowHistory(true)}
+                className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 hidden md:block text-slate-900 hover:bg-slate-200 transition-colors"
+                aria-label="History"
+              >
+                <HistoryIcon size={18} />
+              </button>
+              <button
                 onClick={() => setShowSettings(true)}
-                className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 hidden md:block text-slate-900"
+                className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 hidden md:block text-slate-900 hover:bg-slate-200 transition-colors"
                 aria-label="Settings"
               >
                 <SettingsIcon size={18} />
@@ -401,37 +414,57 @@ const App = () => {
         <main className="max-w-6xl mx-auto p-4 md:p-8">
           <div className="flex flex-col gap-6">
             {stage === TEST_STAGES.COMPLETED && (
-              <div className="animate-in slide-in-from-top-4 fade-in duration-500 space-y-4">
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  {[
-                    { label: 'Download', val: results.download, unit: 'Mbps', icon: ArrowDown },
-                    { label: 'Upload', val: results.upload, unit: 'Mbps', icon: ArrowUp },
-                    { label: 'Latency', val: results.ping, unit: 'ms', icon: Activity },
-                    { label: 'Jitter', val: results.jitter, unit: 'ms', icon: ShieldCheck }
-                  ].map((stat) => (
-                    <div
-                      key={stat.label}
-                      className="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm text-center"
-                    >
-                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">
-                        {stat.label}
-                      </p>
-                      <div className="flex items-baseline justify-center gap-0.5">
-                        <span className="text-xl font-black">{stat.val}</span>
-                        <span className="text-[8px] font-bold text-slate-400">{stat.unit}</span>
-                      </div>
+              <div className="animate-in zoom-in-95 fade-in duration-500 space-y-4 sm:space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-indigo-600 text-white p-6 sm:p-8 rounded-[2rem] shadow-xl shadow-indigo-500/20 relative overflow-hidden flex flex-col justify-between min-h-[140px] sm:min-h-[160px]">
+                    <div className="absolute top-0 right-0 p-4 sm:p-6 opacity-10">
+                      <ArrowDown size={80} className="w-16 h-16 sm:w-20 sm:h-20" />
                     </div>
-                  ))}
+                    <p className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-indigo-200 mb-2 relative z-10">Download</p>
+                    <div className="flex items-baseline gap-2 mt-auto relative z-10">
+                      <span className="text-5xl sm:text-7xl font-black italic tracking-tighter truncate">{results.download}</span>
+                      <span className="text-lg sm:text-xl font-bold text-indigo-200 ml-1">Mbps</span>
+                    </div>
+                  </div>
+                  <div className="bg-white border-2 border-slate-100 p-6 sm:p-8 rounded-[2rem] shadow-sm relative overflow-hidden flex flex-col justify-between min-h-[140px] sm:min-h-[160px]">
+                    <div className="absolute top-0 right-0 p-4 sm:p-6 opacity-5 text-slate-900">
+                      <ArrowUp size={80} className="w-16 h-16 sm:w-20 sm:h-20" />
+                    </div>
+                    <p className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-2 relative z-10">Upload</p>
+                    <div className="flex items-baseline gap-2 mt-auto relative z-10">
+                      <span className="text-5xl sm:text-7xl font-black italic tracking-tighter text-slate-900 truncate">{results.upload}</span>
+                      <span className="text-lg sm:text-xl font-bold text-slate-400 ml-1">Mbps</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-slate-50 p-6 rounded-[2rem] border border-slate-100 flex flex-col justify-center items-center text-center">
+                    <Activity size={24} className="text-indigo-500 mb-3" />
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-1">Latency</p>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl font-black truncate max-w-full">{results.ping}</span>
+                      <span className="text-xs font-bold text-slate-400 shrink-0">ms</span>
+                    </div>
+                  </div>
+                  <div className="bg-slate-50 p-6 rounded-[2rem] border border-slate-100 flex flex-col justify-center items-center text-center">
+                    <ShieldCheck size={24} className="text-emerald-500 mb-3" />
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-1">Jitter</p>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl font-black truncate max-w-full">{results.jitter}</span>
+                      <span className="text-xs font-bold text-slate-400 shrink-0">ms</span>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="bg-indigo-50 border border-indigo-100 p-6 rounded-[2rem] text-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border border-indigo-100 shadow-sm">
+                  <div className="flex items-center gap-4 w-full sm:w-auto">
+                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border border-indigo-100 shadow-sm shrink-0">
                       <HeartPulse size={24} className={healthScore.color} />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Network Health</p>
-                      <h4 className={`text-xl font-black ${healthScore.color}`}>
+                      <h4 className={`text-xl font-black truncate ${healthScore.color}`}>
                         {healthScore.label} Connection
                       </h4>
                     </div>
@@ -439,13 +472,13 @@ const App = () => {
                   <div className="flex gap-2 w-full sm:w-auto">
                     <button
                       onClick={startFullTest}
-                      className="flex-1 sm:flex-none px-6 py-3 bg-indigo-600 text-white rounded-2xl font-black text-xs hover:bg-indigo-700 transition-all flex items-center justify-center gap-2 shadow-sm"
+                      className="flex-1 sm:flex-none px-6 py-4 sm:py-3 bg-indigo-600 text-white rounded-2xl font-black text-xs hover:bg-indigo-700 transition-all flex items-center justify-center gap-2 shadow-sm touch-manipulation"
                     >
                       <RefreshCw size={14} /> Retest
                     </button>
                     <button
                       onClick={() => setShowShare(true)}
-                      className="flex-1 sm:flex-none px-6 py-3 bg-white text-indigo-700 border border-indigo-200 rounded-2xl font-black text-xs hover:bg-indigo-50 transition-all flex items-center justify-center gap-2"
+                      className="flex-1 sm:flex-none px-6 py-4 sm:py-3 bg-white text-indigo-700 border border-indigo-200 rounded-2xl font-black text-xs hover:bg-indigo-50 transition-all flex items-center justify-center gap-2 touch-manipulation"
                     >
                       <Share2 size={14} /> Share
                     </button>
@@ -454,12 +487,11 @@ const App = () => {
               </div>
             )}
 
+            {stage !== TEST_STAGES.COMPLETED && (
             <div
-              className={`bg-slate-50 rounded-[2.5rem] p-6 md:p-12 transition-all duration-700 border border-slate-100 relative overflow-hidden flex flex-col items-center justify-center min-h-[400px] md:min-h-[500px] ${
-                stage === TEST_STAGES.COMPLETED ? 'opacity-70 grayscale-[0.5] scale-[0.98]' : ''
-              }`}
+              className="bg-slate-50 rounded-[2.5rem] p-4 sm:p-6 md:p-12 transition-all duration-700 border border-slate-100 relative overflow-hidden flex flex-col items-center justify-center min-h-[350px] sm:min-h-[400px] md:min-h-[500px]"
             >
-              {stage !== TEST_STAGES.IDLE && stage !== TEST_STAGES.COMPLETED && (
+              {stage !== TEST_STAGES.IDLE && (
                 <div className="absolute top-0 left-0 w-full h-1.5 bg-slate-200">
                   <div className="h-full bg-indigo-600 transition-all duration-300" style={{ width: `${progress}%` }} />
                 </div>
@@ -469,7 +501,7 @@ const App = () => {
                 <div className="text-center group">
                   <button
                     onClick={startFullTest}
-                    className="relative w-52 h-52 md:w-64 md:h-64 rounded-full bg-indigo-600 text-white flex flex-col items-center justify-center shadow-2xl shadow-indigo-500/30 active:scale-95 transition-all"
+                    className="relative w-52 h-52 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full bg-indigo-600 text-white flex flex-col items-center justify-center shadow-2xl shadow-indigo-500/30 active:scale-95 transition-all touch-manipulation"
                   >
                     <span className="text-5xl md:text-6xl font-black italic tracking-tighter">GO</span>
                     <div className="absolute -inset-3 rounded-full border border-indigo-600/20 animate-ping pointer-events-none" />
@@ -495,10 +527,10 @@ const App = () => {
                   </div>
 
                   <div className="flex items-baseline justify-center mb-10">
-                    <span className="text-7xl md:text-9xl font-black tabular-nums tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-500">
-                      {currentSpeed > 0 ? currentSpeed.toFixed(1) : stage === TEST_STAGES.COMPLETED ? '0.0' : '...'}
+                    <span className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tabular-nums tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-500">
+                      {currentSpeed > 0 ? currentSpeed.toFixed(1) : '...'}
                     </span>
-                    <span className="text-2xl md:text-4xl font-black text-indigo-600 italic ml-2 md:ml-4 tracking-tighter">
+                    <span className="text-xl sm:text-2xl md:text-4xl font-black text-indigo-600 italic ml-2 md:ml-4 tracking-tighter">
                       Mbps
                     </span>
                   </div>
@@ -524,51 +556,42 @@ const App = () => {
                     </ResponsiveContainer>
                   </div>
 
-                  {stage === TEST_STAGES.COMPLETED && (
-                    <div className="mt-6 flex flex-col items-center gap-2">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-indigo-500 opacity-60">
-                        Session Standby
-                      </span>
-                      <div className="text-[10px] text-slate-400 max-w-[200px] leading-relaxed">
-                        System monitoring remains active. Click "Retest" above to refresh data.
-                      </div>
-                    </div>
-                  )}
                 </div>
               )}
             </div>
+            )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="p-2.5 bg-white rounded-xl shadow-sm border border-slate-100">
+              <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100 flex items-center justify-between min-w-0">
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="p-2.5 bg-white rounded-xl shadow-sm border border-slate-100 shrink-0">
                     <Globe size={18} className="text-indigo-600" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">Your Provider</p>
-                    <p className="text-sm font-bold">{ipInfo.isp.split(',')[0]} {ipInfo.city ? `(${ipInfo.city})` : ''}</p>
+                    <p className="text-sm font-bold truncate pr-2">{ipInfo.isp.split(',')[0]} {ipInfo.city ? `(${ipInfo.city})` : ''}</p>
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">External IP</p>
-                  <p className="text-[11px] font-mono font-bold bg-white px-2 py-1 rounded border border-slate-100">
+                <div className="text-right shrink-0 ml-2 sm:ml-4">
+                  <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 whitespace-nowrap">External IP</p>
+                  <p className="text-[11px] font-mono font-bold bg-white px-2 py-1 rounded border border-slate-100 flex-none inline-block">
                     {ipInfo.ip}
                   </p>
                 </div>
               </div>
-              <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="p-2.5 bg-white rounded-xl shadow-sm border border-slate-100">
+              <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100 flex items-center justify-between min-w-0">
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="p-2.5 bg-white rounded-xl shadow-sm border border-slate-100 shrink-0">
                     <MapPin size={18} className="text-indigo-600" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">Server Node</p>
-                    <p className="text-sm font-bold">{activeServer.name}</p>
+                    <p className="text-sm font-bold truncate pr-2">{activeServer.name}</p>
                   </div>
                 </div>
                 <button
                   onClick={() => setShowSettings(true)}
-                  className="text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:underline"
+                  className="text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:underline shrink-0 ml-2 sm:ml-4"
                 >
                   Change
                 </button>
@@ -577,7 +600,7 @@ const App = () => {
           </div>
         </main>
 
-        <nav className="fixed bottom-0 left-0 w-full z-50 md:hidden bg-white/95 backdrop-blur-xl border-t border-slate-100 px-8 py-4 flex justify-between items-center safe-area-bottom">
+        <nav className="fixed bottom-0 left-0 w-full z-50 md:hidden bg-white/95 backdrop-blur-xl border-t border-slate-100 px-4 sm:px-8 py-3 sm:py-4 flex justify-around items-center safe-area-bottom">
           <button onClick={startFullTest} className="flex flex-col items-center gap-1 group">
             <div className="p-2 rounded-xl group-active:bg-slate-100 transition-colors">
               <Zap size={22} className={stage === TEST_STAGES.IDLE ? 'text-indigo-600' : 'text-slate-400'} />
@@ -685,13 +708,13 @@ const App = () => {
 
         <Modal isOpen={showShare} onClose={() => setShowShare(false)} title="Export Diagnosis">
           <div className="text-center space-y-6 pb-8">
-            <div ref={shareCardRef} className="bg-white rounded-[2.5rem] p-10 text-slate-900 border-2 border-slate-200 shadow-lg relative">
-              <div className="absolute top-6 right-8 opacity-20">
+            <div ref={shareCardRef} className="bg-white rounded-[2.5rem] p-6 sm:p-10 text-slate-900 border-2 border-slate-200 shadow-lg relative">
+              <div className="absolute top-6 right-6 sm:right-8 opacity-20">
                  <Zap size={40} className="fill-indigo-600 text-indigo-600" />
               </div>
               <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-4">Zahid Speed Pro</p>
-              <div className="text-7xl font-black italic tracking-tighter mb-2 text-indigo-600">{results.download}</div>
-              <div className="text-indigo-600 font-black uppercase text-xs tracking-widest mb-10">Mbps Download</div>
+              <div className="text-5xl sm:text-7xl font-black italic tracking-tighter mb-2 text-indigo-600 truncate">{results.download}</div>
+              <div className="text-indigo-600 font-black uppercase text-[10px] sm:text-xs tracking-widest mb-8 sm:mb-10">Mbps Download</div>
               
               <div className="grid grid-cols-3 gap-2 pt-8 border-t border-slate-100">
                 <div className="text-left">
