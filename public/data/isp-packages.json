@@ -1,0 +1,455 @@
+{
+  "lastUpdated": "2026-05-15",
+  "isps": [
+    {
+      "id": "mirpurnet",
+      "name": "MirpurNet",
+      "color": "#4f46e5",
+      "phone": "01712-000001",
+      "website": "mirpurnetbd.com",
+      "areas": [
+        "Section 1",
+        "Section 2",
+        "Section 6",
+        "Section 10",
+        "Section 11",
+        "Section 12",
+        "DOHS"
+      ],
+      "rating": 4.2,
+      "reviews": 312,
+      "tags": [
+        "Fiber",
+        "BDIX"
+      ],
+      "packages": [
+        {
+          "name": "Starter",
+          "speed": 10,
+          "upload": 5,
+          "price": 525,
+          "bdix": true,
+          "realIp": false,
+          "unlimited": true,
+          "type": "cable",
+          "tags": [
+            "budget"
+          ]
+        },
+        {
+          "name": "Standard",
+          "speed": 25,
+          "upload": 10,
+          "price": 650,
+          "bdix": true,
+          "realIp": false,
+          "unlimited": true,
+          "type": "cable",
+          "tags": []
+        },
+        {
+          "name": "Pro 50",
+          "speed": 50,
+          "upload": 20,
+          "price": 799,
+          "bdix": true,
+          "realIp": false,
+          "unlimited": true,
+          "type": "fiber",
+          "tags": [
+            "popular",
+            "streaming"
+          ]
+        },
+        {
+          "name": "Ultra 100",
+          "speed": 100,
+          "upload": 50,
+          "price": 1299,
+          "bdix": true,
+          "realIp": true,
+          "unlimited": true,
+          "type": "fiber",
+          "tags": [
+            "gaming",
+            "wfh"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mnet",
+      "name": "MNET",
+      "color": "#0891b2",
+      "phone": "01812-000002",
+      "website": "mnetbd.com",
+      "areas": [
+        "Section 1",
+        "Section 7",
+        "Section 10",
+        "Section 11",
+        "Section 13",
+        "Section 14",
+        "Pallabi"
+      ],
+      "rating": 4.0,
+      "reviews": 246,
+      "tags": [
+        "Cable",
+        "BDIX"
+      ],
+      "packages": [
+        {
+          "name": "Basic 10",
+          "speed": 10,
+          "upload": 5,
+          "price": 499,
+          "bdix": true,
+          "realIp": false,
+          "unlimited": true,
+          "type": "cable",
+          "tags": [
+            "budget"
+          ]
+        },
+        {
+          "name": "Starter 25",
+          "speed": 25,
+          "upload": 10,
+          "price": 599,
+          "bdix": true,
+          "realIp": false,
+          "unlimited": true,
+          "type": "cable",
+          "tags": []
+        },
+        {
+          "name": "Power 50",
+          "speed": 50,
+          "upload": 25,
+          "price": 799,
+          "bdix": true,
+          "realIp": false,
+          "unlimited": true,
+          "type": "cable",
+          "tags": [
+            "popular"
+          ]
+        },
+        {
+          "name": "Gamer 100",
+          "speed": 100,
+          "upload": 50,
+          "price": 1199,
+          "bdix": true,
+          "realIp": true,
+          "unlimited": true,
+          "type": "fiber",
+          "tags": [
+            "gaming"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "basnetwork",
+      "name": "BAS Network",
+      "color": "#059669",
+      "phone": "01912-000003",
+      "website": "basnetbd.com",
+      "areas": [
+        "Section 2",
+        "Section 6",
+        "Section 10",
+        "Section 11",
+        "Section 12",
+        "Kazipara"
+      ],
+      "rating": 4.4,
+      "reviews": 198,
+      "tags": [
+        "Fiber",
+        "BDIX",
+        "Real IP"
+      ],
+      "packages": [
+        {
+          "name": "Radical",
+          "speed": 25,
+          "upload": 10,
+          "price": 600,
+          "bdix": true,
+          "realIp": false,
+          "unlimited": true,
+          "type": "cable",
+          "tags": []
+        },
+        {
+          "name": "Gamestar 50",
+          "speed": 50,
+          "upload": 25,
+          "price": 850,
+          "bdix": true,
+          "realIp": true,
+          "unlimited": true,
+          "type": "cable",
+          "tags": [
+            "gaming",
+            "popular"
+          ]
+        },
+        {
+          "name": "Pro 100",
+          "speed": 100,
+          "upload": 50,
+          "price": 1350,
+          "bdix": true,
+          "realIp": true,
+          "unlimited": true,
+          "type": "fiber",
+          "tags": [
+            "gaming",
+            "wfh"
+          ]
+        },
+        {
+          "name": "Beast 200",
+          "speed": 200,
+          "upload": 100,
+          "price": 2200,
+          "bdix": true,
+          "realIp": true,
+          "unlimited": true,
+          "type": "fiber",
+          "tags": [
+            "power"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "infoisp",
+      "name": "Info ISP",
+      "color": "#7c3aed",
+      "phone": "01612-000004",
+      "website": "infoisp.net",
+      "areas": [
+        "Section 1",
+        "Section 6",
+        "Section 10",
+        "Section 11",
+        "Section 12",
+        "Mirpur Road"
+      ],
+      "rating": 3.9,
+      "reviews": 141,
+      "tags": [
+        "Cable",
+        "BDIX"
+      ],
+      "packages": [
+        {
+          "name": "Economy 10",
+          "speed": 10,
+          "upload": 5,
+          "price": 499,
+          "bdix": true,
+          "realIp": false,
+          "unlimited": false,
+          "type": "cable",
+          "tags": [
+            "budget"
+          ]
+        },
+        {
+          "name": "Day/Night 25",
+          "speed": 25,
+          "upload": 10,
+          "price": 550,
+          "bdix": true,
+          "realIp": false,
+          "unlimited": true,
+          "type": "cable",
+          "tags": []
+        },
+        {
+          "name": "Home 50",
+          "speed": 50,
+          "upload": 20,
+          "price": 750,
+          "bdix": true,
+          "realIp": false,
+          "unlimited": true,
+          "type": "cable",
+          "tags": [
+            "popular"
+          ]
+        },
+        {
+          "name": "Office 100",
+          "speed": 100,
+          "upload": 50,
+          "price": 1199,
+          "bdix": true,
+          "realIp": true,
+          "unlimited": true,
+          "type": "fiber",
+          "tags": [
+            "wfh"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mirpuronline",
+      "name": "Mirpur Online",
+      "color": "#dc2626",
+      "phone": "01512-000005",
+      "website": "mirpuronline.net",
+      "areas": [
+        "Section 1",
+        "Section 2",
+        "Section 10",
+        "Section 11",
+        "Section 13",
+        "Section 14"
+      ],
+      "rating": 3.7,
+      "reviews": 109,
+      "tags": [
+        "Cable",
+        "BDIX"
+      ],
+      "packages": [
+        {
+          "name": "Mini 10",
+          "speed": 10,
+          "upload": 5,
+          "price": 499,
+          "bdix": true,
+          "realIp": false,
+          "unlimited": true,
+          "type": "cable",
+          "tags": [
+            "budget"
+          ]
+        },
+        {
+          "name": "Regular 30",
+          "speed": 30,
+          "upload": 15,
+          "price": 650,
+          "bdix": true,
+          "realIp": false,
+          "unlimited": true,
+          "type": "cable",
+          "tags": []
+        },
+        {
+          "name": "Premium 50",
+          "speed": 50,
+          "upload": 25,
+          "price": 799,
+          "bdix": true,
+          "realIp": false,
+          "unlimited": true,
+          "type": "cable",
+          "tags": [
+            "popular"
+          ]
+        },
+        {
+          "name": "Off-Peak 100",
+          "speed": 100,
+          "upload": 50,
+          "price": 1100,
+          "bdix": true,
+          "realIp": false,
+          "unlimited": true,
+          "type": "cable",
+          "tags": []
+        }
+      ]
+    },
+    {
+      "id": "inspire",
+      "name": "Inspire Broadband",
+      "color": "#f59e0b",
+      "phone": "01312-000006",
+      "website": "inspirebroadband.net",
+      "areas": [
+        "Section 6",
+        "Section 10",
+        "Section 11",
+        "Section 12",
+        "DOHS",
+        "Kazipara"
+      ],
+      "rating": 4.5,
+      "reviews": 87,
+      "tags": [
+        "Fiber",
+        "BDIX",
+        "Real IP",
+        "Gaming"
+      ],
+      "packages": [
+        {
+          "name": "Gamer Lite",
+          "speed": 20,
+          "upload": 10,
+          "price": 700,
+          "bdix": true,
+          "realIp": true,
+          "unlimited": true,
+          "type": "cable",
+          "tags": [
+            "gaming"
+          ]
+        },
+        {
+          "name": "Gamer Pro",
+          "speed": 50,
+          "upload": 25,
+          "price": 999,
+          "bdix": true,
+          "realIp": true,
+          "unlimited": true,
+          "type": "fiber",
+          "tags": [
+            "gaming",
+            "popular"
+          ]
+        },
+        {
+          "name": "Gamer Ultra",
+          "speed": 100,
+          "upload": 50,
+          "price": 1599,
+          "bdix": true,
+          "realIp": true,
+          "unlimited": true,
+          "type": "fiber",
+          "tags": [
+            "gaming",
+            "wfh"
+          ]
+        },
+        {
+          "name": "Fiber Beast",
+          "speed": 150,
+          "upload": 75,
+          "price": 2000,
+          "bdix": true,
+          "realIp": true,
+          "unlimited": true,
+          "type": "fiber",
+          "tags": [
+            "power",
+            "streaming"
+          ]
+        }
+      ]
+    }
+  ]
+}

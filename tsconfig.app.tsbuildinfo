@@ -1,1 +1,1 @@
-{"root":["./src/app.tsx","./src/main.tsx"],"version":"5.9.3"}
+{"root":["./src/app.tsx","./src/main.tsx","./src/components/layout.tsx","./src/pages/bdix.tsx","./src/pages/bandwidth.tsx","./src/pages/coverage.tsx","./src/pages/dns.tsx","./src/pages/home.tsx","./src/pages/ipcheck.tsx","./src/pages/outages.tsx","./src/pages/packages.tsx","./src/pages/rankings.tsx","./src/pages/tools.tsx"],"version":"5.9.3"}
