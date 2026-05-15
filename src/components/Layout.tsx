@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import HugeIconPicker from './HugeIconPicker';
 
 const NAV_ITEMS = [
-  { to:'/',         label:'Speed Test', icon:'zapIcon',           exact:true  },
-  { to:'/bdix',     label:'BDIX Hub',   icon:'database01Icon',    exact:false },
-  { to:'/packages', label:'ISP Plans',  icon:'packageIcon',       exact:false },
-  { to:'/tools',    label:'Tools',      icon:'wrench01Icon',      exact:false },
-  { to:'/outages',  label:'Outages',    icon:'alert01Icon',       exact:false },
-  { to:'/rankings', label:'Rankings',   icon:'trophy01Icon',      exact:false },
-  { to:'/coverage', label:'Coverage',   icon:'map01Icon',         exact:false },
-  { to:'/isp-finder', label:'ISP Finder', icon:'location01Icon',  exact:false },
-  { to:'/blog',     label:'Blog',       icon:'book01Icon',        exact:false },
+  // { to:'/',         label:'Home',       icon:'home11Icon',        exact:true  },
+  { to: '/speedtest', label: 'Speed Test', icon: 'zapIcon', exact: true },
+  { to: '/bdix', label: 'BDIX Hub', icon: 'database01Icon', exact: false },
+  { to: '/packages', label: 'ISP Plans', icon: 'packageIcon', exact: false },
+  { to: '/tools', label: 'Tools', icon: 'wrench01Icon', exact: false },
+  { to: '/outages', label: 'Outages', icon: 'alert01Icon', exact: false },
+  { to: '/rankings', label: 'Rankings', icon: 'trophy01Icon', exact: false },
+  { to: '/coverage', label: 'Coverage', icon: 'map01Icon', exact: false },
+  { to: '/isp-finder', label: 'ISP Finder', icon: 'location01Icon', exact: false },
+  { to: '/blog', label: 'Blog', icon: 'book01Icon', exact: false },
 ];
 
 export default function Layout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const closeMenu = () => setMobileMenuOpen(false);
 
@@ -25,9 +27,9 @@ export default function Layout() {
       {/* ── Top Navigation Bar ── */}
       <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
-          
+
           {/* Logo */}
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2.5 hover:cursor-pointer" onClick={() => { navigate('/') }}>
             <div className="bg-gradient-to-br from-indigo-600 to-teal-600 p-1.5 rounded-lg shadow-md shadow-indigo-500/20">
               <HugeIconPicker name="zapIcon" size={18} className="text-white" />
             </div>
@@ -46,10 +48,9 @@ export default function Layout() {
                 to={to}
                 end={exact}
                 className={({ isActive }) =>
-                  `flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all ${
-                    isActive
-                      ? 'bg-indigo-50 text-indigo-700'
-                      : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+                  `flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all ${isActive
+                    ? 'bg-indigo-50 text-indigo-700'
+                    : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
                   }`
                 }
               >
@@ -64,7 +65,7 @@ export default function Layout() {
           </nav>
 
           {/* Mobile Menu Toggle */}
-          <button 
+          <button
             className="lg:hidden p-2 text-slate-500 hover:bg-slate-50 rounded-xl transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
@@ -84,10 +85,9 @@ export default function Layout() {
                 end={exact}
                 onClick={closeMenu}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-4 rounded-2xl text-sm font-bold transition-all ${
-                    isActive
-                      ? 'bg-indigo-50 text-indigo-700'
-                      : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+                  `flex items-center gap-3 px-4 py-4 rounded-2xl text-sm font-bold transition-all ${isActive
+                    ? 'bg-indigo-50 text-indigo-700'
+                    : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
                   }`
                 }
               >

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
+import Landing from './pages/Landing';
 import BDIX from './pages/BDIX';
 import Packages from './pages/Packages';
 import Tools from './pages/Tools';
@@ -19,7 +20,8 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route index element={<Home />} />
+          <Route index element={<Landing />} />
+          <Route path="speedtest" element={<Home />} />
           <Route path="bdix" element={<BDIX />} />
           <Route path="packages" element={<Packages />} />
           <Route path="tools" element={<Tools />} />
