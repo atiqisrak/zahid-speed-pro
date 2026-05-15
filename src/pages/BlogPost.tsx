@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Clock, Tag, Share2, Zap, CheckCircle, ChevronRight, ExternalLink } from 'lucide-react';
+
+import HugeIconPicker from '../components/HugeIconPicker';
 
 interface FAQItem { q: string; a: string; }
 interface TableBlock { type: 'table'; headers: string[]; rows: string[][]; }
@@ -18,7 +19,7 @@ interface BlogPost {
   tags: string[];
   readTime: number;
   publishDate: string;
-  coverEmoji: string;
+  iconName: string;
   heroKeyword: string;
   content: ContentBlock[];
 }
@@ -70,7 +71,7 @@ function renderBlock(block: ContentBlock, idx: number) {
           {block.items.map((item, fi) => (
             <div key={fi} className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
               <div className="flex items-start gap-2 mb-2">
-                <CheckCircle size={16} className="text-indigo-600 shrink-0 mt-0.5" />
+                <HugeIconPicker name="tickCircleIcon" size={16} className="text-indigo-600 shrink-0 mt-0.5" />
                 <p className="font-black text-sm text-slate-900">{item.q}</p>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed ml-6">{item.a}</p>
@@ -84,9 +85,9 @@ function renderBlock(block: ContentBlock, idx: number) {
           <Link to={block.href}
             className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-indigo-600 text-white font-black text-sm px-6 py-3 rounded-2xl hover:opacity-90 transition-opacity shadow-lg shadow-teal-500/20"
           >
-            <Zap size={16} className="fill-white" />
+            <HugeIconPicker name="zapIcon" size={16} className="fill-white" />
             {block.text}
-            <ChevronRight size={16} />
+            <HugeIconPicker name="arrowRight01Icon" size={16} />
           </Link>
         </div>
       );
@@ -145,22 +146,24 @@ export default function BlogPost() {
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-indigo-300 text-xs font-bold mb-6">
             <Link to="/blog" className="hover:text-white transition-colors flex items-center gap-1">
-              <ArrowLeft size={14} /> Blog
+              <HugeIconPicker name="arrowLeft01Icon" size={14} /> Blog
             </Link>
-            <ChevronRight size={12} />
+            <HugeIconPicker name="arrowRight01Icon" size={12} />
             <span className="text-white">{post.category}</span>
           </div>
           <div className="flex items-start gap-4 mb-6">
-            <span className="text-6xl md:text-7xl">{post.coverEmoji}</span>
+            <span className="text-indigo-200 bg-indigo-900/40 p-5 rounded-[2rem] backdrop-blur-md shadow-2xl shadow-indigo-500/20">
+              <HugeIconPicker name={post.iconName} size={64} />
+            </span>
             <span className={`${catColor} text-white text-[10px] font-black uppercase px-3 py-1 rounded-xl tracking-wider mt-2`}>{post.category}</span>
           </div>
           <h1 className="text-2xl md:text-4xl font-black leading-tight mb-4">{post.title}</h1>
           <p className="text-indigo-200 text-sm mb-6">{post.metaDescription}</p>
           <div className="flex items-center gap-4 text-indigo-300 text-xs font-bold flex-wrap">
-            <span className="flex items-center gap-1.5"><Clock size={12} />{post.readTime} min read</span>
+            <span className="flex items-center gap-1.5"><HugeIconPicker name="time01Icon" size={12} />{post.readTime} min read</span>
             <span>{new Date(post.publishDate).toLocaleDateString('en-BD', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
             <button onClick={handleShare} className="flex items-center gap-1.5 hover:text-white transition-colors ml-auto">
-              {copied ? '✅ Copied!' : <><Share2 size={12} />Share</>}
+              {copied ? '✅ Copied!' : <><HugeIconPicker name="share01Icon" size={12} />Share</>}
             </button>
           </div>
         </div>
@@ -178,7 +181,7 @@ export default function BlogPost() {
             <div className="flex gap-2 flex-wrap">
               {post.tags.map(tag => (
                 <span key={tag} className="flex items-center gap-1 text-xs font-bold px-3 py-1.5 bg-white border border-slate-200 text-slate-600 rounded-xl shadow-sm">
-                  <Tag size={11} />{tag}
+                  <HugeIconPicker name="tag01Icon" size={11} />{tag}
                 </span>
               ))}
             </div>
@@ -188,7 +191,7 @@ export default function BlogPost() {
           <aside className="space-y-4">
             {/* Speed Pro widget */}
             <div className="bg-gradient-to-br from-teal-600 to-indigo-600 text-white rounded-2xl p-5">
-              <Zap size={24} className="fill-white text-white mb-3" />
+              <HugeIconPicker name="zapIcon" size={24} className="fill-white text-white mb-3" />
               <h3 className="font-black mb-1">Test Your Speed</h3>
               <p className="text-teal-200 text-xs mb-4">Free — no sign-up needed</p>
               <Link to="/" className="block w-full text-center bg-white text-teal-700 font-black text-sm py-2.5 rounded-xl hover:bg-teal-50 transition-colors">
@@ -201,7 +204,7 @@ export default function BlogPost() {
               <h3 className="font-black text-sm mb-3">Compare ISP Plans</h3>
               <p className="text-slate-500 text-xs mb-4">Find the best internet plan for your area and budget</p>
               <Link to="/packages" className="flex items-center justify-between text-sm font-black text-indigo-600 hover:text-indigo-700">
-                View All Plans <ExternalLink size={14} />
+                View All Plans <HugeIconPicker name="linkSquare01Icon" size={14} />
               </Link>
             </div>
 
@@ -214,10 +217,12 @@ export default function BlogPost() {
                     <Link key={rp.slug} to={`/blog/${rp.slug}`}
                       className="flex items-start gap-3 group hover:bg-slate-50 rounded-xl p-2 -mx-2 transition-colors"
                     >
-                      <span className="text-2xl shrink-0">{rp.coverEmoji}</span>
+                      <span className="text-indigo-600 bg-indigo-50 p-2 rounded-xl shrink-0 border border-indigo-100 group-hover:bg-indigo-100 transition-colors">
+                        <HugeIconPicker name={rp.iconName} size={24} />
+                      </span>
                       <div className="min-w-0">
                         <p className="text-xs font-bold text-slate-800 group-hover:text-indigo-700 leading-tight line-clamp-2 transition-colors">{rp.title}</p>
-                        <p className="text-[10px] text-slate-400 font-bold mt-0.5 flex items-center gap-1"><Clock size={9} />{rp.readTime} min</p>
+                        <p className="text-[10px] text-slate-400 font-bold mt-0.5 flex items-center gap-1"><HugeIconPicker name="time01Icon" size={9} />{rp.readTime} min</p>
                       </div>
                     </Link>
                   ))}
@@ -237,7 +242,7 @@ export default function BlogPost() {
         {/* Back to blog */}
         <div className="mt-8 pt-8 border-t border-slate-200">
           <Link to="/blog" className="inline-flex items-center gap-2 text-sm font-black text-indigo-600 hover:text-indigo-700">
-            <ArrowLeft size={16} /> Back to all articles
+            <HugeIconPicker name="arrowLeft01Icon" size={16} /> Back to all articles
           </Link>
         </div>
       </div>

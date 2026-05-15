@@ -1,5 +1,6 @@
+import HugeIconPicker from '../components/HugeIconPicker';
 import { useState } from 'react';
-import { AlertTriangle, CheckCircle, Clock, Send, Radio, TrendingDown, Users, Flame } from 'lucide-react';
+
 
 const ISPS  = ['MirpurNet','MNET','BAS Network','Info ISP','Mirpur Online','Inspire Broadband','Link3','Carnival','Other'];
 const AREAS = ['Section 1','Section 2','Section 6','Section 7','Section 10','Section 11','Section 12','Section 13','Section 14','Pallabi','Kazipara','DOHS'];
@@ -31,7 +32,7 @@ export default function Outages() {
           style={{backgroundImage:'radial-gradient(circle at 80% 20%, #fb923c 0%, transparent 50%)'}}/>
         <div className="relative max-w-4xl mx-auto px-4 md:px-8 py-10">
           <div className="flex items-center gap-2 text-red-200 text-xs font-bold uppercase tracking-widest mb-3">
-            <Radio size={14} className="animate-pulse"/> Live Outage Monitor
+            <HugeIconPicker name="activity01Icon" size={14} className="animate-pulse"/> Live Outage Monitor
           </div>
           <h1 className="text-3xl md:text-4xl font-black tracking-tight mb-2">ISP Outage Reporter</h1>
           <p className="text-red-100 text-sm">Community-powered real-time outage tracking for Mirpur, Dhaka</p>
@@ -42,12 +43,12 @@ export default function Outages() {
         {/* Quick stats */}
         <div className="grid grid-cols-3 gap-3">
           {[
-            { label:'Active Outages', val:'1', icon:Flame,       color:'text-red-600',   bg:'bg-red-50' },
-            { label:'Resolved Today', val:'3', icon:CheckCircle,  color:'text-teal-600',  bg:'bg-teal-50' },
-            { label:'Users Affected', val:'74', icon:Users,       color:'text-amber-600', bg:'bg-amber-50' },
+            { label:'Active Outages', val:'1', icon:'alert01Icon',       color:'text-red-600',   bg:'bg-red-50' },
+            { label:'Resolved Today', val:'3', icon:'tickCircleIcon',  color:'text-teal-600',  bg:'bg-teal-50' },
+            { label:'Users Affected', val:'74', icon:'userMultipleIcon',       color:'text-amber-600', bg:'bg-amber-50' },
           ].map(s=>(
             <div key={s.label} className={`${s.bg} rounded-2xl p-4 border border-white text-center shadow-sm`}>
-              <s.icon size={18} className={`${s.color} mx-auto mb-1.5`}/>
+              <HugeIconPicker name={s.icon} size={18} className={`${s.color} mx-auto mb-1.5`}/>
               <p className="text-xl font-black text-slate-900">{s.val}</p>
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{s.label}</p>
             </div>
@@ -60,7 +61,7 @@ export default function Outages() {
             <div className="bg-white rounded-[1.5rem] border border-slate-100 overflow-hidden shadow-sm">
               <div className="bg-gradient-to-r from-red-600 to-rose-600 px-5 py-4">
                 <h3 className="text-white font-black text-sm flex items-center gap-2">
-                  <AlertTriangle size={16}/> Report an Outage
+                  <HugeIconPicker name="alert01Icon" size={16}/> Report an Outage
                 </h3>
                 <p className="text-red-200 text-[10px] mt-0.5">Help your neighbors know what's happening</p>
               </div>
@@ -68,7 +69,7 @@ export default function Outages() {
                 {sent ? (
                   <div className="flex flex-col items-center gap-3 py-6 text-center">
                     <div className="w-14 h-14 bg-teal-50 rounded-full flex items-center justify-center">
-                      <CheckCircle size={28} className="text-teal-600"/>
+                      <HugeIconPicker name="tickCircleIcon" size={28} className="text-teal-600"/>
                     </div>
                     <p className="font-black text-slate-900">Report Submitted!</p>
                     <p className="text-slate-500 text-xs">Thank you for helping the Mirpur community</p>
@@ -101,7 +102,7 @@ export default function Outages() {
                     <button onClick={()=>{if(isp&&area)setSent(true);}}
                       disabled={!isp||!area}
                       className="w-full py-3 bg-red-600 text-white rounded-2xl font-black text-sm flex items-center justify-center gap-2 hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-sm shadow-red-500/20">
-                      <Send size={15}/> Submit Report
+                      <HugeIconPicker name="edit01Icon" size={15}/> Submit Report
                     </button>
                   </div>
                 )}
@@ -113,7 +114,7 @@ export default function Outages() {
           <div className="md:col-span-3">
             <div className="bg-white rounded-[1.5rem] border border-slate-100 overflow-hidden shadow-sm">
               <div className="px-5 py-4 border-b border-slate-50 flex items-center gap-2 bg-gradient-to-r from-slate-50 to-red-50">
-                <Clock size={15} className="text-red-500"/>
+                <HugeIconPicker name="time01Icon" size={15} className="text-red-500"/>
                 <span className="font-black text-sm uppercase tracking-wider">Live Outage Feed</span>
                 <span className="ml-auto flex items-center gap-1.5 text-[10px] font-bold text-red-500">
                   <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse inline-block"/>LIVE
@@ -132,7 +133,7 @@ export default function Outages() {
                           <p className="text-xs text-slate-600 font-medium">{f.area}</p>
                         </div>
                         <div className="flex items-center gap-2 mt-0.5">
-                          <Users size={10} className="text-slate-400"/>
+                          <HugeIconPicker name="userMultipleIcon" size={10} className="text-slate-400"/>
                           <p className="text-[10px] text-slate-400 font-bold uppercase">{f.users} users · {f.time}</p>
                         </div>
                       </div>
@@ -170,7 +171,7 @@ export default function Outages() {
 
         {/* BTRC callout */}
         <div className="bg-gradient-to-r from-rose-50 to-red-50 border border-red-100 rounded-2xl p-5 flex items-center gap-4">
-          <TrendingDown size={32} className="text-red-400 shrink-0"/>
+          <HugeIconPicker name="alert01Icon" size={32} className="text-red-400 shrink-0"/>
           <div>
             <p className="font-black text-sm text-slate-900">Persistent internet problems?</p>
             <p className="text-slate-600 text-xs mt-0.5">File an official complaint with BTRC if your ISP isn't resolving outages within 24 hours.</p>

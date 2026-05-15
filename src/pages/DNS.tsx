@@ -1,5 +1,6 @@
+import HugeIconPicker from '../components/HugeIconPicker';
 import { useState } from 'react';
-import { Globe, Zap, Trophy } from 'lucide-react';
+
 
 const DNS_SERVERS = [
   { name: 'ISP Default',   primary: '',          color: 'bg-slate-100 text-slate-600' },
@@ -48,7 +49,7 @@ export default function DNS() {
       <button onClick={run} disabled={running}
         className={`w-full py-4 rounded-2xl font-black text-sm flex items-center justify-center gap-2 transition-all
           ${running ? 'bg-slate-100 text-slate-400' : 'bg-teal-600 text-white hover:bg-teal-700 shadow-lg shadow-teal-500/20'}`}>
-        <Zap size={18} className={running ? 'animate-spin' : ''} />
+        <HugeIconPicker name="zapIcon" size={18} className={running ? 'animate-spin' : ''} />
         {running ? 'Benchmarking DNS Servers...' : 'Run DNS Benchmark'}
       </button>
 
@@ -57,7 +58,7 @@ export default function DNS() {
           {DNS_SERVERS.map(d => (
             <div key={d.name} className="bg-white rounded-2xl border border-slate-100 p-4 flex items-center gap-4">
               <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-xs font-black shrink-0 ${d.color}`}>
-                <Globe size={16} />
+                <HugeIconPicker name="informationCircleIcon" size={16} />
               </div>
               <div className="flex-1">
                 <p className="font-bold text-sm">{d.name}</p>
@@ -75,7 +76,7 @@ export default function DNS() {
         <div className="space-y-3">
           {best && (
             <div className="bg-teal-600 text-white rounded-3xl p-6 flex items-center gap-4">
-              <Trophy size={28} className="text-amber-300 shrink-0" />
+              <HugeIconPicker name="trophy01Icon" size={28} className="text-amber-300 shrink-0" />
               <div>
                 <p className="text-[10px] font-black uppercase tracking-widest text-teal-200">Recommended DNS</p>
                 <p className="text-xl font-black">{best.name}</p>

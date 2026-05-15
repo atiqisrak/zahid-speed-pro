@@ -2,25 +2,15 @@
 
 ## Current State Audit
 
-✅ **Already Built**: Multi-page routing, Layout with sidebar, Home (Speed Test), BDIX Hub, ISP Packages, Tools (IP Check, DNS, Bandwidth), Outages, Rankings, Coverage  
-❌ **Missing**: Blog/SEO pages, Recharts charts on key pages, design consistency, icon lib  
+✅ **Already Built**: Multi-page routing, Layout with sidebar, Home (Speed Test), BDIX Hub, ISP Packages, Tools (IP Check, DNS, Bandwidth), Outages, Rankings, Coverage, Blog Pages  
+❌ **Missing**: Recharts charts on key pages, design consistency, icon lib, mobile responsiveness, component refactoring  
 ⚠️ **Needs Update**: `public/data` files need enrichment from scrapped data  
 
 ---
 
-## 1. Blog / SEO Pages — ❌ NOT BUILT
+## 1. Blog / SEO Pages — ✅ BUILT
 
-Blog is listed as **Phase 4** in the original plan, and was **not implemented**. We'll add it now as a static React blog with JSON-driven content (Option A from the plan).
-
-### Architecture
-- Route: `/blog` → Blog index listing all posts  
-- Route: `/blog/:slug` → Individual post reader  
-- Content: Stored in `/public/data/blog-posts.json` (easy to update)  
-- Schema: Article + HowTo + FAQPage structured data injected per post  
-- Built-in Speed Pro CTA widget in every post  
-
-### 12 Posts to create (all as JSON content)
-All 12 posts from the content calendar, pre-written with full SEO structure.
+Blog pages (`Blog.tsx` and `BlogPost.tsx`) have been created along with their routing in `App.tsx` and navigation in `Layout.tsx`. The content is driven by JSON data.
 
 ---
 
@@ -122,7 +112,7 @@ Data to add to `isp-packages.json`:
 - **Coverage**: Doesn't match the indigo/violet design of Home  
 
 ### Solution
-1. Install `@hugeicons/core-free-icons` and create an icon wrapper component  
+1. Install `@hugeicons/core-free-icons` and create an icon wrapper component (Done)  
 2. Create a shared `design-tokens.css` with CSS variables  
 3. Refactor all 10 pages to use consistent:
    - Dark gradient header sections  
@@ -132,17 +122,32 @@ Data to add to `isp-packages.json`:
 
 ---
 
+## 7. Refactoring and Mobile Responsiveness (NEW)
+
+### Problems Identified
+- Files in `src/pages/` are very long (e.g., `Home.tsx` is >24KB, `Coverage.tsx` is >14KB).
+- Reusability of UI components is low.
+- Mobile responsiveness needs to be robust across all layouts.
+
+### Solution
+1. **Component Extraction**: Break down large page files into smaller, reusable components inside `src/components/` (e.g., Cards, Charts, Header Sections, Modals).
+2. **Mobile First Design**: Ensure all views use Tailwind's responsive utilities (`md:`, `lg:`) to provide an excellent experience on small screens.
+
+---
+
 ## Execution Order
 
-```
-Step 1: Install @hugeicons/core-free-icons
-Step 2: Enrich public/data JSON files (bdix + packages)  
-Step 3: Add Recharts to Rankings, Home history, Packages  
-Step 4: Create Blog.tsx + BlogPost.tsx pages + JSON content  
-Step 5: Update App.tsx routing for /blog and /blog/:slug  
-Step 6: Fix design consistency on all pages  
-Step 7: Update Layout.tsx to add Blog nav item  
-Step 8: Plan for API integrations (Google Maps, Places)  
+```text
+[x] Step 1: Install @hugeicons/core-free-icons
+[x] Step 4: Create Blog.tsx + BlogPost.tsx pages + JSON content
+[x] Step 5: Update App.tsx routing for /blog and /blog/:slug
+[x] Step 7: Update Layout.tsx to add Blog nav item
+[ ] Step 2: Enrich public/data JSON files (bdix + packages)  
+[ ] Step 3: Add Recharts to Rankings, Home history, Packages  
+[ ] Step 6: Fix design consistency on all pages  
+[ ] Step 8: Refactor pages into smaller, reusable components (No long files)
+[ ] Step 9: Ensure robust mobile responsiveness across the entire app
+[ ] Step 10: Plan for API integrations (Google Maps, Places)  
 ```
 
 ---
@@ -154,9 +159,6 @@ Step 8: Plan for API integrations (Google Maps, Places)
 > - ISP Outage Heatmap (Maps JS API)  
 > - ISP Finder by Address (Places API)  
 > - Both?
-
-> [!NOTE]
-> **Blog platform decision**: Going with Option A (static JSON in React). This means no CMS — content is updated by editing `/public/data/blog-posts.json`. This is fastest to ship and works great for our use case.
 
 > [!TIP]
 > The `recharts` package is **already installed** — no `npm install recharts` needed. The `/recharts` folder in the project root is the recharts GitHub source (separate clone), not related to our app.

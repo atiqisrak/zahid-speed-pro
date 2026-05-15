@@ -6,330 +6,952 @@
       "title": "The Ultimate Guide to ISPs in Mirpur, Dhaka (2026)",
       "metaDescription": "Complete guide to all internet service providers in Mirpur, Dhaka. Compare plans, speeds, and prices from MirpurNet, MNET, BAS Network, Inspire & more.",
       "category": "Guide",
-      "tags": ["ISP", "Mirpur", "Internet", "Broadband", "Dhaka"],
+      "tags": [
+        "ISP",
+        "Mirpur",
+        "Internet",
+        "Broadband",
+        "Dhaka"
+      ],
       "readTime": 10,
       "publishDate": "2026-05-01",
-      "coverEmoji": "🌐",
       "heroKeyword": "ISP in Mirpur",
       "schema": "Article",
       "content": [
-        { "type": "h2", "text": "Which ISPs Operate in Mirpur?" },
-        { "type": "p", "text": "Mirpur is one of Dhaka's most densely connected neighborhoods for broadband internet. As of 2026, at least 6 major ISPs compete for customers across Mirpur's 14 sections, with prices ranging from ৳499/month for entry-level cable to ৳2,200/month for 200 Mbps fiber packages." },
-        { "type": "h2", "text": "Top ISPs in Mirpur — Quick Comparison" },
-        { "type": "table", "headers": ["ISP", "Starting Price", "Max Speed", "BDIX", "Coverage"], "rows": [
-          ["MirpurNet", "৳525/mo", "100 Mbps", "✅", "Section 1,2,6,10,11,12"],
-          ["MNET", "৳499/mo", "100 Mbps", "✅", "Section 1,7,10,11,13,14"],
-          ["BAS Network", "৳600/mo", "200 Mbps", "✅", "Section 2,6,10,11,12"],
-          ["Info ISP", "৳499/mo", "100 Mbps", "✅", "Section 1,6,10,11,12"],
-          ["Mirpur Online", "৳499/mo", "100 Mbps", "✅", "Section 1,2,10,11,13"],
-          ["Inspire Broadband", "৳700/mo", "150 Mbps", "✅", "Section 6,10,11,12"]
-        ]},
-        { "type": "h2", "text": "What is BDIX and Why Does It Matter?" },
-        { "type": "p", "text": "BDIX (Bangladesh Internet Exchange) is a local peering point that allows ISPs to exchange traffic domestically. This means when you download from a BDIX-connected FTP server, you get blazing fast speeds — sometimes 10–50x faster than your international download speed. All major Mirpur ISPs support BDIX." },
-        { "type": "h2", "text": "How to Test Your Internet Speed" },
-        { "type": "p", "text": "Use Speed Pro's free speed test tool right here on this site. It measures your download speed, upload speed, ping (latency), and jitter — giving you a complete picture of your connection quality." },
-        { "type": "cta", "text": "Test Your Speed Now →", "href": "/" },
-        { "type": "h2", "text": "FAQ: ISPs in Mirpur" },
-        { "type": "faq", "items": [
-          { "q": "Which is the fastest ISP in Mirpur?", "a": "Based on Speed Pro user data, Inspire Broadband and BAS Network consistently deliver the highest real-world speeds in Mirpur, averaging 88–94 Mbps on their 100 Mbps fiber plans." },
-          { "q": "Which ISP is cheapest in Mirpur?", "a": "MNET and Mirpur Online both offer entry-level 10 Mbps plans at ৳499/month, making them the most affordable options." },
-          { "q": "Do all Mirpur ISPs support BDIX?", "a": "Yes, all major ISPs operating in Mirpur are BDIX-connected, giving you access to local FTP servers with very fast download speeds." }
-        ]}
-      ]
+        {
+          "type": "h2",
+          "text": "Which ISPs Operate in Mirpur?"
+        },
+        {
+          "type": "p",
+          "text": "Mirpur is one of Dhaka's most densely connected neighborhoods for broadband internet. As of 2026, at least 6 major ISPs compete for customers across Mirpur's 14 sections, with prices ranging from ৳499/month for entry-level cable to ৳2,200/month for 200 Mbps fiber packages."
+        },
+        {
+          "type": "h2",
+          "text": "Top ISPs in Mirpur — Quick Comparison"
+        },
+        {
+          "type": "table",
+          "headers": [
+            "ISP",
+            "Starting Price",
+            "Max Speed",
+            "BDIX",
+            "Coverage"
+          ],
+          "rows": [
+            [
+              "MirpurNet",
+              "৳525/mo",
+              "100 Mbps",
+              "✅",
+              "Section 1,2,6,10,11,12"
+            ],
+            [
+              "MNET",
+              "৳499/mo",
+              "100 Mbps",
+              "✅",
+              "Section 1,7,10,11,13,14"
+            ],
+            [
+              "BAS Network",
+              "৳600/mo",
+              "200 Mbps",
+              "✅",
+              "Section 2,6,10,11,12"
+            ],
+            [
+              "Info ISP",
+              "৳499/mo",
+              "100 Mbps",
+              "✅",
+              "Section 1,6,10,11,12"
+            ],
+            [
+              "Mirpur Online",
+              "৳499/mo",
+              "100 Mbps",
+              "✅",
+              "Section 1,2,10,11,13"
+            ],
+            [
+              "Inspire Broadband",
+              "৳700/mo",
+              "150 Mbps",
+              "✅",
+              "Section 6,10,11,12"
+            ]
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "What is BDIX and Why Does It Matter?"
+        },
+        {
+          "type": "p",
+          "text": "BDIX (Bangladesh Internet Exchange) is a local peering point that allows ISPs to exchange traffic domestically. This means when you download from a BDIX-connected FTP server, you get blazing fast speeds — sometimes 10–50x faster than your international download speed. All major Mirpur ISPs support BDIX."
+        },
+        {
+          "type": "h2",
+          "text": "How to Test Your Internet Speed"
+        },
+        {
+          "type": "p",
+          "text": "Use Speed Pro's free speed test tool right here on this site. It measures your download speed, upload speed, ping (latency), and jitter — giving you a complete picture of your connection quality."
+        },
+        {
+          "type": "cta",
+          "text": "Test Your Speed Now →",
+          "href": "/"
+        },
+        {
+          "type": "h2",
+          "text": "FAQ: ISPs in Mirpur"
+        },
+        {
+          "type": "faq",
+          "items": [
+            {
+              "q": "Which is the fastest ISP in Mirpur?",
+              "a": "Based on Speed Pro user data, Inspire Broadband and BAS Network consistently deliver the highest real-world speeds in Mirpur, averaging 88–94 Mbps on their 100 Mbps fiber plans."
+            },
+            {
+              "q": "Which ISP is cheapest in Mirpur?",
+              "a": "MNET and Mirpur Online both offer entry-level 10 Mbps plans at ৳499/month, making them the most affordable options."
+            },
+            {
+              "q": "Do all Mirpur ISPs support BDIX?",
+              "a": "Yes, all major ISPs operating in Mirpur are BDIX-connected, giving you access to local FTP servers with very fast download speeds."
+            }
+          ]
+        }
+      ],
+      "iconName": "GlobeIcon"
     },
     {
       "slug": "best-isp-mirpur-ranked-by-speed-2026",
       "title": "Best Broadband Internet Providers in Mirpur — Ranked by Speed (2026)",
       "metaDescription": "Which ISP is fastest in Mirpur? We ranked MirpurNet, MNET, BAS Network, Inspire & more by real speed test data from Speed Pro users. Updated May 2026.",
       "category": "Rankings",
-      "tags": ["Best ISP", "Mirpur", "Speed Test", "Ranking", "2026"],
+      "tags": [
+        "Best ISP",
+        "Mirpur",
+        "Speed Test",
+        "Ranking",
+        "2026"
+      ],
       "readTime": 8,
       "publishDate": "2026-05-03",
-      "coverEmoji": "🏆",
       "heroKeyword": "best ISP in Mirpur",
       "schema": "Article",
       "content": [
-        { "type": "h2", "text": "How We Ranked These ISPs" },
-        { "type": "p", "text": "Rankings are based on anonymized speed test data collected from Speed Pro users in Mirpur. We measure download speed, upload speed, ping, and jitter — then calculate an overall score weighted for real-world performance." },
-        { "type": "h2", "text": "2026 Mirpur ISP Speed Rankings" },
-        { "type": "table", "headers": ["Rank", "ISP", "Avg Download", "Avg Ping", "Score"], "rows": [
-          ["🥇 1", "Inspire Broadband", "94.2 Mbps", "5ms", "9.4/10"],
-          ["🥈 2", "BAS Network", "88.7 Mbps", "7ms", "8.9/10"],
-          ["🥉 3", "MirpurNet", "71.3 Mbps", "9ms", "7.6/10"],
-          ["4", "MNET", "58.4 Mbps", "12ms", "6.5/10"],
-          ["5", "Info ISP", "44.1 Mbps", "18ms", "5.2/10"],
-          ["6", "Mirpur Online", "38.6 Mbps", "22ms", "4.4/10"]
-        ]},
-        { "type": "cta", "text": "Run Your Speed Test →", "href": "/" },
-        { "type": "h2", "text": "Key Takeaways" },
-        { "type": "p", "text": "Inspire Broadband leads the pack with consistently low ping and high throughput — ideal for gaming and WFH. Budget users should look at MNET or MirpurNet for the best value." }
-      ]
+        {
+          "type": "h2",
+          "text": "How We Ranked These ISPs"
+        },
+        {
+          "type": "p",
+          "text": "Rankings are based on anonymized speed test data collected from Speed Pro users in Mirpur. We measure download speed, upload speed, ping, and jitter — then calculate an overall score weighted for real-world performance."
+        },
+        {
+          "type": "h2",
+          "text": "2026 Mirpur ISP Speed Rankings"
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Rank",
+            "ISP",
+            "Avg Download",
+            "Avg Ping",
+            "Score"
+          ],
+          "rows": [
+            [
+              "🥇 1",
+              "Inspire Broadband",
+              "94.2 Mbps",
+              "5ms",
+              "9.4/10"
+            ],
+            [
+              "🥈 2",
+              "BAS Network",
+              "88.7 Mbps",
+              "7ms",
+              "8.9/10"
+            ],
+            [
+              "🥉 3",
+              "MirpurNet",
+              "71.3 Mbps",
+              "9ms",
+              "7.6/10"
+            ],
+            [
+              "4",
+              "MNET",
+              "58.4 Mbps",
+              "12ms",
+              "6.5/10"
+            ],
+            [
+              "5",
+              "Info ISP",
+              "44.1 Mbps",
+              "18ms",
+              "5.2/10"
+            ],
+            [
+              "6",
+              "Mirpur Online",
+              "38.6 Mbps",
+              "22ms",
+              "4.4/10"
+            ]
+          ]
+        },
+        {
+          "type": "cta",
+          "text": "Run Your Speed Test →",
+          "href": "/"
+        },
+        {
+          "type": "h2",
+          "text": "Key Takeaways"
+        },
+        {
+          "type": "p",
+          "text": "Inspire Broadband leads the pack with consistently low ping and high throughput — ideal for gaming and WFH. Budget users should look at MNET or MirpurNet for the best value."
+        }
+      ],
+      "iconName": "TrophyIcon"
     },
     {
       "slug": "how-to-check-internet-speed-mirpur",
       "title": "How to Check Your Internet Speed in Mirpur (Step-by-Step)",
       "metaDescription": "Learn how to accurately test your internet speed in Mirpur, Dhaka using Speed Pro. Understand download, upload, ping and jitter with this simple guide.",
       "category": "Tutorial",
-      "tags": ["Speed Test", "How To", "Mirpur", "Internet", "Tutorial"],
+      "tags": [
+        "Speed Test",
+        "How To",
+        "Mirpur",
+        "Internet",
+        "Tutorial"
+      ],
       "readTime": 5,
       "publishDate": "2026-05-05",
-      "coverEmoji": "📊",
       "heroKeyword": "check internet speed Mirpur",
       "schema": "HowTo",
       "content": [
-        { "type": "h2", "text": "Why Test Your Speed?" },
-        { "type": "p", "text": "Many ISPs in Mirpur advertise up to 100 Mbps but deliver far less during peak hours. Testing your speed regularly helps you know if you're getting what you're paying for — and gives you evidence to file a BTRC complaint if needed." },
-        { "type": "h2", "text": "Step-by-Step: Run a Speed Test" },
-        { "type": "steps", "items": [
-          "Click the 'GO' button on Speed Pro's home page",
-          "Wait 30–60 seconds while the test runs automatically",
-          "View your Download speed, Upload speed, Ping and Jitter",
-          "Compare results to your ISP's advertised package speed",
-          "Share or save your results using the Share button"
-        ]},
-        { "type": "cta", "text": "Start Speed Test →", "href": "/" },
-        { "type": "h2", "text": "Understanding Your Results" },
-        { "type": "p", "text": "Download speed determines how fast you can load websites and stream video. Upload speed affects video calls and cloud backups. Ping (latency) is critical for gaming — under 20ms is excellent. Jitter measures consistency; lower is better." },
-        { "type": "faq", "items": [
-          { "q": "What is a good internet speed in Mirpur?", "a": "For streaming HD video, you need at least 10 Mbps. For 4K streaming or multiple users, aim for 25+ Mbps. Gamers should target under 20ms ping." },
-          { "q": "Why is my speed lower than my plan?", "a": "Peak hour congestion (6–11 PM), Wi-Fi interference, and router limitations commonly cause this. Test via Ethernet cable for the most accurate results." }
-        ]}
-      ]
+        {
+          "type": "h2",
+          "text": "Why Test Your Speed?"
+        },
+        {
+          "type": "p",
+          "text": "Many ISPs in Mirpur advertise up to 100 Mbps but deliver far less during peak hours. Testing your speed regularly helps you know if you're getting what you're paying for — and gives you evidence to file a BTRC complaint if needed."
+        },
+        {
+          "type": "h2",
+          "text": "Step-by-Step: Run a Speed Test"
+        },
+        {
+          "type": "steps",
+          "items": [
+            "Click the 'GO' button on Speed Pro's home page",
+            "Wait 30–60 seconds while the test runs automatically",
+            "View your Download speed, Upload speed, Ping and Jitter",
+            "Compare results to your ISP's advertised package speed",
+            "Share or save your results using the Share button"
+          ]
+        },
+        {
+          "type": "cta",
+          "text": "Start Speed Test →",
+          "href": "/"
+        },
+        {
+          "type": "h2",
+          "text": "Understanding Your Results"
+        },
+        {
+          "type": "p",
+          "text": "Download speed determines how fast you can load websites and stream video. Upload speed affects video calls and cloud backups. Ping (latency) is critical for gaming — under 20ms is excellent. Jitter measures consistency; lower is better."
+        },
+        {
+          "type": "faq",
+          "items": [
+            {
+              "q": "What is a good internet speed in Mirpur?",
+              "a": "For streaming HD video, you need at least 10 Mbps. For 4K streaming or multiple users, aim for 25+ Mbps. Gamers should target under 20ms ping."
+            },
+            {
+              "q": "Why is my speed lower than my plan?",
+              "a": "Peak hour congestion (6–11 PM), Wi-Fi interference, and router limitations commonly cause this. Test via Ethernet cable for the most accurate results."
+            }
+          ]
+        }
+      ],
+      "iconName": "ChartBarIcon"
     },
     {
       "slug": "best-isp-mirpur-section-10-2026",
       "title": "Best ISP in Mirpur Section 10 — 2026 Comparison",
       "metaDescription": "Which internet provider is best in Mirpur Section 10? Compare MirpurNet, MNET, BAS Network, Info ISP, Inspire Broadband with real speed data.",
       "category": "Local Guide",
-      "tags": ["Mirpur Section 10", "ISP", "Internet", "Broadband", "Local"],
+      "tags": [
+        "Mirpur Section 10",
+        "ISP",
+        "Internet",
+        "Broadband",
+        "Local"
+      ],
       "readTime": 6,
       "publishDate": "2026-05-07",
-      "coverEmoji": "📍",
       "heroKeyword": "ISP Mirpur Section 10",
       "schema": "Article",
       "content": [
-        { "type": "h2", "text": "ISPs Available in Mirpur Section 10" },
-        { "type": "p", "text": "Mirpur Section 10 is one of the best-connected areas in Mirpur — all major ISPs have infrastructure here. This gives residents excellent choice and competitive pricing." },
-        { "type": "table", "headers": ["ISP", "Speed Plans", "Price Range", "Rating"], "rows": [
-          ["MirpurNet", "10–100 Mbps", "৳525–৳1,299", "⭐ 4.2/5"],
-          ["MNET", "10–100 Mbps", "৳499–৳1,199", "⭐ 4.0/5"],
-          ["BAS Network", "25–200 Mbps", "৳600–৳2,200", "⭐ 4.4/5"],
-          ["Info ISP", "10–100 Mbps", "৳499–৳1,199", "⭐ 3.9/5"],
-          ["Inspire Broadband", "20–150 Mbps", "৳700–৳2,000", "⭐ 4.5/5"]
-        ]},
-        { "type": "h2", "text": "Recommendation for Section 10 Residents" },
-        { "type": "p", "text": "For gaming and WFH: Inspire Broadband. For best value: MNET or MirpurNet 25 Mbps plans. For high-speed fiber: BAS Network." },
-        { "type": "cta", "text": "Compare All ISP Plans →", "href": "/packages" }
-      ]
+        {
+          "type": "h2",
+          "text": "ISPs Available in Mirpur Section 10"
+        },
+        {
+          "type": "p",
+          "text": "Mirpur Section 10 is one of the best-connected areas in Mirpur — all major ISPs have infrastructure here. This gives residents excellent choice and competitive pricing."
+        },
+        {
+          "type": "table",
+          "headers": [
+            "ISP",
+            "Speed Plans",
+            "Price Range",
+            "Rating"
+          ],
+          "rows": [
+            [
+              "MirpurNet",
+              "10–100 Mbps",
+              "৳525–৳1,299",
+              "⭐ 4.2/5"
+            ],
+            [
+              "MNET",
+              "10–100 Mbps",
+              "৳499–৳1,199",
+              "⭐ 4.0/5"
+            ],
+            [
+              "BAS Network",
+              "25–200 Mbps",
+              "৳600–৳2,200",
+              "⭐ 4.4/5"
+            ],
+            [
+              "Info ISP",
+              "10–100 Mbps",
+              "৳499–৳1,199",
+              "⭐ 3.9/5"
+            ],
+            [
+              "Inspire Broadband",
+              "20–150 Mbps",
+              "৳700–৳2,000",
+              "⭐ 4.5/5"
+            ]
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Recommendation for Section 10 Residents"
+        },
+        {
+          "type": "p",
+          "text": "For gaming and WFH: Inspire Broadband. For best value: MNET or MirpurNet 25 Mbps plans. For high-speed fiber: BAS Network."
+        },
+        {
+          "type": "cta",
+          "text": "Compare All ISP Plans →",
+          "href": "/packages"
+        }
+      ],
+      "iconName": "Location01Icon"
     },
     {
       "slug": "fiber-internet-mirpur-worth-it-2026",
       "title": "Fiber Internet in Mirpur — Is It Worth It? (2026 Guide)",
       "metaDescription": "Should you upgrade to fiber internet in Mirpur? Compare fiber vs cable speeds, prices, and which ISPs offer fiber in Mirpur, Dhaka.",
       "category": "Guide",
-      "tags": ["Fiber Internet", "Mirpur", "Cable vs Fiber", "Broadband", "2026"],
+      "tags": [
+        "Fiber Internet",
+        "Mirpur",
+        "Cable vs Fiber",
+        "Broadband",
+        "2026"
+      ],
       "readTime": 7,
       "publishDate": "2026-05-09",
-      "coverEmoji": "⚡",
       "heroKeyword": "fiber internet Mirpur",
       "schema": "Article",
       "content": [
-        { "type": "h2", "text": "Fiber vs Cable Internet in Mirpur" },
-        { "type": "p", "text": "Fiber optic internet in Mirpur offers significantly better performance than traditional cable, especially during peak hours (6–11 PM) when cable networks get congested." },
-        { "type": "table", "headers": ["Feature", "Fiber", "Cable"], "rows": [
-          ["Max Speed", "Up to 200 Mbps", "Up to 100 Mbps"],
-          ["Peak Hour Speed", "80–95% of advertised", "40–70% of advertised"],
-          ["Ping", "3–10ms", "8–25ms"],
-          ["Upload Speed", "50–100 Mbps", "5–25 Mbps"],
-          ["Price", "৳700–৳2,200", "৳499–৳1,200"],
-          ["Reliability", "Very High", "Good"]
-        ]},
-        { "type": "h2", "text": "Which ISPs Offer Fiber in Mirpur?" },
-        { "type": "p", "text": "MirpurNet (Pro 50+), BAS Network (all plans), and Inspire Broadband (all plans) offer true fiber connections. MNET offers fiber on their Gamer 100 plan. Others remain cable-based." },
-        { "type": "cta", "text": "Compare Fiber Plans →", "href": "/packages" }
-      ]
+        {
+          "type": "h2",
+          "text": "Fiber vs Cable Internet in Mirpur"
+        },
+        {
+          "type": "p",
+          "text": "Fiber optic internet in Mirpur offers significantly better performance than traditional cable, especially during peak hours (6–11 PM) when cable networks get congested."
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Feature",
+            "Fiber",
+            "Cable"
+          ],
+          "rows": [
+            [
+              "Max Speed",
+              "Up to 200 Mbps",
+              "Up to 100 Mbps"
+            ],
+            [
+              "Peak Hour Speed",
+              "80–95% of advertised",
+              "40–70% of advertised"
+            ],
+            [
+              "Ping",
+              "3–10ms",
+              "8–25ms"
+            ],
+            [
+              "Upload Speed",
+              "50–100 Mbps",
+              "5–25 Mbps"
+            ],
+            [
+              "Price",
+              "৳700–৳2,200",
+              "৳499–৳1,200"
+            ],
+            [
+              "Reliability",
+              "Very High",
+              "Good"
+            ]
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Which ISPs Offer Fiber in Mirpur?"
+        },
+        {
+          "type": "p",
+          "text": "MirpurNet (Pro 50+), BAS Network (all plans), and Inspire Broadband (all plans) offer true fiber connections. MNET offers fiber on their Gamer 100 plan. Others remain cable-based."
+        },
+        {
+          "type": "cta",
+          "text": "Compare Fiber Plans →",
+          "href": "/packages"
+        }
+      ],
+      "iconName": "ZapIcon"
     },
     {
       "slug": "cheapest-internet-packages-mirpur-2026",
       "title": "Cheapest Internet Packages in Mirpur Dhaka (2026)",
       "metaDescription": "Find the most affordable broadband internet packages in Mirpur, Dhaka. Compare prices from ৳499/month and get the best value for your budget.",
       "category": "Deals",
-      "tags": ["Cheap Internet", "Budget", "Mirpur", "Packages", "Affordable"],
+      "tags": [
+        "Cheap Internet",
+        "Budget",
+        "Mirpur",
+        "Packages",
+        "Affordable"
+      ],
       "readTime": 5,
       "publishDate": "2026-05-11",
-      "coverEmoji": "💰",
       "heroKeyword": "cheap internet Mirpur",
       "schema": "Article",
       "content": [
-        { "type": "h2", "text": "Budget Internet Plans Starting at ৳499/month" },
-        { "type": "p", "text": "Multiple ISPs in Mirpur offer 10 Mbps plans at just ৳499/month. For most casual users — social media, YouTube, WhatsApp — this is more than enough." },
-        { "type": "table", "headers": ["ISP", "Speed", "Price", "BDIX", "Best For"], "rows": [
-          ["MNET Basic 10", "10 Mbps", "৳499/mo", "✅", "Casual browsing"],
-          ["Mirpur Online Mini", "10 Mbps", "৳499/mo", "✅", "Budget users"],
-          ["Info ISP Economy", "10 Mbps", "৳499/mo", "✅", "Families"],
-          ["MirpurNet Starter", "10 Mbps", "৳525/mo", "✅", "Reliable budget"],
-          ["BAS Network Radical", "25 Mbps", "৳600/mo", "✅", "Best value"]
-        ]},
-        { "type": "p", "text": "Pro tip: BAS Network's ৳600/month 25 Mbps plan gives you 2.5x more speed for just ৳100 more than the cheapest options — making it the best value pick in Mirpur." },
-        { "type": "cta", "text": "View All Plans & Compare →", "href": "/packages" }
-      ]
+        {
+          "type": "h2",
+          "text": "Budget Internet Plans Starting at ৳499/month"
+        },
+        {
+          "type": "p",
+          "text": "Multiple ISPs in Mirpur offer 10 Mbps plans at just ৳499/month. For most casual users — social media, YouTube, WhatsApp — this is more than enough."
+        },
+        {
+          "type": "table",
+          "headers": [
+            "ISP",
+            "Speed",
+            "Price",
+            "BDIX",
+            "Best For"
+          ],
+          "rows": [
+            [
+              "MNET Basic 10",
+              "10 Mbps",
+              "৳499/mo",
+              "✅",
+              "Casual browsing"
+            ],
+            [
+              "Mirpur Online Mini",
+              "10 Mbps",
+              "৳499/mo",
+              "✅",
+              "Budget users"
+            ],
+            [
+              "Info ISP Economy",
+              "10 Mbps",
+              "৳499/mo",
+              "✅",
+              "Families"
+            ],
+            [
+              "MirpurNet Starter",
+              "10 Mbps",
+              "৳525/mo",
+              "✅",
+              "Reliable budget"
+            ],
+            [
+              "BAS Network Radical",
+              "25 Mbps",
+              "৳600/mo",
+              "✅",
+              "Best value"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Pro tip: BAS Network's ৳600/month 25 Mbps plan gives you 2.5x more speed for just ৳100 more than the cheapest options — making it the best value pick in Mirpur."
+        },
+        {
+          "type": "cta",
+          "text": "View All Plans & Compare →",
+          "href": "/packages"
+        }
+      ],
+      "iconName": "Coins02Icon"
     },
     {
       "slug": "why-internet-slow-mirpur-10-fixes",
       "title": "Why Is My Internet Slow in Mirpur? (10 Causes & Fixes)",
       "metaDescription": "Is your internet slow in Mirpur? Discover the 10 most common causes and practical fixes to speed up your connection in Mirpur, Dhaka.",
       "category": "Troubleshooting",
-      "tags": ["Slow Internet", "Mirpur", "Fix", "Troubleshooting", "ISP Problems"],
+      "tags": [
+        "Slow Internet",
+        "Mirpur",
+        "Fix",
+        "Troubleshooting",
+        "ISP Problems"
+      ],
       "readTime": 8,
       "publishDate": "2026-05-13",
-      "coverEmoji": "🔧",
       "heroKeyword": "internet slow Mirpur",
       "schema": "HowTo",
       "content": [
-        { "type": "h2", "text": "10 Reasons Your Internet Is Slow in Mirpur" },
-        { "type": "steps", "items": [
-          "Peak hour congestion (6–11 PM) — Most ISPs in Mirpur experience heavy congestion on weekday evenings. Try scheduling large downloads for after midnight.",
-          "Wi-Fi interference — Walls, microwave ovens, and neighboring networks can cut your Wi-Fi speed by 50%. Use 5GHz band or Ethernet cable.",
-          "Old router — Routers over 3 years old may not support modern speeds. Upgrade to a Wi-Fi 6 router for best performance.",
-          "ISP throttling — Some ISPs slow your connection after you've used a certain amount of data. Check your plan's fair usage policy.",
-          "Shared bandwidth — Cable internet is shared with your neighborhood. Fiber connections are less affected.",
-          "DNS slowness — Your ISP's default DNS servers may be slow. Switch to Cloudflare (1.1.1.1) or Google (8.8.8.8) for faster browsing.",
-          "Malware — Background malware can consume your bandwidth. Run an antivirus scan.",
-          "Too many devices — 5+ connected devices sharing a 10 Mbps plan will feel slow for everyone.",
-          "Faulty cable — Physical damage to coaxial or ethernet cable causes speed drops. Inspect your cable runs.",
-          "ISP technical issues — Check Speed Pro's outage reporter to see if others in your area are affected."
-        ]},
-        { "type": "cta", "text": "Run a Diagnostic Speed Test →", "href": "/" },
-        { "type": "faq", "items": [
-          { "q": "How do I report a slow connection to my ISP?", "a": "Screenshot your Speed Pro results showing the slow speed, then contact your ISP's customer support. If unresolved, file a complaint at BTRC: 16996." }
-        ]}
-      ]
+        {
+          "type": "h2",
+          "text": "10 Reasons Your Internet Is Slow in Mirpur"
+        },
+        {
+          "type": "steps",
+          "items": [
+            "Peak hour congestion (6–11 PM) — Most ISPs in Mirpur experience heavy congestion on weekday evenings. Try scheduling large downloads for after midnight.",
+            "Wi-Fi interference — Walls, microwave ovens, and neighboring networks can cut your Wi-Fi speed by 50%. Use 5GHz band or Ethernet cable.",
+            "Old router — Routers over 3 years old may not support modern speeds. Upgrade to a Wi-Fi 6 router for best performance.",
+            "ISP throttling — Some ISPs slow your connection after you've used a certain amount of data. Check your plan's fair usage policy.",
+            "Shared bandwidth — Cable internet is shared with your neighborhood. Fiber connections are less affected.",
+            "DNS slowness — Your ISP's default DNS servers may be slow. Switch to Cloudflare (1.1.1.1) or Google (8.8.8.8) for faster browsing.",
+            "Malware — Background malware can consume your bandwidth. Run an antivirus scan.",
+            "Too many devices — 5+ connected devices sharing a 10 Mbps plan will feel slow for everyone.",
+            "Faulty cable — Physical damage to coaxial or ethernet cable causes speed drops. Inspect your cable runs.",
+            "ISP technical issues — Check Speed Pro's outage reporter to see if others in your area are affected."
+          ]
+        },
+        {
+          "type": "cta",
+          "text": "Run a Diagnostic Speed Test →",
+          "href": "/"
+        },
+        {
+          "type": "faq",
+          "items": [
+            {
+              "q": "How do I report a slow connection to my ISP?",
+              "a": "Screenshot your Speed Pro results showing the slow speed, then contact your ISP's customer support. If unresolved, file a complaint at BTRC: 16996."
+            }
+          ]
+        }
+      ],
+      "iconName": "Wrench01Icon"
     },
     {
       "slug": "gaming-internet-mirpur-best-isp-low-ping",
       "title": "Gaming Internet in Mirpur — Best ISPs for Low Ping (2026)",
       "metaDescription": "Best internet for gaming in Mirpur, Dhaka. Which ISP gives the lowest ping for PUBG, Free Fire, Valorant? Compare gaming plans from Inspire, BAS Network & more.",
       "category": "Gaming",
-      "tags": ["Gaming", "Low Ping", "Mirpur", "ISP", "PUBG", "Free Fire"],
+      "tags": [
+        "Gaming",
+        "Low Ping",
+        "Mirpur",
+        "ISP",
+        "PUBG",
+        "Free Fire"
+      ],
       "readTime": 7,
       "publishDate": "2026-05-15",
-      "coverEmoji": "🎮",
       "heroKeyword": "best gaming internet Mirpur",
       "schema": "Article",
       "content": [
-        { "type": "h2", "text": "What Matters for Gaming?" },
-        { "type": "p", "text": "For online gaming (PUBG Mobile, Free Fire, Valorant, FIFA), the most important metrics are: Ping (under 30ms is good, under 15ms is excellent), Jitter (variation in ping — lower is better), and Packet Loss (should be 0%)." },
-        { "type": "h2", "text": "Best ISPs for Gaming in Mirpur" },
-        { "type": "table", "headers": ["ISP", "Avg Ping", "Gaming Plan", "Price", "Rating"], "rows": [
-          ["Inspire Broadband", "5ms", "Gamer Pro 50", "৳999/mo", "⭐⭐⭐⭐⭐"],
-          ["BAS Network", "7ms", "Gamestar 50", "৳850/mo", "⭐⭐⭐⭐½"],
-          ["MirpurNet", "9ms", "Ultra 100", "৳1,299/mo", "⭐⭐⭐⭐"],
-          ["MNET", "12ms", "Gamer 100", "৳1,199/mo", "⭐⭐⭐½"]
-        ]},
-        { "type": "p", "text": "Inspire Broadband's Gamer Pro plan with Real IP is the top choice for serious gamers in Mirpur. The low ping and guaranteed bandwidth make it ideal for competitive play." },
-        { "type": "cta", "text": "Test Your Gaming Ping →", "href": "/" }
-      ]
+        {
+          "type": "h2",
+          "text": "What Matters for Gaming?"
+        },
+        {
+          "type": "p",
+          "text": "For online gaming (PUBG Mobile, Free Fire, Valorant, FIFA), the most important metrics are: Ping (under 30ms is good, under 15ms is excellent), Jitter (variation in ping — lower is better), and Packet Loss (should be 0%)."
+        },
+        {
+          "type": "h2",
+          "text": "Best ISPs for Gaming in Mirpur"
+        },
+        {
+          "type": "table",
+          "headers": [
+            "ISP",
+            "Avg Ping",
+            "Gaming Plan",
+            "Price",
+            "Rating"
+          ],
+          "rows": [
+            [
+              "Inspire Broadband",
+              "5ms",
+              "Gamer Pro 50",
+              "৳999/mo",
+              "⭐⭐⭐⭐⭐"
+            ],
+            [
+              "BAS Network",
+              "7ms",
+              "Gamestar 50",
+              "৳850/mo",
+              "⭐⭐⭐⭐½"
+            ],
+            [
+              "MirpurNet",
+              "9ms",
+              "Ultra 100",
+              "৳1,299/mo",
+              "⭐⭐⭐⭐"
+            ],
+            [
+              "MNET",
+              "12ms",
+              "Gamer 100",
+              "৳1,199/mo",
+              "⭐⭐⭐½"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Inspire Broadband's Gamer Pro plan with Real IP is the top choice for serious gamers in Mirpur. The low ping and guaranteed bandwidth make it ideal for competitive play."
+        },
+        {
+          "type": "cta",
+          "text": "Test Your Gaming Ping →",
+          "href": "/"
+        }
+      ],
+      "iconName": "GameController01Icon"
     },
     {
       "slug": "work-from-home-internet-guide-mirpur",
       "title": "Work From Home Internet Guide for Mirpur Residents",
       "metaDescription": "What internet speed do you need to work from home in Mirpur? Compare WFH-ready ISP plans for Zoom, Google Meet, and remote work in Mirpur, Dhaka.",
       "category": "WFH",
-      "tags": ["Work From Home", "WFH", "Mirpur", "Zoom", "Internet Speed"],
+      "tags": [
+        "Work From Home",
+        "WFH",
+        "Mirpur",
+        "Zoom",
+        "Internet Speed"
+      ],
       "readTime": 6,
       "publishDate": "2026-05-17",
-      "coverEmoji": "💼",
       "heroKeyword": "best internet for WFH Mirpur",
       "schema": "Article",
       "content": [
-        { "type": "h2", "text": "Speed Requirements for Remote Work" },
-        { "type": "table", "headers": ["Activity", "Min Download", "Min Upload", "Ping"], "rows": [
-          ["Email & Slack", "1 Mbps", "1 Mbps", "Any"],
-          ["Zoom HD Video", "3 Mbps", "3 Mbps", "<150ms"],
-          ["Google Meet 1080p", "4 Mbps", "4 Mbps", "<100ms"],
-          ["Cloud file upload", "Any", "10+ Mbps", "Any"],
-          ["Large team meetings", "8 Mbps", "5 Mbps", "<80ms"]
-        ]},
-        { "type": "p", "text": "For comfortable WFH, we recommend at least a 25 Mbps plan — ideally with at least 10 Mbps upload. Fiber plans from BAS Network or Inspire Broadband are the most reliable for WFH in Mirpur." },
-        { "type": "cta", "text": "Check Your Upload Speed →", "href": "/" }
-      ]
+        {
+          "type": "h2",
+          "text": "Speed Requirements for Remote Work"
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Activity",
+            "Min Download",
+            "Min Upload",
+            "Ping"
+          ],
+          "rows": [
+            [
+              "Email & Slack",
+              "1 Mbps",
+              "1 Mbps",
+              "Any"
+            ],
+            [
+              "Zoom HD Video",
+              "3 Mbps",
+              "3 Mbps",
+              "<150ms"
+            ],
+            [
+              "Google Meet 1080p",
+              "4 Mbps",
+              "4 Mbps",
+              "<100ms"
+            ],
+            [
+              "Cloud file upload",
+              "Any",
+              "10+ Mbps",
+              "Any"
+            ],
+            [
+              "Large team meetings",
+              "8 Mbps",
+              "5 Mbps",
+              "<80ms"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "For comfortable WFH, we recommend at least a 25 Mbps plan — ideally with at least 10 Mbps upload. Fiber plans from BAS Network or Inspire Broadband are the most reliable for WFH in Mirpur."
+        },
+        {
+          "type": "cta",
+          "text": "Check Your Upload Speed →",
+          "href": "/"
+        }
+      ],
+      "iconName": "Briefcase01Icon"
     },
     {
       "slug": "mirpur-internet-speed-report-may-2026",
       "title": "Mirpur Internet Speed Report — May 2026 (Crowdsourced Data)",
       "metaDescription": "Monthly Speed Pro report on internet speeds in Mirpur, Dhaka. See average ISP speeds, peak hour performance, and rankings for May 2026.",
       "category": "Report",
-      "tags": ["Speed Report", "Mirpur", "2026", "ISP Data", "Monthly"],
+      "tags": [
+        "Speed Report",
+        "Mirpur",
+        "2026",
+        "ISP Data",
+        "Monthly"
+      ],
       "readTime": 4,
       "publishDate": "2026-05-20",
-      "coverEmoji": "📈",
       "heroKeyword": "internet speed Mirpur",
       "schema": "Article",
       "content": [
-        { "type": "h2", "text": "May 2026 Speed Highlights" },
-        { "type": "table", "headers": ["ISP", "Avg Download", "Avg Upload", "Avg Ping", "Tests"], "rows": [
-          ["Inspire Broadband", "94.2 Mbps", "47.1 Mbps", "5ms", "247"],
-          ["BAS Network", "88.7 Mbps", "43.2 Mbps", "7ms", "312"],
-          ["MirpurNet", "71.3 Mbps", "35.6 Mbps", "9ms", "891"],
-          ["MNET", "58.4 Mbps", "28.9 Mbps", "12ms", "743"],
-          ["Info ISP", "44.1 Mbps", "21.3 Mbps", "18ms", "412"],
-          ["Mirpur Online", "38.6 Mbps", "18.7 Mbps", "22ms", "298"]
-        ]},
-        { "type": "p", "text": "Average Mirpur internet speed in May 2026: 65.9 Mbps download, 32.5 Mbps upload, 12ms ping. Speed Pro tested 2,903 connections across Mirpur this month." },
-        { "type": "cta", "text": "Contribute Your Speed Data →", "href": "/" }
-      ]
+        {
+          "type": "h2",
+          "text": "May 2026 Speed Highlights"
+        },
+        {
+          "type": "table",
+          "headers": [
+            "ISP",
+            "Avg Download",
+            "Avg Upload",
+            "Avg Ping",
+            "Tests"
+          ],
+          "rows": [
+            [
+              "Inspire Broadband",
+              "94.2 Mbps",
+              "47.1 Mbps",
+              "5ms",
+              "247"
+            ],
+            [
+              "BAS Network",
+              "88.7 Mbps",
+              "43.2 Mbps",
+              "7ms",
+              "312"
+            ],
+            [
+              "MirpurNet",
+              "71.3 Mbps",
+              "35.6 Mbps",
+              "9ms",
+              "891"
+            ],
+            [
+              "MNET",
+              "58.4 Mbps",
+              "28.9 Mbps",
+              "12ms",
+              "743"
+            ],
+            [
+              "Info ISP",
+              "44.1 Mbps",
+              "21.3 Mbps",
+              "18ms",
+              "412"
+            ],
+            [
+              "Mirpur Online",
+              "38.6 Mbps",
+              "18.7 Mbps",
+              "22ms",
+              "298"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Average Mirpur internet speed in May 2026: 65.9 Mbps download, 32.5 Mbps upload, 12ms ping. Speed Pro tested 2,903 connections across Mirpur this month."
+        },
+        {
+          "type": "cta",
+          "text": "Contribute Your Speed Data →",
+          "href": "/"
+        }
+      ],
+      "iconName": "TrendUp01Icon"
     },
     {
       "slug": "how-to-switch-isp-mirpur",
       "title": "How to Switch ISPs in Mirpur Without Losing Service",
       "metaDescription": "Step-by-step guide to switching internet providers in Mirpur, Dhaka. How to evaluate, compare, negotiate, and switch ISP without downtime.",
       "category": "Guide",
-      "tags": ["Switch ISP", "Mirpur", "Change Internet", "Guide", "Tips"],
+      "tags": [
+        "Switch ISP",
+        "Mirpur",
+        "Change Internet",
+        "Guide",
+        "Tips"
+      ],
       "readTime": 6,
       "publishDate": "2026-05-22",
-      "coverEmoji": "🔄",
       "heroKeyword": "change ISP Mirpur",
       "schema": "HowTo",
       "content": [
-        { "type": "h2", "text": "When Should You Switch ISPs?" },
-        { "type": "p", "text": "Consider switching if: your actual speed is consistently below 70% of your advertised speed, you experience frequent outages, or you're paying more than ৳600/month for 25 Mbps or less." },
-        { "type": "h2", "text": "Step-by-Step ISP Switch Guide" },
-        { "type": "steps", "items": [
-          "Run 3 speed tests at different times using Speed Pro to document your current performance",
-          "Browse our ISP Packages page to find better plans in your section",
-          "Contact 2–3 ISPs to ask about installation time and current customer offers",
-          "Negotiate — many ISPs offer a free month or router upgrade for new customers",
-          "Schedule installation at least 2 days before cancelling your old ISP",
-          "Once the new ISP is installed and tested, notify your old ISP to cancel",
-          "Run a final speed test with Speed Pro to verify your new connection"
-        ]},
-        { "type": "cta", "text": "Compare ISP Plans Now →", "href": "/packages" }
-      ]
+        {
+          "type": "h2",
+          "text": "When Should You Switch ISPs?"
+        },
+        {
+          "type": "p",
+          "text": "Consider switching if: your actual speed is consistently below 70% of your advertised speed, you experience frequent outages, or you're paying more than ৳600/month for 25 Mbps or less."
+        },
+        {
+          "type": "h2",
+          "text": "Step-by-Step ISP Switch Guide"
+        },
+        {
+          "type": "steps",
+          "items": [
+            "Run 3 speed tests at different times using Speed Pro to document your current performance",
+            "Browse our ISP Packages page to find better plans in your section",
+            "Contact 2–3 ISPs to ask about installation time and current customer offers",
+            "Negotiate — many ISPs offer a free month or router upgrade for new customers",
+            "Schedule installation at least 2 days before cancelling your old ISP",
+            "Once the new ISP is installed and tested, notify your old ISP to cancel",
+            "Run a final speed test with Speed Pro to verify your new connection"
+          ]
+        },
+        {
+          "type": "cta",
+          "text": "Compare ISP Plans Now →",
+          "href": "/packages"
+        }
+      ],
+      "iconName": "ArrowReloadHorizontalIcon"
     },
     {
       "slug": "history-of-internet-mirpur-dhaka",
       "title": "The History of Internet in Mirpur, Dhaka — From Dial-Up to Fiber",
       "metaDescription": "The fascinating history of internet connectivity in Mirpur, Dhaka — from dial-up modems in the 2000s to the fiber revolution of 2025.",
       "category": "History",
-      "tags": ["Internet History", "Mirpur", "Dhaka", "Broadband Evolution", "Bangladesh"],
+      "tags": [
+        "Internet History",
+        "Mirpur",
+        "Dhaka",
+        "Broadband Evolution",
+        "Bangladesh"
+      ],
       "readTime": 10,
       "publishDate": "2026-05-25",
-      "coverEmoji": "📡",
       "heroKeyword": "internet history Mirpur",
       "schema": "Article",
       "content": [
-        { "type": "h2", "text": "2000s: The Dial-Up Era" },
-        { "type": "p", "text": "In the early 2000s, internet access in Mirpur was limited to dial-up connections through BTTB (now Teletalk). Speeds were measured in Kbps, and connection costs were charged per minute. A family would pay ৳2,000+ per month for just a few hours of internet." },
-        { "type": "h2", "text": "2007–2012: The ADSL Revolution" },
-        { "type": "p", "text": "ADSL (Asymmetric Digital Subscriber Line) arrived in Mirpur through BTTB and early ISPs like Link3 Technologies. Suddenly, always-on connections at 512 Kbps to 2 Mbps were possible. Cyber cafes boomed during this period." },
-        { "type": "h2", "text": "2013–2018: Cable Broadband Explosion" },
-        { "type": "p", "text": "Local ISPs began laying cable networks across Mirpur's sections. MirpurNet, MNET, and dozens of smaller providers emerged, offering 5–20 Mbps for ৳400–৳800/month. BDIX was established, creating a local internet exchange that would transform content delivery." },
-        { "type": "h2", "text": "2019–2022: The BDIX Golden Age" },
-        { "type": "p", "text": "BDIX-connected FTP servers proliferated, giving Mirpur users access to massive local content libraries. Downloading Bangla movies, software, and game patches at 50–100 Mbps became normal while international speeds were only 10–20 Mbps." },
-        { "type": "h2", "text": "2023–2026: The Fiber Era" },
-        { "type": "p", "text": "Fiber optic infrastructure reached most of Mirpur between 2023 and 2025. ISPs like BAS Network and Inspire Broadband began offering 100–200 Mbps fiber plans, and real-world speeds finally matched advertised speeds consistently." },
-        { "type": "cta", "text": "Test Your Modern Connection →", "href": "/" }
-      ]
+        {
+          "type": "h2",
+          "text": "2000s: The Dial-Up Era"
+        },
+        {
+          "type": "p",
+          "text": "In the early 2000s, internet access in Mirpur was limited to dial-up connections through BTTB (now Teletalk). Speeds were measured in Kbps, and connection costs were charged per minute. A family would pay ৳2,000+ per month for just a few hours of internet."
+        },
+        {
+          "type": "h2",
+          "text": "2007–2012: The ADSL Revolution"
+        },
+        {
+          "type": "p",
+          "text": "ADSL (Asymmetric Digital Subscriber Line) arrived in Mirpur through BTTB and early ISPs like Link3 Technologies. Suddenly, always-on connections at 512 Kbps to 2 Mbps were possible. Cyber cafes boomed during this period."
+        },
+        {
+          "type": "h2",
+          "text": "2013–2018: Cable Broadband Explosion"
+        },
+        {
+          "type": "p",
+          "text": "Local ISPs began laying cable networks across Mirpur's sections. MirpurNet, MNET, and dozens of smaller providers emerged, offering 5–20 Mbps for ৳400–৳800/month. BDIX was established, creating a local internet exchange that would transform content delivery."
+        },
+        {
+          "type": "h2",
+          "text": "2019–2022: The BDIX Golden Age"
+        },
+        {
+          "type": "p",
+          "text": "BDIX-connected FTP servers proliferated, giving Mirpur users access to massive local content libraries. Downloading Bangla movies, software, and game patches at 50–100 Mbps became normal while international speeds were only 10–20 Mbps."
+        },
+        {
+          "type": "h2",
+          "text": "2023–2026: The Fiber Era"
+        },
+        {
+          "type": "p",
+          "text": "Fiber optic infrastructure reached most of Mirpur between 2023 and 2025. ISPs like BAS Network and Inspire Broadband began offering 100–200 Mbps fiber plans, and real-world speeds finally matched advertised speeds consistently."
+        },
+        {
+          "type": "cta",
+          "text": "Test Your Modern Connection →",
+          "href": "/"
+        }
+      ],
+      "iconName": "Satellite01Icon"
     }
   ]
 }

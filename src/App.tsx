@@ -10,6 +10,7 @@ import DNS from './pages/DNS';
 import Rankings from './pages/Rankings';
 import Outages from './pages/Outages';
 import Coverage from './pages/Coverage';
+import IspFinder from './pages/IspFinder';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="rankings" element={<Rankings />} />
           <Route path="outages" element={<Outages />} />
           <Route path="coverage" element={<Coverage />} />
+          <Route path="isp-finder" element={<IspFinder />} />
           <Route path="blog" element={<Blog />} />
           <Route path="blog/:slug" element={<BlogPost />} />
         </Route>

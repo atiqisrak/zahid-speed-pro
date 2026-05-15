@@ -1,8 +1,11 @@
+import HugeIconPicker from '../components/HugeIconPicker';
 import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { toPng } from 'html-to-image';
 import { ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { ArrowDown, ArrowUp, Activity, RefreshCw, Share2, ShieldCheck, Globe, History as HistoryIcon, Settings as SettingsIcon, Copy, Check, X, Zap, MapPin, Smartphone, Router, HeartPulse } from 'lucide-react';
 
+import SettingsModal from '../components/home/SettingsModal';
+import HistoryModal from '../components/home/HistoryModal';
+import ShareModal from '../components/home/ShareModal';
 const TEST_STAGES = { IDLE:'IDLE', LATENCY:'LATENCY', DOWNLOAD:'DOWNLOAD', UPLOAD:'UPLOAD', COMPLETED:'COMPLETED' } as const;
 type TestStage = (typeof TEST_STAGES)[keyof typeof TEST_STAGES];
 type Profile = { id:'real'|'broadband'|'fiber'; name:string; desc:string; };
@@ -23,22 +26,7 @@ const SERVERS:Server[] = [
 ];
 const STORAGE_KEY = 'speedpro_history_v1';
 
-function copyText(t:string){ return navigator.clipboard?.writeText(t)||Promise.resolve(); }
 
-const Modal = ({isOpen,onClose,title,children}:{isOpen:boolean;onClose:()=>void;title:string;children:React.ReactNode}) => {
-  if(!isOpen) return null;
-  return (
-    <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/40 backdrop-blur-sm">
-      <div className="bg-white w-full max-w-lg rounded-t-[2.5rem] sm:rounded-[2rem] overflow-hidden shadow-2xl border-t sm:border border-slate-200 max-h-[90vh] flex flex-col">
-        <div className="p-6 border-b border-slate-100 flex justify-between items-center shrink-0">
-          <h3 className="text-xl font-black tracking-tight text-slate-900">{title}</h3>
-          <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-full transition-colors"><X size={20}/></button>
-        </div>
-        <div className="p-6 overflow-y-auto flex-1">{children}</div>
-      </div>
-    </div>
-  );
-};
 
 export default function Home() {
   const [stage, setStage] = useState<TestStage>(TEST_STAGES.IDLE);
@@ -52,15 +40,7 @@ export default function Home() {
   const [showSettings, setShowSettings] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [showShare, setShowShare] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [ipInfo, setIpInfo] = useState({ ip:'...', isp:'Fetching...', city:'' });
-  const shareCardRef = useRef<HTMLDivElement>(null);
-
-  const downloadImage = async () => {
-    if(!shareCardRef.current) return;
-    const dataUrl = await toPng(shareCardRef.current,{ backgroundColor:'#ffffff', pixelRatio:2 });
-    const link = document.createElement('a'); link.download=`SpeedPro_${Date.now()}.png`; link.href=dataUrl; link.click();
-  };
 
   useEffect(() => {
     fetch('https://speed.cloudflare.com/meta').then(r=>r.json())
@@ -156,10 +136,6 @@ export default function Home() {
     setTestHistory(p=>[{ id:Date.now(), date:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}), download:dl, upload:ul, ping:results.ping, profile:activeProfile.id },...p].slice(0,10));
   };
 
-  const copyToClipboard = async () => {
-    await copyText(`Speed Pro\nDL: ${results.download} Mbps | UL: ${results.upload} Mbps\nPing: ${results.ping}ms\nTested via ${activeServer.name}`);
-    setCopied(true); setTimeout(()=>setCopied(false),2000);
-  };
 
   return (
     <div className="min-h-full bg-white text-slate-900 font-sans">
@@ -169,7 +145,7 @@ export default function Home() {
             <div className="animate-in zoom-in-95 fade-in duration-500 space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-teal-600 text-white p-6 sm:p-8 rounded-[2rem] shadow-xl shadow-teal-500/20 relative overflow-hidden flex flex-col justify-between min-h-[140px]">
-                  <div className="absolute top-0 right-0 p-6 opacity-10"><ArrowDown size={80}/></div>
+                  <div className="absolute top-0 right-0 p-6 opacity-10"><HugeIconPicker name="arrowDown01Icon" size={80}/></div>
                   <p className="text-[10px] font-black uppercase tracking-[0.2em] text-teal-200 mb-2">Download</p>
                   <div className="flex items-baseline gap-2 mt-auto">
                     <span className="text-5xl sm:text-7xl font-black italic tracking-tighter">{results.download}</span>
@@ -177,7 +153,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="bg-white border-2 border-slate-100 p-6 sm:p-8 rounded-[2rem] shadow-sm relative overflow-hidden flex flex-col justify-between min-h-[140px]">
-                  <div className="absolute top-0 right-0 p-6 opacity-5"><ArrowUp size={80}/></div>
+                  <div className="absolute top-0 right-0 p-6 opacity-5"><HugeIconPicker name="arrowUp01Icon" size={80}/></div>
                   <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Upload</p>
                   <div className="flex items-baseline gap-2 mt-auto">
                     <span className="text-5xl sm:text-7xl font-black italic tracking-tighter text-slate-900">{results.upload}</span>
@@ -187,12 +163,12 @@ export default function Home() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-slate-50 p-6 rounded-[2rem] border border-slate-100 flex flex-col justify-center items-center text-center">
-                  <Activity size={24} className="text-teal-500 mb-3"/>
+                  <HugeIconPicker name="activity01Icon" size={24} className="text-teal-500 mb-3"/>
                   <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-1">Latency</p>
                   <div className="flex items-baseline gap-1"><span className="text-3xl font-black">{results.ping}</span><span className="text-xs font-bold text-slate-400">ms</span></div>
                 </div>
                 <div className="bg-slate-50 p-6 rounded-[2rem] border border-slate-100 flex flex-col justify-center items-center text-center">
-                  <ShieldCheck size={24} className="text-emerald-500 mb-3"/>
+                  <HugeIconPicker name="shield01Icon" size={24} className="text-emerald-500 mb-3"/>
                   <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-1">Jitter</p>
                   <div className="flex items-baseline gap-1"><span className="text-3xl font-black">{results.jitter}</span><span className="text-xs font-bold text-slate-400">ms</span></div>
                 </div>
@@ -200,7 +176,7 @@ export default function Home() {
               <div className="bg-teal-50 border border-teal-100 p-6 rounded-[2rem] text-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-4 w-full sm:w-auto">
                   <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border border-teal-100 shadow-sm shrink-0">
-                    <HeartPulse size={24} className={healthScore.color}/>
+                    <HugeIconPicker name="heartPulseIcon" size={24} className={healthScore.color}/>
                   </div>
                   <div>
                     <p className="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Network Health</p>
@@ -209,10 +185,10 @@ export default function Home() {
                 </div>
                 <div className="flex gap-2 w-full sm:w-auto">
                   <button onClick={startFullTest} className="flex-1 sm:flex-none px-6 py-4 sm:py-3 bg-teal-600 text-white rounded-2xl font-black text-xs hover:bg-teal-700 transition-all flex items-center justify-center gap-2 shadow-sm">
-                    <RefreshCw size={14}/> Retest
+                    <HugeIconPicker name="arrowReloadHorizontalIcon" size={14}/> Retest
                   </button>
                   <button onClick={()=>setShowShare(true)} className="flex-1 sm:flex-none px-6 py-4 sm:py-3 bg-white text-teal-700 border border-teal-200 rounded-2xl font-black text-xs hover:bg-teal-50 transition-all flex items-center justify-center gap-2">
-                    <Share2 size={14}/> Share
+                    <HugeIconPicker name="share01Icon" size={14}/> Share
                   </button>
                 </div>
               </div>
@@ -234,7 +210,7 @@ export default function Home() {
                   </button>
                   <div className="mt-10 space-y-2">
                     <div className="px-4 py-1.5 bg-white rounded-full text-[10px] font-bold shadow-sm inline-flex items-center gap-2 border border-slate-100">
-                      <Router size={12} className="text-teal-500"/> {activeProfile.name}
+                      <HugeIconPicker name="routerIcon" size={12} className="text-teal-500"/> {activeProfile.name}
                     </div>
                     <p className="text-slate-400 text-xs font-medium block">Node: {activeServer.name}</p>
                   </div>
@@ -272,7 +248,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100 flex items-center justify-between">
               <div className="flex items-center gap-4 min-w-0">
-                <div className="p-2.5 bg-white rounded-xl shadow-sm border border-slate-100 shrink-0"><Globe size={18} className="text-teal-600"/></div>
+                <div className="p-2.5 bg-white rounded-xl shadow-sm border border-slate-100 shrink-0"><HugeIconPicker name="globe02Icon" size={18} className="text-teal-600"/></div>
                 <div className="min-w-0">
                   <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">Your Provider</p>
                   <p className="text-sm font-bold truncate">{ipInfo.isp.split(',')[0]} {ipInfo.city?`(${ipInfo.city})`:''}</p>
@@ -285,7 +261,7 @@ export default function Home() {
             </div>
             <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100 flex items-center justify-between">
               <div className="flex items-center gap-4 min-w-0">
-                <div className="p-2.5 bg-white rounded-xl shadow-sm border border-slate-100 shrink-0"><MapPin size={18} className="text-teal-600"/></div>
+                <div className="p-2.5 bg-white rounded-xl shadow-sm border border-slate-100 shrink-0"><HugeIconPicker name="location01Icon" size={18} className="text-teal-600"/></div>
                 <div className="min-w-0">
                   <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">Server Node</p>
                   <p className="text-sm font-bold truncate">{activeServer.name}</p>
@@ -298,89 +274,18 @@ export default function Home() {
           {/* Mobile action buttons */}
           <div className="flex gap-3 md:hidden">
             <button onClick={()=>setShowHistory(true)} className="flex-1 py-3 bg-slate-100 rounded-2xl font-black text-xs flex items-center justify-center gap-2">
-              <HistoryIcon size={16}/> History
+              <HugeIconPicker name="historyIcon" size={16}/> History
             </button>
             <button onClick={()=>setShowSettings(true)} className="flex-1 py-3 bg-slate-100 rounded-2xl font-black text-xs flex items-center justify-center gap-2">
-              <SettingsIcon size={16}/> Settings
+              <HugeIconPicker name="settings01Icon" size={16}/> Settings
             </button>
           </div>
         </div>
       </main>
 
-      {/* Settings Modal */}
-      <Modal isOpen={showSettings} onClose={()=>setShowSettings(false)} title="Engine Configuration">
-        <div className="space-y-6 pb-6">
-          <section>
-            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-4 flex items-center gap-2"><Smartphone size={14}/> Profile Simulation</h4>
-            <div className="space-y-3">
-              {PROFILES.map(p=>(
-                <button key={p.id} onClick={()=>{setActiveProfile(p);setShowSettings(false);}}
-                  className={`w-full p-5 rounded-3xl text-left border-2 transition-all ${activeProfile.id===p.id?'border-teal-600 bg-teal-50':'border-slate-100'}`}>
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="font-black text-sm">{p.name}</span>
-                    {activeProfile.id===p.id&&<Check size={16} className="text-teal-600"/>}
-                  </div>
-                  <p className="text-[10px] font-bold opacity-50 uppercase tracking-tighter">{p.desc}</p>
-                </button>
-              ))}
-            </div>
-          </section>
-          <section>
-            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-4 flex items-center gap-2"><Globe size={14}/> Edge Node</h4>
-            <div className="grid grid-cols-1 gap-2">
-              {SERVERS.map(s=>(
-                <button key={s.id} onClick={()=>{setActiveServer(s);setShowSettings(false);}}
-                  className={`p-4 rounded-2xl border ${activeServer.id===s.id?'bg-teal-600 text-white border-teal-600':'bg-slate-50 border-slate-100 text-slate-900'}`}>
-                  <div className="font-bold text-xs">{s.name}</div>
-                </button>
-              ))}
-            </div>
-          </section>
-        </div>
-      </Modal>
-
-      {/* History Modal */}
-      <Modal isOpen={showHistory} onClose={()=>setShowHistory(false)} title="Test History">
-        <div className="space-y-3 pb-8">
-          {testHistory.length===0?(
-            <div className="text-center py-10 opacity-30"><HistoryIcon size={32} className="mx-auto mb-2"/><p className="text-[10px] font-bold uppercase tracking-widest">No Logs Found</p></div>
-          ):testHistory.map(h=>(
-            <div key={h.id} className="p-4 bg-slate-50 rounded-3xl flex justify-between items-center border border-slate-100">
-              <div>
-                <div className="text-lg font-black">{h.download} <span className="text-[10px] text-slate-400 uppercase">Mbps</span></div>
-                <div className="text-[9px] font-bold text-slate-400">{h.date}</div>
-              </div>
-              <div className="text-right">
-                <div className="text-[10px] font-black uppercase tracking-tighter text-teal-600">{h.ping}ms / {h.upload} Up</div>
-                <div className="text-[8px] font-bold text-slate-400 uppercase">{h.profile}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </Modal>
-
-      {/* Share Modal */}
-      <Modal isOpen={showShare} onClose={()=>setShowShare(false)} title="Export Diagnosis">
-        <div className="text-center space-y-6 pb-8">
-          <div ref={shareCardRef} className="bg-white rounded-[2.5rem] p-6 sm:p-10 text-slate-900 border-2 border-slate-200 shadow-lg relative">
-            <div className="absolute top-6 right-6 opacity-20"><Zap size={40} className="fill-teal-600 text-teal-600"/></div>
-            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-4">Speed Pro</p>
-            <div className="text-5xl sm:text-7xl font-black italic tracking-tighter mb-2 text-teal-600">{results.download}</div>
-            <div className="text-teal-600 font-black uppercase text-[10px] tracking-widest mb-8">Mbps Download</div>
-            <div className="grid grid-cols-3 gap-2 pt-8 border-t border-slate-100">
-              <div className="text-left"><p className="text-[9px] text-slate-400 uppercase font-black">Upload</p><p className="font-black text-[13px]">{results.upload} Mbps</p></div>
-              <div className="text-center"><p className="text-[9px] text-slate-400 uppercase font-black">Latency</p><p className="font-black text-[13px]">{results.ping} ms</p></div>
-              <div className="text-right"><p className="text-[9px] text-slate-400 uppercase font-black">Provider</p><p className="font-black text-[11px] truncate">{ipInfo.isp.split(' ')[0]}</p></div>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <button onClick={downloadImage} className="w-full py-4 rounded-2xl font-black flex items-center justify-center gap-2 bg-slate-900 text-white">Download Image</button>
-            <button onClick={copyToClipboard} className={`w-full py-4 rounded-2xl font-black flex items-center justify-center gap-2 transition-all ${copied?'bg-emerald-500 text-white':'bg-teal-600 text-white'}`}>
-              {copied?<><Check size={18}/>Copied</>:<><Copy size={18}/>Copy Text</>}
-            </button>
-          </div>
-        </div>
-      </Modal>
+      <SettingsModal isOpen={showSettings} onClose={()=>setShowSettings(false)} PROFILES={PROFILES as any} SERVERS={SERVERS} activeProfile={activeProfile as any} setActiveProfile={setActiveProfile as any} activeServer={activeServer} setActiveServer={setActiveServer} />
+      <HistoryModal isOpen={showHistory} onClose={()=>setShowHistory(false)} testHistory={testHistory as any} />
+      <ShareModal isOpen={showShare} onClose={()=>setShowShare(false)} results={results} ipInfo={ipInfo} />
     </div>
   );
 }

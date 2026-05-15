@@ -1,5 +1,6 @@
+import HugeIconPicker from '../components/HugeIconPicker';
 import { useState } from 'react';
-import { Download, Clock, Monitor, Video } from 'lucide-react';
+
 
 const TABS = ['Download Time', 'Streaming', 'Video Calls'] as const;
 type Tab = typeof TABS[number];
@@ -67,7 +68,7 @@ export default function Bandwidth() {
             </div>
           </div>
           <div className="bg-teal-50 border border-teal-100 rounded-3xl p-8 text-center">
-            <Clock size={32} className="text-teal-500 mx-auto mb-3" />
+            <HugeIconPicker name="time01Icon" size={32} className="text-teal-500 mx-auto mb-3" />
             <p className="text-5xl font-black text-teal-700">{fmtTime(dlTime)}</p>
             <p className="text-sm text-slate-500 mt-2">to download {(fileMB/1024).toFixed(fileMB<1024?1:0)} GB at {speed} Mbps</p>
             <p className="text-xs text-teal-400 mt-1 font-bold">≈ {(fileMB/1024).toFixed(1)} GB file · {speed} Mbps connection</p>

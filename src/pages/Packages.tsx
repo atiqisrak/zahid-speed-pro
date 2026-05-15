@@ -1,25 +1,13 @@
+import HugeIconPicker from '../components/HugeIconPicker';
 import { useState, useEffect } from 'react';
-import { Package, Phone, Globe, Star, Check, X, ChevronDown, ChevronUp, SlidersHorizontal } from 'lucide-react';
 
-type ISPPackage = {
-  name: string; speed: number; upload: number; price: number;
-  bdix: boolean; realIp: boolean; unlimited: boolean; type: string; tags: string[];
-};
+import { ResponsiveContainer, RadialBarChart, RadialBar, Legend, Tooltip } from 'recharts';
+import PackageCard, { ISPPackage } from '../components/PackageCard';
+import FilterBar from '../components/FilterBar';
+
 type ISP = {
   id: string; name: string; color: string; phone: string; website: string;
   areas: string[]; rating: number; reviews: number; tags: string[]; packages: ISPPackage[];
-};
-
-const TAG_COLORS: Record<string,string> = {
-  gaming: 'bg-emerald-100 text-emerald-700',
-  streaming: 'bg-violet-100 text-violet-700',
-  wfh: 'bg-blue-100 text-blue-700',
-  budget: 'bg-amber-100 text-amber-700',
-  popular: 'bg-teal-100 text-teal-700',
-  power: 'bg-red-100 text-red-700',
-};
-const TAG_LABELS: Record<string,string> = {
-  gaming:'🎮 Gaming', streaming:'📹 Streaming', wfh:'💼 WFH', budget:'💰 Budget', popular:'⚡ Popular', power:'🚀 Power',
 };
 
 const SPEED_FILTERS = ['All','≤25 Mbps','50 Mbps','100 Mbps','150+ Mbps'];
@@ -69,35 +57,62 @@ export default function Packages() {
 
   const toggleExpand = (id: string) => setExpanded(p => ({ ...p, [id]: !p[id] }));
 
-  const FilterBar = ({ label, opts, val, set }: { label:string; opts:string[]; val:string; set:(v:string)=>void }) => (
-    <div>
-      <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2">{label}</p>
-      <div className="flex flex-wrap gap-1.5">
-        {opts.map(o => (
-          <button key={o} onClick={() => set(o)}
-            className={`px-2.5 py-1 rounded-lg text-[11px] font-bold border transition-all
-              ${val===o ? 'bg-teal-600 text-white border-teal-600' : 'border-slate-200 text-slate-600 hover:border-teal-300 bg-white'}`}>
-            {o}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
+  // Generate chart data based on visible ISPs
+  const chartData = isps.map(isp => {
+    // Value score calculation (simplified for mock data)
+    const avgPrice = isp.packages.reduce((a, b) => a + b.price, 0) / (isp.packages.length || 1);
+    const avgSpeed = isp.packages.reduce((a, b) => a + b.speed, 0) / (isp.packages.length || 1);
+    const valueScore = avgSpeed > 0 ? ((avgSpeed / avgPrice) * 1000).toFixed(1) : 0;
+    
+    return {
+      name: isp.name,
+      value: Number(valueScore),
+      fill: isp.color
+    };
+  }).sort((a, b) => b.value - a.value).slice(0, 6);
 
   return (
     <div className="max-w-5xl mx-auto p-4 md:p-8 space-y-6">
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <h2 className="text-2xl font-black tracking-tight flex items-center gap-2">
-            <Package size={22} className="text-teal-600" /> ISP Packages
+            <HugeIconPicker name="packageIcon" size={22} className="text-teal-600" /> ISP Packages
           </h2>
           <p className="text-slate-500 text-sm mt-1">Compare internet plans from ISPs in Mirpur, Dhaka · Updated May 2026</p>
         </div>
         <button onClick={() => setShowFilters(!showFilters)}
           className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold hover:border-teal-300 transition-colors">
-          <SlidersHorizontal size={14} /> Filters
+          <HugeIconPicker name="filterIcon" size={14} /> Filters
         </button>
       </div>
+
+      {/* Value Score Chart */}
+      {isps.length > 0 && !showFilters && (
+        <div className="bg-white rounded-3xl border border-slate-100 p-6 flex flex-col md:flex-row items-center gap-6 shadow-sm">
+          <div className="flex-1">
+            <h3 className="font-black text-sm uppercase tracking-wider flex items-center gap-2">
+              <HugeIconPicker name="activity01Icon" size={16} className="text-teal-600"/> Value Score Index
+            </h3>
+            <p className="text-slate-400 text-xs mt-1 mb-4">Speed-to-price ratio across Mirpur ISPs (Higher is better)</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {chartData.map(d => (
+                <div key={d.name} className="bg-slate-50 rounded-xl p-3 border border-slate-100">
+                  <p className="text-[10px] font-bold text-slate-500 uppercase truncate">{d.name}</p>
+                  <p className="font-black text-lg" style={{color:d.fill}}>{d.value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="w-full md:w-64 h-56 shrink-0">
+            <ResponsiveContainer width="100%" height="100%">
+              <RadialBarChart cx="50%" cy="50%" innerRadius="20%" outerRadius="100%" barSize={10} data={chartData}>
+                <RadialBar background dataKey="value" cornerRadius={10} />
+                <Tooltip cursor={{fill: 'transparent'}} contentStyle={{borderRadius:12,border:'none',boxShadow:'0 10px 40px rgba(0,0,0,.1)',fontSize:11,fontWeight:700}}/>
+              </RadialBarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      )}
 
       {/* Filters */}
       {showFilters && (
@@ -125,7 +140,7 @@ export default function Packages() {
                   <div className="flex items-center gap-2 flex-wrap">
                     <h3 className="font-black text-sm">{isp.name}</h3>
                     <div className="flex items-center gap-0.5 text-amber-500">
-                      <Star size={11} className="fill-amber-400" />
+                      <HugeIconPicker name="starIcon" size={11} className="fill-amber-400" />
                       <span className="text-[10px] font-black text-slate-600">{isp.rating}</span>
                       <span className="text-[10px] text-slate-400 font-medium">({isp.reviews})</span>
                     </div>
@@ -135,56 +150,18 @@ export default function Packages() {
                       ))}
                     </div>
                   </div>
-                  <p className="text-[10px] text-slate-400 font-bold mt-0.5">
-                    📞 {isp.phone} · 🗺️ {isp.areas.slice(0,3).join(', ')}{isp.areas.length>3 ? ` +${isp.areas.length-3} more`:''}
+                  <p className="text-[10px] text-slate-400 font-bold mt-0.5 flex items-center gap-1">
+                    <HugeIconPicker name="callIcon" size={10} /> {isp.phone} <span className="mx-1">·</span> <HugeIconPicker name="location01Icon" size={10} /> {isp.areas.slice(0,3).join(', ')}{isp.areas.length>3 ? ` +${isp.areas.length-3} more`:''}
                   </p>
                 </div>
-                {expanded[isp.id] ? <ChevronUp size={16} className="text-slate-400 shrink-0" /> : <ChevronDown size={16} className="text-slate-400 shrink-0" />}
+                {expanded[isp.id] ? <HugeIconPicker name="arrowUp01Icon" size={16} className="text-slate-400 shrink-0" /> : <HugeIconPicker name="arrowDown01Icon" size={16} className="text-slate-400 shrink-0" />}
               </button>
 
               {/* Packages */}
               {expanded[isp.id] && (
                 <div className="px-4 pb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                   {visiblePkgs.map(pkg => (
-                    <div key={pkg.name} className={`rounded-2xl border p-4 flex flex-col gap-3 ${pkg.tags.includes('popular') ? 'border-teal-300 bg-teal-50' : 'border-slate-100 bg-slate-50'}`}>
-                      {pkg.tags.includes('popular') && (
-                        <span className="text-[9px] font-black uppercase bg-teal-600 text-white px-2 py-0.5 rounded-full w-fit">⚡ Most Popular</span>
-                      )}
-                      <div>
-                        <p className="font-black text-xs text-slate-500 uppercase tracking-wider">{pkg.name}</p>
-                        <div className="flex items-baseline gap-1 mt-1">
-                          <span className="text-2xl font-black">{pkg.speed}</span>
-                          <span className="text-xs font-bold text-slate-400">Mbps</span>
-                        </div>
-                        <p className="text-xs text-slate-400 font-medium">↑ {pkg.upload} Mbps upload</p>
-                      </div>
-                      <p className="text-xl font-black text-teal-700">৳{pkg.price}<span className="text-xs font-bold text-slate-400">/mo</span></p>
-                      <div className="space-y-1 flex-1">
-                        {[['BDIX',pkg.bdix],['Real IP',pkg.realIp],['Unlimited',pkg.unlimited]].map(([l,v]) => (
-                          <div key={l as string} className="flex items-center gap-1.5 text-[10px] font-bold">
-                            {v ? <Check size={11} className="text-emerald-500" /> : <X size={11} className="text-slate-300" />}
-                            <span className={v ? 'text-slate-700' : 'text-slate-300'}>{l as string}</span>
-                          </div>
-                        ))}
-                        <div className="flex items-center gap-1.5 text-[10px] font-bold">
-                          <Check size={11} className="text-emerald-500" />
-                          <span className="text-slate-700 capitalize">{pkg.type} connection</span>
-                        </div>
-                      </div>
-                      {pkg.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1">
-                          {pkg.tags.filter(t=>t!=='popular').map(t => (
-                            <span key={t} className={`text-[9px] font-black px-1.5 py-0.5 rounded-lg ${TAG_COLORS[t]||'bg-slate-100 text-slate-500'}`}>
-                              {TAG_LABELS[t]||t}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                      <a href={`tel:${isp.phone}`}
-                        className="w-full py-2 bg-white border border-slate-200 rounded-xl text-xs font-black text-center hover:bg-teal-50 hover:border-teal-300 hover:text-teal-700 transition-all flex items-center justify-center gap-1.5">
-                        <Phone size={11} /> Contact ISP
-                      </a>
-                    </div>
+                    <PackageCard key={pkg.name} pkg={pkg} ispPhone={isp.phone} />
                   ))}
                 </div>
               )}
@@ -194,7 +171,7 @@ export default function Packages() {
       </div>
 
       <div className="bg-slate-50 rounded-2xl p-4 text-xs text-slate-500 text-center">
-        📋 Prices are indicative. Contact ISPs directly for current offers and availability in your specific area. <br/>
+        <div className="flex items-center justify-center gap-1 mb-1"><HugeIconPicker name="informationCircleIcon" size={14} /> Prices are indicative. Contact ISPs directly for current offers and availability in your specific area.</div>
         <button className="text-teal-600 font-bold hover:underline mt-1">Submit your ISP's package →</button>
       </div>
     </div>

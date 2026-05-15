@@ -1,5 +1,6 @@
+import HugeIconPicker from '../components/HugeIconPicker';
 import { useState } from 'react';
-import { MapPin, Users, CheckCircle, Circle, PieChart as PieIcon } from 'lucide-react';
+
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 
 const SECTIONS = [
@@ -50,7 +51,7 @@ export default function Coverage() {
           style={{backgroundImage:'radial-gradient(circle at 20% 80%, #2dd4bf 0%, transparent 50%)'}}/>
         <div className="relative max-w-5xl mx-auto px-4 md:px-8 py-10">
           <div className="flex items-center gap-2 text-teal-200 text-xs font-bold uppercase tracking-widest mb-3">
-            <MapPin size={14}/> Coverage Map
+            <HugeIconPicker name="location01Icon" size={14}/> Coverage Map
           </div>
           <h1 className="text-3xl md:text-4xl font-black tracking-tight mb-2">ISP Coverage in Mirpur</h1>
           <p className="text-teal-100 text-sm">Interactive map showing broadband coverage by section · Community-sourced</p>
@@ -63,11 +64,11 @@ export default function Coverage() {
           <div className="flex gap-1.5 bg-white rounded-2xl p-1.5 border border-slate-100 shadow-sm">
             <button onClick={()=>setView('map')}
               className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 ${view==='map'?'bg-teal-600 text-white shadow-sm':'text-slate-500 hover:text-slate-800'}`}>
-              <MapPin size={13}/> Map View
+              <HugeIconPicker name="location01Icon" size={13}/> Map View
             </button>
             <button onClick={()=>setView('chart')}
               className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 ${view==='chart'?'bg-teal-600 text-white shadow-sm':'text-slate-500 hover:text-slate-800'}`}>
-              <PieIcon size={13}/> Market Share
+              <HugeIconPicker name="pieChartIcon" size={13}/> Market Share
             </button>
           </div>
           <div className="flex flex-wrap gap-1.5">
@@ -126,7 +127,7 @@ export default function Coverage() {
                 <div className="bg-white rounded-[1.5rem] border border-slate-100 p-5 shadow-sm space-y-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-teal-50 rounded-2xl flex items-center justify-center">
-                      <MapPin size={18} className="text-teal-600"/>
+                      <HugeIconPicker name="location01Icon" size={18} className="text-teal-600"/>
                     </div>
                     <div>
                       <h3 className="font-black text-sm">{active.label}</h3>
@@ -139,8 +140,8 @@ export default function Coverage() {
                       return (
                         <div key={isp} className={`flex items-center gap-2.5 p-2.5 rounded-xl ${covered?'bg-teal-50':'bg-slate-50'}`}>
                           {covered
-                            ?<CheckCircle size={14} className="text-teal-600 shrink-0"/>
-                            :<Circle size={14} className="text-slate-300 shrink-0"/>}
+                            ?<HugeIconPicker name="tickCircleIcon" size={14} className="text-teal-600 shrink-0"/>
+                            :<HugeIconPicker name="circleIcon" size={14} className="text-slate-300 shrink-0"/>}
                           <span className={`text-xs font-bold ${covered?'text-slate-800':'text-slate-300'}`}>{isp}</span>
                           {covered&&<div className="ml-auto w-2 h-2 rounded-full" style={{backgroundColor:ISP_COLORS[isp]||'#0d9488'}}/>}
                         </div>
@@ -150,14 +151,14 @@ export default function Coverage() {
                 </div>
               ):(
                 <div className="bg-white rounded-[1.5rem] border border-slate-100 p-5 text-center shadow-sm">
-                  <MapPin size={28} className="text-slate-200 mx-auto mb-2"/>
+                  <HugeIconPicker name="location01Icon" size={28} className="text-slate-200 mx-auto mb-2"/>
                   <p className="text-xs font-bold text-slate-400">Click a section on the map to see which ISPs cover that area</p>
                 </div>
               )}
 
               <div className="bg-white rounded-[1.5rem] border border-slate-100 overflow-hidden shadow-sm">
                 <div className="px-4 py-3 border-b border-slate-50 flex items-center gap-1.5">
-                  <Users size={12} className="text-slate-400"/>
+                  <HugeIconPicker name="userMultipleIcon" size={12} className="text-slate-400"/>
                   <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">All Sections</p>
                 </div>
                 <div className="divide-y divide-slate-50 max-h-48 overflow-y-auto">
@@ -223,9 +224,9 @@ export default function Coverage() {
         )}
 
         <div className="bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-100 rounded-2xl p-5 flex items-center gap-3">
-          <MapPin size={20} className="text-teal-600 shrink-0"/>
-          <p className="text-xs text-teal-700 font-medium flex-1">
-            📍 Coverage data is community-sourced and updated monthly.
+          <HugeIconPicker name="location01Icon" size={20} className="text-teal-600 shrink-0"/>
+          <p className="text-xs text-teal-700 font-medium flex-1 flex items-center gap-1.5">
+            <HugeIconPicker name="location01Icon" size={12} /> Coverage data is community-sourced and updated monthly.
           </p>
           <button className="shrink-0 bg-teal-600 text-white text-xs font-black px-4 py-2 rounded-xl hover:bg-teal-700 transition-colors">
             Submit Your Area →
