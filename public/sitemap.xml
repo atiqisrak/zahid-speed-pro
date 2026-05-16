@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://speedpro.vercel.app/</loc>
+    <loc>https://dspeedpro.vercel.app/</loc>
     <lastmod>2026-05-16</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://speedpro.vercel.app/speedtest</loc>
+    <loc>https://dspeedpro.vercel.app/speedtest</loc>
     <lastmod>2026-05-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://speedpro.vercel.app/packages</loc>
+    <loc>https://dspeedpro.vercel.app/packages</loc>
     <lastmod>2026-05-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://speedpro.vercel.app/coverage</loc>
+    <loc>https://dspeedpro.vercel.app/coverage</loc>
     <lastmod>2026-05-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://speedpro.vercel.app/isp-finder</loc>
+    <loc>https://dspeedpro.vercel.app/isp-finder</loc>
     <lastmod>2026-05-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://speedpro.vercel.app/blog</loc>
+    <loc>https://dspeedpro.vercel.app/blog</loc>
     <lastmod>2026-05-16</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://speedpro.vercel.app/about</loc>
+    <loc>https://dspeedpro.vercel.app/about</loc>
     <lastmod>2026-05-16</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://speedpro.vercel.app/contact</loc>
+    <loc>https://dspeedpro.vercel.app/contact</loc>
     <lastmod>2026-05-16</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://speedpro.vercel.app/privacy</loc>
+    <loc>https://dspeedpro.vercel.app/privacy</loc>
     <lastmod>2026-05-16</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://speedpro.vercel.app/terms</loc>
+    <loc>https://dspeedpro.vercel.app/terms</loc>
     <lastmod>2026-05-16</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://speedpro.vercel.app/compliance</loc>
+    <loc>https://dspeedpro.vercel.app/compliance</loc>
     <lastmod>2026-05-16</lastmod>
     <priority>0.3</priority>
   </url>

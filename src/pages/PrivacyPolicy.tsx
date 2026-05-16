@@ -58,8 +58,8 @@ export default function PrivacyPolicy() {
             <div className="bg-slate-50 p-10 rounded-[2.5rem] border border-slate-200">
               <h3 className="text-xl font-black uppercase tracking-tight text-slate-950 mb-4">Questions?</h3>
               <p className="text-slate-600 mb-6 font-medium">If you have any questions about this Privacy Policy, please contact our legal team.</p>
-              <a href="mailto:legal@speedpro.vercel.app" className="inline-flex items-center gap-2 text-teal-600 font-black uppercase tracking-widest text-xs hover:text-teal-700 transition-colors">
-                <HugeIconPicker name="mail01Icon" size={16} /> legal@speedpro.vercel.app
+              <a href="mailto:legal@dspeedpro.vercel.app" className="inline-flex items-center gap-2 text-teal-600 font-black uppercase tracking-widest text-xs hover:text-teal-700 transition-colors">
+                <HugeIconPicker name="mail01Icon" size={16} /> legal@dspeedpro.vercel.app
               </a>
             </div>
           </div>

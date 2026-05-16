@@ -48,7 +48,7 @@ export default function Contact() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
-                { icon: 'mail01Icon', label: 'Email', val: 'hello@speedpro.vercel.app', color: 'text-teal-600', bg: 'bg-teal-50' },
+                { icon: 'mail01Icon', label: 'Email', val: 'hello@dspeedpro.vercel.app', color: 'text-teal-600', bg: 'bg-teal-50' },
                 { icon: 'callIcon', label: 'Phone', val: '+880 1700 000000', color: 'text-indigo-600', bg: 'bg-indigo-50' },
                 { icon: 'location01Icon', label: 'Dhaka Office', val: 'Mirpur DOHS, Road 12', color: 'text-emerald-600', bg: 'bg-emerald-50' },
                 { icon: 'chat01Icon', label: 'Support', val: '24/7 Live Chat', color: 'text-rose-600', bg: 'bg-rose-50' },
