@@ -1,138 +1,169 @@
 import React, { useState } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import HugeIconPicker from './HugeIconPicker';
 
 const NAV_ITEMS = [
-  // { to:'/',         label:'Home',       icon:'home11Icon',        exact:true  },
-  { to: '/speedtest', label: 'Speed Test', icon: 'zapIcon', exact: true },
-  { to: '/bdix', label: 'BDIX Hub', icon: 'database01Icon', exact: false },
-  { to: '/packages', label: 'ISP Plans', icon: 'packageIcon', exact: false },
-  { to: '/tools', label: 'Tools', icon: 'wrench01Icon', exact: false },
-  { to: '/outages', label: 'Outages', icon: 'alert01Icon', exact: false },
-  { to: '/rankings', label: 'Rankings', icon: 'trophy01Icon', exact: false },
-  { to: '/coverage', label: 'Coverage', icon: 'map01Icon', exact: false },
-  { to: '/isp-finder', label: 'ISP Finder', icon: 'location01Icon', exact: false },
-  { to: '/blog', label: 'Blog', icon: 'book01Icon', exact: false },
+  { to: '/speedtest', label: 'Speed Test', icon: 'zapIcon' },
+  { to: '/packages', label: 'Plans', icon: 'packageIcon' },
+  { to: '/coverage', label: 'Coverage', icon: 'map01Icon' },
+  { to: '/isp-finder', label: 'Finder', icon: 'location01Icon' },
+  { to: '/tools', label: 'Tools', icon: 'wrench01Icon' },
 ];
 
 export default function Layout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
   const navigate = useNavigate();
 
   const closeMenu = () => setMobileMenuOpen(false);
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 font-sans">
-      {/* ── Top Navigation Bar ── */}
-      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
-
+    <div className="flex flex-col min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-teal-500/30 selection:text-teal-900">
+      
+      {/* ── Floating Pill Navigation (Non-traditional) ── */}
+      <header className="fixed bottom-6 md:bottom-auto md:top-8 left-1/2 -translate-x-1/2 z-[100] px-4 w-full max-w-max pointer-events-none">
+        <div className="pointer-events-auto bg-slate-900/80 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.5)] rounded-full px-2 py-2 flex items-center gap-2 md:gap-4 transition-all hover:bg-slate-900/90 hover:border-white/20">
+          
           {/* Logo */}
-          <div className="flex items-center gap-2.5 hover:cursor-pointer" onClick={() => { navigate('/') }}>
-            <div className="bg-gradient-to-br from-indigo-600 to-teal-600 p-1.5 rounded-lg shadow-md shadow-indigo-500/20">
-              <HugeIconPicker name="zapIcon" size={18} className="text-white" />
-            </div>
-            <div>
-              <h1 className="text-lg font-black tracking-tighter italic uppercase leading-none">
-                Speed<span className="text-indigo-600">Pro</span>
-              </h1>
-            </div>
+          <div 
+            className="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-teal-500 to-indigo-500 rounded-full cursor-pointer hover:scale-105 transition-transform" 
+            onClick={() => navigate('/')}
+            title="Speed Pro Home"
+          >
+            <HugeIconPicker name="zapIcon" size={20} className="text-white" />
           </div>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {NAV_ITEMS.map(({ to, label, icon, exact }) => (
+          <nav className="hidden md:flex items-center gap-1 px-4">
+            {NAV_ITEMS.map(({ to, label }) => (
               <NavLink
                 key={to}
                 to={to}
-                end={exact}
                 className={({ isActive }) =>
-                  `flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all ${isActive
-                    ? 'bg-indigo-50 text-indigo-700'
-                    : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+                  `px-4 py-2 rounded-full text-sm font-bold tracking-wide transition-all ${isActive
+                    ? 'bg-white/10 text-teal-400'
+                    : 'text-slate-300 hover:bg-white/5 hover:text-white'
                   }`
                 }
               >
-                {({ isActive }) => (
-                  <>
-                    <HugeIconPicker name={icon} size={14} className={isActive ? 'text-indigo-600' : 'text-slate-400'} />
-                    {label}
-                  </>
-                )}
+                {label}
               </NavLink>
             ))}
           </nav>
 
           {/* Mobile Menu Toggle */}
           <button
-            className="lg:hidden p-2 text-slate-500 hover:bg-slate-50 rounded-xl transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white transition-colors ml-2"
+            onClick={() => setMobileMenuOpen(true)}
           >
-            {mobileMenuOpen ? <HugeIconPicker name="cancel01Icon" size={24} /> : <HugeIconPicker name="menu01Icon" size={24} />}
+            <HugeIconPicker name="menu01Icon" size={20} />
           </button>
+          
+          {/* Contact CTA */}
+          <button onClick={() => navigate('/contact')} className="hidden md:flex items-center gap-2 bg-white text-slate-950 px-6 py-2.5 rounded-full font-bold text-sm tracking-wide hover:bg-teal-400 hover:text-white transition-colors group">
+             Let's Talk <HugeIconPicker name="arrowRight01Icon" size={16} className="group-hover:translate-x-1 transition-transform" />
+          </button>
+
         </div>
       </header>
 
-      {/* Mobile Nav Overlay */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-40 bg-white pt-16 flex flex-col">
-          <nav className="p-4 space-y-1 overflow-y-auto pb-24 flex-1">
-            {NAV_ITEMS.map(({ to, label, icon, exact }) => (
-              <NavLink
-                key={to}
-                to={to}
-                end={exact}
+      {/* Fullscreen Mobile Nav Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: "100%" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed inset-0 z-[110] bg-slate-950 flex flex-col justify-end md:hidden"
+          >
+            <div className="absolute top-6 right-6">
+              <button
+                className="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
                 onClick={closeMenu}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-4 rounded-2xl text-sm font-bold transition-all ${isActive
-                    ? 'bg-indigo-50 text-indigo-700'
-                    : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
-                  }`
-                }
               >
-                {({ isActive }) => (
-                  <>
-                    <HugeIconPicker name={icon} size={20} className={isActive ? 'text-indigo-600' : 'text-slate-400'} />
-                    {label}
-                  </>
-                )}
+                <HugeIconPicker name="cancel01Icon" size={24} />
+              </button>
+            </div>
+            
+            <div className="flex-1 flex flex-col justify-center px-8 py-12 space-y-6">
+              <h2 className="text-xs font-bold text-teal-500 uppercase tracking-[0.3em] mb-4">Navigation</h2>
+              {NAV_ITEMS.map(({ to, label, icon }) => (
+                <NavLink
+                  key={to}
+                  to={to}
+                  onClick={closeMenu}
+                  className={({ isActive }) =>
+                    `flex items-center gap-6 text-3xl font-black transition-all ${isActive
+                      ? 'text-teal-400'
+                      : 'text-white hover:text-slate-300'
+                    }`
+                  }
+                >
+                  <HugeIconPicker name={icon} size={32} className="opacity-50" />
+                  {label}
+                </NavLink>
+              ))}
+              <NavLink
+                to="/contact"
+                onClick={closeMenu}
+                className="flex items-center gap-6 text-3xl font-black text-amber-500 mt-8"
+              >
+                <HugeIconPicker name="chat01Icon" size={32} className="opacity-50" />
+                Let's Talk
               </NavLink>
-            ))}
-          </nav>
-        </div>
-      )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Main Content ── */}
-      <main className="flex-1 flex flex-col">
+      <main className="flex-1 flex flex-col relative z-0">
         <Outlet />
       </main>
 
-      {/* ── Footer ── */}
-      <footer className="bg-white border-t border-slate-200 mt-auto">
-        <div className="max-w-6xl mx-auto px-4 md:px-8 py-10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2.5">
-              <div className="bg-gradient-to-br from-indigo-600 to-teal-600 p-1 rounded-lg">
-                <HugeIconPicker name="zapIcon" size={14} className="text-white" />
-              </div>
-              <div>
-                <h2 className="text-sm font-black tracking-tighter italic uppercase leading-none">
-                  Speed<span className="text-indigo-600">Pro</span>
-                </h2>
-              </div>
+      {/* ── Massive Agency Footer ── */}
+      <footer className="bg-slate-950 text-white border-t border-slate-900 pt-32 pb-16 px-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-teal-500/5 rounded-full blur-3xl pointer-events-none" />
+        
+        <div className="max-w-screen-2xl mx-auto flex flex-col justify-between relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-32">
+            <div className="lg:col-span-2">
+               <h3 className="text-2xl md:text-4xl font-bold mb-6">Ready to redefine your <br/><span className="text-teal-500">network infrastructure?</span></h3>
+               <p className="text-slate-400 max-w-md text-lg">We partner with forward-thinking enterprises to deliver flawless routing and zero packet loss.</p>
             </div>
-            <div className="flex items-center gap-4 text-xs font-bold text-slate-400">
-              <a href="#" className="hover:text-indigo-600 transition-colors">Privacy</a>
-              <a href="#" className="hover:text-indigo-600 transition-colors">Terms</a>
-              <a href="#" className="hover:text-indigo-600 transition-colors">Contact</a>
+            <div>
+               <h4 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-8">Platform</h4>
+               <ul className="space-y-4">
+                 <li><a href="#" className="font-medium hover:text-teal-400 transition-colors">Speed Test</a></li>
+                 <li><a href="#" className="font-medium hover:text-teal-400 transition-colors">BDIX Hub</a></li>
+                 <li><a href="#" className="font-medium hover:text-teal-400 transition-colors">ISP Finder</a></li>
+                 <li><a href="#" className="font-medium hover:text-teal-400 transition-colors">Enterprise Plans</a></li>
+               </ul>
             </div>
-            <div className="flex items-center gap-1.5 text-xs text-slate-400 font-bold tracking-widest uppercase">
-              <HugeIconPicker name="globe02Icon" size={12} /> Mirpur, Dhaka, BD
+            <div>
+               <h4 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-8">Company</h4>
+               <ul className="space-y-4">
+                 <li><a href="#" className="font-medium hover:text-teal-400 transition-colors">About Us</a></li>
+                 <li><a href="#" className="font-medium hover:text-teal-400 transition-colors">Contact</a></li>
+                 <li><a href="#" className="font-medium hover:text-teal-400 transition-colors">Privacy Policy</a></li>
+                 <li><a href="#" className="font-medium hover:text-teal-400 transition-colors">Terms of Service</a></li>
+               </ul>
             </div>
           </div>
-          <div className="mt-8 text-center text-xs font-medium text-slate-400">
-            &copy; {new Date().getFullYear()} Speed Pro Bangladesh. All rights reserved.
+          
+          <div className="flex flex-col items-center">
+             <h2 className="text-[15vw] leading-none font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-800 uppercase text-center w-full mb-8">
+               Speed<span className="text-teal-500">Pro</span>
+             </h2>
+             <div className="flex flex-col md:flex-row items-center justify-between w-full pt-8 border-t border-slate-900 gap-4">
+                <div className="text-slate-500 font-medium text-sm">
+                  &copy; {new Date().getFullYear()} Speed Pro BD. All rights reserved.
+                </div>
+                <div className="flex items-center gap-2 text-slate-500 text-sm font-bold uppercase tracking-widest">
+                  <HugeIconPicker name="globe02Icon" size={16} /> Dhaka, Bangladesh
+                </div>
+             </div>
           </div>
         </div>
       </footer>
