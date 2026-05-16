@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 import HugeIconPicker from '../components/HugeIconPicker';
 
@@ -25,28 +26,28 @@ interface BlogPost {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  Guide: 'bg-indigo-600', Rankings: 'bg-amber-500', Tutorial: 'bg-teal-600',
-  'Local Guide': 'bg-blue-600', Deals: 'bg-green-600', Troubleshooting: 'bg-red-600',
-  Gaming: 'bg-violet-600', WFH: 'bg-orange-600', Report: 'bg-cyan-600', History: 'bg-rose-600',
+  Guide: 'bg-indigo-500/10 text-indigo-500 border-indigo-500/20', Rankings: 'bg-amber-500/10 text-amber-500 border-amber-500/20', Tutorial: 'bg-teal-500/10 text-teal-600 border-teal-500/20',
+  'Local Guide': 'bg-blue-500/10 text-blue-500 border-blue-500/20', Deals: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20', Troubleshooting: 'bg-rose-500/10 text-rose-500 border-rose-500/20',
+  Gaming: 'bg-violet-500/10 text-violet-500 border-violet-500/20', WFH: 'bg-orange-500/10 text-orange-500 border-orange-500/20', Report: 'bg-cyan-500/10 text-cyan-500 border-cyan-500/20', History: 'bg-pink-500/10 text-pink-500 border-pink-500/20',
 };
 
 function renderBlock(block: ContentBlock, idx: number) {
   switch (block.type) {
     case 'h2':
-      return <h2 key={idx} className="text-xl font-black text-slate-900 mt-8 mb-3">{block.text}</h2>;
+      return <h2 key={idx} className="text-3xl font-black text-slate-900 mt-16 mb-6 uppercase tracking-wider">{block.text}</h2>;
     case 'p':
-      return <p key={idx} className="text-slate-600 leading-relaxed text-sm">{block.text}</p>;
+      return <p key={idx} className="text-slate-600 leading-relaxed text-lg mb-6 font-medium">{block.text}</p>;
     case 'table':
       return (
-        <div key={idx} className="overflow-x-auto rounded-2xl border border-slate-100 my-4">
-          <table className="w-full text-xs">
-            <thead className="bg-indigo-600 text-white">
-              <tr>{block.headers.map((h, i) => <th key={i} className="text-left px-4 py-3 font-black uppercase tracking-wider">{h}</th>)}</tr>
+        <div key={idx} className="overflow-x-auto rounded-[1.5rem] border border-slate-200 my-10 shadow-lg bg-white">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 text-teal-600 border-b border-slate-200">
+              <tr>{block.headers.map((h, i) => <th key={i} className="text-left px-6 py-5 font-black uppercase tracking-widest">{h}</th>)}</tr>
             </thead>
-            <tbody className="divide-y divide-slate-50">
+            <tbody className="divide-y divide-slate-100">
               {block.rows.map((row, ri) => (
-                <tr key={ri} className={ri % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
-                  {row.map((cell, ci) => <td key={ci} className="px-4 py-3 font-medium text-slate-700">{cell}</td>)}
+                <tr key={ri} className="hover:bg-slate-50 transition-colors">
+                  {row.map((cell, ci) => <td key={ci} className="px-6 py-5 font-bold text-slate-700">{cell}</td>)}
                 </tr>
               ))}
             </tbody>
@@ -55,39 +56,41 @@ function renderBlock(block: ContentBlock, idx: number) {
       );
     case 'steps':
       return (
-        <div key={idx} className="my-4 space-y-3">
+        <div key={idx} className="my-10 space-y-6">
           {block.items.map((step, si) => (
-            <div key={si} className="flex gap-3 bg-white rounded-2xl p-4 border border-slate-100 shadow-sm">
-              <div className="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5">{si + 1}</div>
-              <p className="text-sm text-slate-700 leading-relaxed">{step}</p>
+            <div key={si} className="flex gap-5 bg-slate-50 rounded-[1.5rem] p-6 border border-slate-200 shadow-sm hover:border-teal-500/30 transition-colors">
+              <div className="w-10 h-10 rounded-xl bg-teal-500 text-white flex items-center justify-center text-sm font-black shrink-0 shadow-md">{si + 1}</div>
+              <p className="text-base text-slate-700 leading-relaxed font-bold pt-2">{step}</p>
             </div>
           ))}
         </div>
       );
     case 'faq':
       return (
-        <div key={idx} className="my-6 space-y-3">
-          <h3 className="text-sm font-black uppercase tracking-widest text-slate-400">Frequently Asked Questions</h3>
+        <div key={idx} className="my-12 space-y-6">
+          <h3 className="text-xs font-black uppercase tracking-[0.2em] text-teal-600 mb-8 flex items-center gap-2">
+            <HugeIconPicker name="messageQuestionIcon" size={18} /> Frequently Asked Questions
+          </h3>
           {block.items.map((item, fi) => (
-            <div key={fi} className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
-              <div className="flex items-start gap-2 mb-2">
-                <HugeIconPicker name="tickCircleIcon" size={16} className="text-indigo-600 shrink-0 mt-0.5" />
-                <p className="font-black text-sm text-slate-900">{item.q}</p>
+            <div key={fi} className="bg-white rounded-[1.5rem] border border-slate-200 p-8 shadow-md hover:shadow-lg transition-shadow">
+              <div className="flex items-start gap-4 mb-4">
+                <HugeIconPicker name="tickCircleIcon" size={20} className="text-teal-500 shrink-0 mt-0.5" />
+                <p className="font-black text-lg text-slate-900">{item.q}</p>
               </div>
-              <p className="text-xs text-slate-600 leading-relaxed ml-6">{item.a}</p>
+              <p className="text-base text-slate-600 leading-relaxed ml-9 font-medium">{item.a}</p>
             </div>
           ))}
         </div>
       );
     case 'cta':
       return (
-        <div key={idx} className="my-6">
+        <div key={idx} className="my-12">
           <Link to={block.href}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-indigo-600 text-white font-black text-sm px-6 py-3 rounded-2xl hover:opacity-90 transition-opacity shadow-lg shadow-teal-500/20"
+            className="inline-flex items-center gap-3 bg-teal-500 text-white font-black uppercase tracking-widest text-sm px-10 py-5 rounded-2xl hover:bg-teal-600 transition-all shadow-[0_10px_20px_rgba(20,184,166,0.3)] hover:shadow-[0_15px_30px_rgba(20,184,166,0.4)] hover:-translate-y-1"
           >
-            <HugeIconPicker name="zapIcon" size={16} className="fill-white" />
+            <HugeIconPicker name="zapIcon" size={18} className="fill-white" />
             {block.text}
-            <HugeIconPicker name="arrowRight01Icon" size={16} />
+            <HugeIconPicker name="arrowRight01Icon" size={18} />
           </Link>
         </div>
       );
@@ -114,19 +117,24 @@ export default function BlogPost() {
       });
   }, [slug, navigate]);
 
+  const heroRef = useRef(null);
+  const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const y = useTransform(heroScroll, [0, 1], [0, 200]);
+  const opacity = useTransform(heroScroll, [0, 0.8], [1, 0]);
+
   if (!post) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center pt-32">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-slate-500 font-bold text-sm">Loading article…</p>
+          <div className="w-16 h-16 border-4 border-white/10 border-t-teal-500 rounded-full animate-spin mx-auto mb-6 shadow-[0_0_15px_rgba(20,184,166,0.5)]" />
+          <p className="text-slate-400 font-black uppercase tracking-widest text-xs">Loading article…</p>
         </div>
       </div>
     );
   }
 
   const related = allPosts.filter(p => p.slug !== post.slug && (p.category === post.category || p.tags.some(t => post.tags.includes(t)))).slice(0, 3);
-  const catColor = CATEGORY_COLORS[post.category] || 'bg-indigo-600';
+  const catColor = CATEGORY_COLORS[post.category] || 'bg-slate-100 text-slate-600 border-slate-200';
 
   const handleShare = async () => {
     try {
@@ -137,92 +145,110 @@ export default function BlogPost() {
   };
 
   return (
-    <div className="min-h-full bg-slate-50 font-sans">
-      {/* Hero */}
-      <div className={`relative overflow-hidden bg-gradient-to-br from-indigo-900 to-violet-900 text-white`}>
-        <div className="absolute inset-0 opacity-10"
-          style={{ backgroundImage: 'radial-gradient(circle at 80% 20%, #8b5cf6 0%, transparent 60%)' }} />
-        <div className="relative max-w-3xl mx-auto px-4 md:px-8 py-10 md:py-14">
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-indigo-300 text-xs font-bold mb-6">
-            <Link to="/blog" className="hover:text-white transition-colors flex items-center gap-1">
+    <div className="min-h-screen font-sans selection:bg-teal-500/30 selection:text-teal-900 bg-slate-50">
+      
+      {/* 1. DARK HERO SECTION */}
+      <section ref={heroRef} className="relative pt-40 pb-32 px-6 flex flex-col justify-center overflow-hidden bg-slate-950">
+        <motion.div style={{ opacity, y }} className="max-w-4xl mx-auto w-full z-10 text-white relative">
+          
+          <div className="flex items-center justify-center gap-2 text-slate-400 text-xs font-black uppercase tracking-widest mb-10">
+            <Link to="/blog" className="hover:text-teal-400 transition-colors flex items-center gap-1.5 bg-white/5 px-4 py-2 rounded-xl border border-white/10 backdrop-blur-sm">
               <HugeIconPicker name="arrowLeft01Icon" size={14} /> Blog
             </Link>
-            <HugeIconPicker name="arrowRight01Icon" size={12} />
-            <span className="text-white">{post.category}</span>
+            <HugeIconPicker name="arrowRight01Icon" size={12} className="text-white/20 mx-2" />
+            <span className="text-teal-400 bg-teal-500/10 px-4 py-2 rounded-xl border border-teal-500/20 backdrop-blur-sm">{post.category}</span>
           </div>
-          <div className="flex items-start gap-4 mb-6">
-            <span className="text-indigo-200 bg-indigo-900/40 p-5 rounded-[2rem] backdrop-blur-md shadow-2xl shadow-indigo-500/20">
-              <HugeIconPicker name={post.iconName} size={64} />
+          
+          <div className="text-center mb-10">
+            <span className="inline-flex items-center justify-center text-teal-400 bg-white/5 p-6 rounded-[2rem] backdrop-blur-md shadow-2xl border border-white/10 mb-8">
+              <HugeIconPicker name={post.iconName} size={56} className="drop-shadow-[0_0_15px_rgba(20,184,166,0.5)]" />
             </span>
-            <span className={`${catColor} text-white text-[10px] font-black uppercase px-3 py-1 rounded-xl tracking-wider mt-2`}>{post.category}</span>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] uppercase tracking-tighter text-white drop-shadow-2xl">{post.title}</h1>
           </div>
-          <h1 className="text-2xl md:text-4xl font-black leading-tight mb-4">{post.title}</h1>
-          <p className="text-indigo-200 text-sm mb-6">{post.metaDescription}</p>
-          <div className="flex items-center gap-4 text-indigo-300 text-xs font-bold flex-wrap">
-            <span className="flex items-center gap-1.5"><HugeIconPicker name="time01Icon" size={12} />{post.readTime} min read</span>
+          
+          <p className="text-slate-400 text-lg md:text-2xl mb-12 font-bold leading-relaxed max-w-3xl mx-auto text-center tracking-tight">{post.metaDescription}</p>
+          
+          <div className="flex items-center justify-center gap-8 text-slate-500 text-xs font-black uppercase tracking-widest flex-wrap border-t border-white/10 pt-10">
+            <span className="flex items-center gap-2"><HugeIconPicker name="time01Icon" size={16} className="text-teal-500" />{post.readTime} min read</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-white/20" />
             <span>{new Date(post.publishDate).toLocaleDateString('en-BD', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-            <button onClick={handleShare} className="flex items-center gap-1.5 hover:text-white transition-colors ml-auto">
-              {copied ? '✅ Copied!' : <><HugeIconPicker name="share01Icon" size={12} />Share</>}
-            </button>
           </div>
+
+        </motion.div>
+        
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/40 via-slate-950/80 to-slate-950 z-10" />
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-teal-500/10 rounded-full blur-[150px] z-10 mix-blend-screen" />
+          <div className="absolute top-1/2 left-0 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[150px] z-10 -translate-x-1/2 mix-blend-screen" />
         </div>
-      </div>
+      </section>
 
-      <div className="max-w-3xl mx-auto px-4 md:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      {/* 2. LIGHT CONTENT SECTION */}
+      <section className="relative z-20 bg-white py-24 px-6 border-b border-slate-200 shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
+        <div className="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-16">
+          
           {/* Article content */}
-          <article className="lg:col-span-2 space-y-4">
-            <div className="bg-white rounded-[1.5rem] border border-slate-100 p-6 md:p-8 shadow-sm space-y-4">
+          <article className="lg:col-span-2 space-y-8">
+            <div className="bg-slate-50 rounded-[3rem] border border-slate-200 p-10 md:p-16 shadow-xl">
               {post.content.map((block, idx) => renderBlock(block, idx))}
-            </div>
-
-            {/* Tags */}
-            <div className="flex gap-2 flex-wrap">
-              {post.tags.map(tag => (
-                <span key={tag} className="flex items-center gap-1 text-xs font-bold px-3 py-1.5 bg-white border border-slate-200 text-slate-600 rounded-xl shadow-sm">
-                  <HugeIconPicker name="tag01Icon" size={11} />{tag}
-                </span>
-              ))}
+              
+              {/* Tags & Share */}
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mt-16 pt-10 border-t border-slate-200">
+                <div className="flex gap-3 flex-wrap">
+                  {post.tags.map(tag => (
+                    <span key={tag} className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest px-4 py-2 bg-white border border-slate-200 text-slate-500 rounded-xl hover:border-teal-200 hover:text-teal-600 transition-colors cursor-default shadow-sm">
+                      <HugeIconPicker name="tag01Icon" size={14} className="text-teal-500" />{tag}
+                    </span>
+                  ))}
+                </div>
+                
+                <button onClick={handleShare} className="flex items-center gap-2 hover:bg-slate-100 transition-colors shrink-0 bg-white px-6 py-3 rounded-xl border border-slate-200 font-black uppercase tracking-widest text-xs text-slate-700 shadow-sm hover:shadow-md">
+                  {copied ? <><HugeIconPicker name="checkIcon" size={16} className="text-emerald-500" /> <span className="text-emerald-600">Copied!</span></> : <><HugeIconPicker name="share01Icon" size={16} className="text-slate-500" /> Share</>}
+                </button>
+              </div>
             </div>
           </article>
 
           {/* Sidebar */}
-          <aside className="space-y-4">
-            {/* Speed Pro widget */}
-            <div className="bg-gradient-to-br from-teal-600 to-indigo-600 text-white rounded-2xl p-5">
-              <HugeIconPicker name="zapIcon" size={24} className="fill-white text-white mb-3" />
-              <h3 className="font-black mb-1">Test Your Speed</h3>
-              <p className="text-teal-200 text-xs mb-4">Free — no sign-up needed</p>
-              <Link to="/" className="block w-full text-center bg-white text-teal-700 font-black text-sm py-2.5 rounded-xl hover:bg-teal-50 transition-colors">
+          <aside className="space-y-8">
+            
+            {/* Speed Pro widget (DARK IN LIGHT) */}
+            <div className="bg-slate-950 border border-slate-800 text-white rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden group">
+              <div className="absolute -right-4 -top-4 opacity-10 text-teal-400 pointer-events-none group-hover:scale-110 transition-transform duration-500"><HugeIconPicker name="zapIcon" size={140} /></div>
+              <HugeIconPicker name="zapIcon" size={40} className="fill-teal-400 text-teal-400 mb-6 drop-shadow-[0_0_15px_rgba(45,212,191,0.5)]" />
+              <h3 className="font-black text-2xl uppercase tracking-tighter mb-2">Test Your Speed</h3>
+              <p className="text-slate-400 text-xs font-black uppercase tracking-widest mb-8">Free — no sign-up needed</p>
+              <Link to="/" className="block w-full text-center bg-teal-500 text-slate-950 font-black text-xs uppercase tracking-widest py-4 rounded-xl hover:bg-teal-400 transition-all shadow-[0_0_20px_rgba(20,184,166,0.3)]">
                 Run Speed Test →
               </Link>
             </div>
 
-            {/* Compare ISPs */}
-            <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
-              <h3 className="font-black text-sm mb-3">Compare ISP Plans</h3>
-              <p className="text-slate-500 text-xs mb-4">Find the best internet plan for your area and budget</p>
-              <Link to="/packages" className="flex items-center justify-between text-sm font-black text-indigo-600 hover:text-indigo-700">
-                View All Plans <HugeIconPicker name="linkSquare01Icon" size={14} />
+            {/* Compare ISPs (LIGHT) */}
+            <div className="bg-slate-50 rounded-[2.5rem] border border-slate-200 p-10 shadow-md">
+              <h3 className="font-black text-lg uppercase tracking-tighter mb-2 text-slate-900">Compare ISP Plans</h3>
+              <p className="text-slate-500 text-xs font-bold leading-relaxed mb-8">Find the best internet plan for your area and budget</p>
+              <Link to="/packages" className="flex items-center justify-between text-xs font-black uppercase tracking-widest text-teal-600 hover:text-white bg-teal-50 hover:bg-teal-500 border border-teal-200 px-5 py-4 rounded-xl transition-colors shadow-sm">
+                View All Plans <HugeIconPicker name="linkSquare01Icon" size={16} />
               </Link>
             </div>
 
-            {/* Related articles */}
+            {/* Related articles (LIGHT) */}
             {related.length > 0 && (
-              <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
-                <h3 className="font-black text-sm mb-4 uppercase tracking-wider text-slate-400">Related Articles</h3>
-                <div className="space-y-3">
+              <div className="bg-slate-50 rounded-[2.5rem] border border-slate-200 p-10 shadow-md">
+                <h3 className="font-black text-xs mb-8 uppercase tracking-[0.2em] text-slate-900 flex items-center gap-2">
+                  <HugeIconPicker name="book01Icon" size={16} className="text-teal-500" /> Related Articles
+                </h3>
+                <div className="space-y-6">
                   {related.map(rp => (
                     <Link key={rp.slug} to={`/blog/${rp.slug}`}
-                      className="flex items-start gap-3 group hover:bg-slate-50 rounded-xl p-2 -mx-2 transition-colors"
+                      className="flex items-start gap-5 group transition-colors"
                     >
-                      <span className="text-indigo-600 bg-indigo-50 p-2 rounded-xl shrink-0 border border-indigo-100 group-hover:bg-indigo-100 transition-colors">
+                      <span className="text-teal-600 bg-white p-3 rounded-xl shrink-0 border border-slate-200 shadow-sm group-hover:bg-teal-50 group-hover:border-teal-200 transition-colors">
                         <HugeIconPicker name={rp.iconName} size={24} />
                       </span>
-                      <div className="min-w-0">
-                        <p className="text-xs font-bold text-slate-800 group-hover:text-indigo-700 leading-tight line-clamp-2 transition-colors">{rp.title}</p>
-                        <p className="text-[10px] text-slate-400 font-bold mt-0.5 flex items-center gap-1"><HugeIconPicker name="time01Icon" size={9} />{rp.readTime} min</p>
+                      <div className="min-w-0 pt-1">
+                        <p className="text-sm font-black text-slate-900 group-hover:text-teal-600 leading-snug line-clamp-2 transition-colors uppercase tracking-wider">{rp.title}</p>
+                        <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-2 flex items-center gap-1.5"><HugeIconPicker name="time01Icon" size={12} className="text-teal-500" />{rp.readTime} min</p>
                       </div>
                     </Link>
                   ))}
@@ -230,22 +256,27 @@ export default function BlogPost() {
               </div>
             )}
 
-            {/* BTRC info */}
-            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4">
-              <p className="text-xs font-bold text-amber-800 mb-1">ISP Problem?</p>
-              <p className="text-[10px] text-amber-700 mb-2">File a complaint with BTRC if your ISP isn't delivering advertised speeds</p>
-              <a href="tel:16996" className="text-xs font-black text-amber-600 hover:underline">📞 BTRC Hotline: 16996</a>
+            {/* BTRC info (RED THEME IN LIGHT) */}
+            <div className="bg-rose-50 border border-rose-200 rounded-[2.5rem] p-10 relative overflow-hidden group shadow-md hover:shadow-lg transition-shadow">
+              <div className="absolute -right-4 -top-4 opacity-[0.03] text-rose-600 pointer-events-none group-hover:scale-110 transition-transform"><HugeIconPicker name="alertCircleIcon" size={140} /></div>
+              <p className="text-xs font-black uppercase tracking-widest text-rose-600 mb-3 relative z-10">ISP Problem?</p>
+              <p className="text-sm text-slate-700 font-bold leading-relaxed mb-8 relative z-10">File a complaint with BTRC if your ISP isn't delivering advertised speeds.</p>
+              <a href="tel:16996" className="inline-flex items-center justify-center w-full gap-2 text-xs font-black uppercase tracking-widest text-white bg-rose-600 hover:bg-rose-500 px-6 py-4 rounded-xl transition-colors relative z-10 shadow-[0_10px_20px_rgba(225,29,72,0.3)]">
+                <HugeIconPicker name="callIcon" size={16} /> Hotline: 16996
+              </a>
             </div>
           </aside>
         </div>
 
         {/* Back to blog */}
-        <div className="mt-8 pt-8 border-t border-slate-200">
-          <Link to="/blog" className="inline-flex items-center gap-2 text-sm font-black text-indigo-600 hover:text-indigo-700">
+        <div className="max-w-screen-xl mx-auto mt-16 pt-10 border-t border-slate-200 text-center">
+          <Link to="/blog" className="inline-flex items-center justify-center gap-3 text-xs font-black uppercase tracking-widest text-slate-600 hover:text-teal-600 bg-slate-50 border border-slate-200 px-8 py-4 rounded-xl hover:bg-white transition-colors shadow-sm">
             <HugeIconPicker name="arrowLeft01Icon" size={16} /> Back to all articles
           </Link>
         </div>
-      </div>
+      </section>
+      
     </div>
   );
+
 }

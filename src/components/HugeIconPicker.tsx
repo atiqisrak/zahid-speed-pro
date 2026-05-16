@@ -13,7 +13,7 @@ export default function HugeIconPicker({ name, className = '', size = 24 }: { na
   // Fallback to a generic icon if not found
   if (!iconData) {
     // @ts-ignore
-    iconData = HugeIconsAll.globe02Icon || HugeIconsAll.Globe02Icon;
+    iconData = HugeIconsAll.Globe02Icon;
   }
 
   if (!iconData) return null;

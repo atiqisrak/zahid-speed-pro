@@ -26,8 +26,6 @@ const SERVERS:Server[] = [
 ];
 const STORAGE_KEY = 'speedpro_history_v1';
 
-
-
 export default function Home() {
   const [stage, setStage] = useState<TestStage>(TEST_STAGES.IDLE);
   const [currentSpeed, setCurrentSpeed] = useState(0);
@@ -56,9 +54,9 @@ export default function Home() {
 
   const healthScore = useMemo(() => {
     const dl = Number(results.download), ping = Number(results.ping);
-    if(dl>100 && ping<20) return { label:'Excellent', color:'text-emerald-500' };
-    if(dl>25) return { label:'Good', color:'text-blue-500' };
-    return { label:'Unstable', color:'text-amber-500' };
+    if(dl>100 && ping<20) return { label:'Excellent', color:'text-emerald-400', dropShadow:'drop-shadow-[0_0_10px_rgba(52,211,153,0.5)]', glow:'shadow-[0_0_20px_rgba(52,211,153,0.2)]', border:'border-emerald-500/30', bg:'bg-emerald-500/10' };
+    if(dl>25) return { label:'Good', color:'text-teal-400', dropShadow:'drop-shadow-[0_0_10px_rgba(45,212,191,0.5)]', glow:'shadow-[0_0_20px_rgba(45,212,191,0.2)]', border:'border-teal-500/30', bg:'bg-teal-500/10' };
+    return { label:'Unstable', color:'text-rose-400', dropShadow:'drop-shadow-[0_0_10px_rgba(244,63,94,0.5)]', glow:'shadow-[0_0_20px_rgba(244,63,94,0.2)]', border:'border-rose-500/30', bg:'bg-rose-500/10' };
   },[results.download, results.ping]);
 
   const simulateLatency = async () => {
@@ -138,57 +136,101 @@ export default function Home() {
 
 
   return (
-    <div className="min-h-full bg-white text-slate-900 font-sans">
-      <main className="max-w-6xl mx-auto p-4 md:p-8">
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans relative pb-20 pt-32 selection:bg-teal-500/30 selection:text-teal-900 overflow-hidden">
+      
+      {/* Background Graphic */}
+      <div className="absolute top-0 left-0 w-full h-full z-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-slate-950 z-10 opacity-80" />
+        <img 
+          src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=2000&q=80" 
+          alt="Datacenter Core" 
+          className="w-full h-full object-cover opacity-[0.15] mix-blend-luminosity scale-105"
+        />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-teal-500/10 rounded-full blur-[150px] z-10" />
+      </div>
+
+      <main className="relative z-10 max-w-5xl mx-auto px-4 md:px-8">
         <div className="flex flex-col gap-6">
+          
+          {/* Header text on idle */}
+          {stage === TEST_STAGES.IDLE && (
+            <div className="text-center mb-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+              <div className="inline-flex items-center gap-2 text-teal-400 text-[10px] font-black uppercase tracking-widest mb-4 bg-teal-500/10 px-4 py-2 rounded-full border border-teal-500/20 shadow-[0_0_15px_rgba(20,184,166,0.15)]">
+                <HugeIconPicker name="activity01Icon" size={14} className="animate-pulse" /> Precision Speed Test
+              </div>
+              <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-white drop-shadow-2xl mb-2">
+                Core <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-indigo-400">Diagnostics</span>
+              </h1>
+            </div>
+          )}
+
           {stage===TEST_STAGES.COMPLETED && (
-            <div className="animate-in zoom-in-95 fade-in duration-500 space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-teal-600 text-white p-6 sm:p-8 rounded-[2rem] shadow-xl shadow-teal-500/20 relative overflow-hidden flex flex-col justify-between min-h-[140px]">
-                  <div className="absolute top-0 right-0 p-6 opacity-10"><HugeIconPicker name="arrowDown01Icon" size={80}/></div>
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-teal-200 mb-2">Download</p>
-                  <div className="flex items-baseline gap-2 mt-auto">
-                    <span className="text-5xl sm:text-7xl font-black italic tracking-tighter">{results.download}</span>
-                    <span className="text-xl font-bold text-teal-200 ml-1">Mbps</span>
+            <div className="animate-in zoom-in-95 fade-in duration-500 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Download Box */}
+                <div className="bg-teal-500/10 border border-teal-500/30 backdrop-blur-md p-8 sm:p-10 rounded-[2.5rem] shadow-[0_0_40px_rgba(20,184,166,0.15)] relative overflow-hidden flex flex-col justify-between min-h-[180px] group transition-all hover:bg-teal-500/20">
+                  <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity text-teal-400"><HugeIconPicker name="arrowDown01Icon" size={100}/></div>
+                  <div className="absolute -inset-24 bg-teal-500/20 rounded-full blur-[80px] group-hover:bg-teal-500/30 transition-colors pointer-events-none" />
+                  
+                  <div className="relative">
+                    <p className="text-[11px] font-black uppercase tracking-widest text-teal-400 mb-2 flex items-center gap-2">
+                      <HugeIconPicker name="download02Icon" size={16} /> Download
+                    </p>
+                    <div className="flex items-baseline gap-3 mt-auto">
+                      <span className="text-6xl sm:text-8xl font-black italic tracking-tighter text-white drop-shadow-[0_0_15px_rgba(20,184,166,0.5)]">{results.download}</span>
+                      <span className="text-2xl font-black uppercase tracking-widest text-teal-400 ml-1">Mbps</span>
+                    </div>
                   </div>
                 </div>
-                <div className="bg-white border-2 border-slate-100 p-6 sm:p-8 rounded-[2rem] shadow-sm relative overflow-hidden flex flex-col justify-between min-h-[140px]">
-                  <div className="absolute top-0 right-0 p-6 opacity-5"><HugeIconPicker name="arrowUp01Icon" size={80}/></div>
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Upload</p>
-                  <div className="flex items-baseline gap-2 mt-auto">
-                    <span className="text-5xl sm:text-7xl font-black italic tracking-tighter text-slate-900">{results.upload}</span>
-                    <span className="text-xl font-bold text-slate-400 ml-1">Mbps</span>
+                
+                {/* Upload Box */}
+                <div className="bg-white/5 border border-white/10 backdrop-blur-md p-8 sm:p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden flex flex-col justify-between min-h-[180px] group transition-all hover:bg-white/10 hover:border-white/20">
+                  <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity text-white"><HugeIconPicker name="arrowUp01Icon" size={100}/></div>
+                  <div className="absolute -inset-24 bg-indigo-500/10 rounded-full blur-[80px] group-hover:bg-indigo-500/20 transition-colors pointer-events-none" />
+                  
+                  <div className="relative">
+                    <p className="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-2 flex items-center gap-2">
+                      <HugeIconPicker name="upload02Icon" size={16} /> Upload
+                    </p>
+                    <div className="flex items-baseline gap-3 mt-auto">
+                      <span className="text-6xl sm:text-8xl font-black italic tracking-tighter text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">{results.upload}</span>
+                      <span className="text-2xl font-black uppercase tracking-widest text-slate-400 ml-1">Mbps</span>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-slate-50 p-6 rounded-[2rem] border border-slate-100 flex flex-col justify-center items-center text-center">
-                  <HugeIconPicker name="activity01Icon" size={24} className="text-teal-500 mb-3"/>
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-1">Latency</p>
-                  <div className="flex items-baseline gap-1"><span className="text-3xl font-black">{results.ping}</span><span className="text-xs font-bold text-slate-400">ms</span></div>
+              
+              <div className="grid grid-cols-2 gap-6">
+                <div className="bg-white/5 backdrop-blur-md p-6 sm:p-8 rounded-[2rem] border border-white/10 shadow-xl flex flex-col justify-center items-center text-center hover:bg-white/10 transition-colors relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 to-transparent pointer-events-none" />
+                  <HugeIconPicker name="activity01Icon" size={28} className="text-teal-400 mb-4 drop-shadow-[0_0_8px_currentColor]"/>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Latency</p>
+                  <div className="flex items-baseline gap-1.5"><span className="text-4xl font-black text-white">{results.ping}</span><span className="text-xs font-black uppercase tracking-widest text-slate-400">ms</span></div>
                 </div>
-                <div className="bg-slate-50 p-6 rounded-[2rem] border border-slate-100 flex flex-col justify-center items-center text-center">
-                  <HugeIconPicker name="shield01Icon" size={24} className="text-emerald-500 mb-3"/>
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-1">Jitter</p>
-                  <div className="flex items-baseline gap-1"><span className="text-3xl font-black">{results.jitter}</span><span className="text-xs font-bold text-slate-400">ms</span></div>
+                <div className="bg-white/5 backdrop-blur-md p-6 sm:p-8 rounded-[2rem] border border-white/10 shadow-xl flex flex-col justify-center items-center text-center hover:bg-white/10 transition-colors relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-bl from-emerald-500/5 to-transparent pointer-events-none" />
+                  <HugeIconPicker name="shield01Icon" size={28} className="text-emerald-400 mb-4 drop-shadow-[0_0_8px_currentColor]"/>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Jitter</p>
+                  <div className="flex items-baseline gap-1.5"><span className="text-4xl font-black text-white">{results.jitter}</span><span className="text-xs font-black uppercase tracking-widest text-slate-400">ms</span></div>
                 </div>
               </div>
-              <div className="bg-teal-50 border border-teal-100 p-6 rounded-[2rem] text-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-4 w-full sm:w-auto">
-                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border border-teal-100 shadow-sm shrink-0">
-                    <HugeIconPicker name="heartPulseIcon" size={24} className={healthScore.color}/>
+
+              <div className={`${healthScore.bg} backdrop-blur-md border ${healthScore.border} p-6 sm:p-8 rounded-[2rem] text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl`}>
+                <div className="flex items-center gap-6 w-full sm:w-auto">
+                  <div className={`w-16 h-16 bg-white/5 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10 shadow-inner shrink-0 ${healthScore.glow}`}>
+                    <HugeIconPicker name="heartPulseIcon" size={32} className={`${healthScore.color} ${healthScore.dropShadow}`}/>
                   </div>
                   <div>
-                    <p className="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Network Health</p>
-                    <h4 className={`text-xl font-black ${healthScore.color}`}>{healthScore.label} Connection</h4>
+                    <p className="text-[10px] uppercase font-black text-slate-400 tracking-widest mb-1">Network Health</p>
+                    <h4 className={`text-2xl font-black uppercase tracking-wider ${healthScore.color} ${healthScore.dropShadow}`}>{healthScore.label} Connection</h4>
                   </div>
                 </div>
-                <div className="flex gap-2 w-full sm:w-auto">
-                  <button onClick={startFullTest} className="flex-1 sm:flex-none px-6 py-4 sm:py-3 bg-teal-600 text-white rounded-2xl font-black text-xs hover:bg-teal-700 transition-all flex items-center justify-center gap-2 shadow-sm">
-                    <HugeIconPicker name="arrowReloadHorizontalIcon" size={14}/> Retest
+                <div className="flex gap-3 w-full sm:w-auto">
+                  <button onClick={startFullTest} className="flex-1 sm:flex-none px-8 py-4 bg-teal-500 text-slate-950 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-teal-400 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(20,184,166,0.3)] hover:shadow-[0_0_30px_rgba(20,184,166,0.5)]">
+                    <HugeIconPicker name="arrowReloadHorizontalIcon" size={16}/> Retest
                   </button>
-                  <button onClick={()=>setShowShare(true)} className="flex-1 sm:flex-none px-6 py-4 sm:py-3 bg-white text-teal-700 border border-teal-200 rounded-2xl font-black text-xs hover:bg-teal-50 transition-all flex items-center justify-center gap-2">
-                    <HugeIconPicker name="share01Icon" size={14}/> Share
+                  <button onClick={()=>setShowShare(true)} className="flex-1 sm:flex-none px-8 py-4 bg-white/5 text-white border border-white/10 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-white/10 transition-all flex items-center justify-center gap-2">
+                    <HugeIconPicker name="share01Icon" size={16}/> Share
                   </button>
                 </div>
               </div>
@@ -196,47 +238,57 @@ export default function Home() {
           )}
 
           {stage!==TEST_STAGES.COMPLETED && (
-            <div className="bg-slate-50 rounded-[2.5rem] p-4 sm:p-6 md:p-12 border border-slate-100 relative overflow-hidden flex flex-col items-center justify-center min-h-[350px] sm:min-h-[400px] md:min-h-[500px]">
+            <div className="bg-slate-900/40 backdrop-blur-xl rounded-[3rem] p-6 sm:p-8 md:p-14 border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden flex flex-col items-center justify-center min-h-[400px] sm:min-h-[450px] md:min-h-[550px]">
+              
               {stage!==TEST_STAGES.IDLE && (
-                <div className="absolute top-0 left-0 w-full h-1.5 bg-slate-200">
-                  <div className="h-full bg-teal-600 transition-all duration-300" style={{width:`${progress}%`}}/>
+                <div className="absolute top-0 left-0 w-full h-1.5 bg-slate-900/80">
+                  <div className="h-full bg-teal-400 transition-all duration-300 shadow-[0_0_15px_currentColor]" style={{width:`${progress}%`}}/>
                 </div>
               )}
+              
               {stage===TEST_STAGES.IDLE ? (
-                <div className="text-center">
-                  <button onClick={startFullTest} className="relative w-52 h-52 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full bg-teal-600 text-white flex flex-col items-center justify-center shadow-2xl shadow-teal-500/30 active:scale-95 transition-all">
-                    <span className="text-5xl md:text-6xl font-black italic tracking-tighter">GO</span>
-                    <div className="absolute -inset-3 rounded-full border border-teal-600/20 animate-ping pointer-events-none"/>
-                  </button>
-                  <div className="mt-10 space-y-2">
-                    <div className="px-4 py-1.5 bg-white rounded-full text-[10px] font-bold shadow-sm inline-flex items-center gap-2 border border-slate-100">
-                      <HugeIconPicker name="routerIcon" size={12} className="text-teal-500"/> {activeProfile.name}
+                <div className="text-center animate-in zoom-in-95 duration-500">
+                  <div className="relative group">
+                    {/* Glowing pulse rings */}
+                    <div className="absolute inset-0 rounded-full bg-teal-500/20 blur-2xl group-hover:bg-teal-500/30 transition-colors duration-500" />
+                    <div className="absolute -inset-8 rounded-full border border-teal-500/20 animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite] pointer-events-none" />
+                    <div className="absolute -inset-16 rounded-full border border-teal-500/10 animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite_1s] pointer-events-none" />
+                    
+                    <button onClick={startFullTest} className="relative w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 text-slate-950 flex flex-col items-center justify-center shadow-[0_0_50px_rgba(20,184,166,0.5)] group-active:scale-95 transition-all overflow-hidden border border-teal-300/50">
+                      <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <span className="text-6xl md:text-8xl font-black italic tracking-tighter drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]">GO</span>
+                    </button>
+                  </div>
+                  <div className="mt-14 space-y-3">
+                    <div className="px-5 py-2.5 bg-white/5 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-widest shadow-inner inline-flex items-center gap-2 border border-white/10 text-white">
+                      <HugeIconPicker name="routerIcon" size={14} className="text-teal-400"/> {activeProfile.name}
                     </div>
-                    <p className="text-slate-400 text-xs font-medium block">Node: {activeServer.name}</p>
+                    <p className="text-slate-400 text-[11px] font-bold uppercase tracking-widest block">Node: <span className="text-white">{activeServer.name}</span></p>
                   </div>
                 </div>
               ) : (
-                <div className="w-full max-w-2xl text-center">
-                  <div className="mb-4 flex items-center justify-center gap-2">
-                    <div className={`w-2 h-2 rounded-full animate-pulse ${stage===TEST_STAGES.DOWNLOAD?'bg-teal-500':'bg-emerald-500'}`}/>
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">{stage.replace('_',' ')}</span>
+                <div className="w-full max-w-3xl text-center">
+                  <div className="mb-8 flex items-center justify-center gap-3">
+                    <div className={`w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] animate-pulse ${stage===TEST_STAGES.DOWNLOAD?'bg-teal-400 text-teal-400':'bg-indigo-400 text-indigo-400'}`}/>
+                    <span className="text-xs font-black uppercase tracking-[0.3em] text-slate-300">{stage.replace('_',' ')}</span>
                   </div>
-                  <div className="flex items-baseline justify-center mb-10">
-                    <span className="text-6xl sm:text-7xl md:text-9xl font-black tabular-nums tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-500">
+                  <div className="flex items-baseline justify-center mb-12">
+                    <span className="text-7xl sm:text-8xl md:text-[10rem] font-black tabular-nums tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-slate-500 drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
                       {currentSpeed>0?currentSpeed.toFixed(1):'...'}
                     </span>
-                    <span className="text-xl sm:text-4xl font-black text-teal-600 italic ml-2 md:ml-4 tracking-tighter">Mbps</span>
+                    <span className="text-2xl sm:text-4xl md:text-5xl font-black text-teal-400 italic ml-4 tracking-tighter drop-shadow-[0_0_15px_rgba(45,212,191,0.5)]">Mbps</span>
                   </div>
-                  <div className="h-40 md:h-56 w-full px-2">
+                  <div className="h-48 md:h-64 w-full px-4 relative">
+                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-slate-900/50 to-transparent pointer-events-none z-10" />
                     <ResponsiveContainer width="100%" height="100%">
                       <AreaChart data={graphData}>
                         <defs>
-                          <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#0d9488" stopOpacity={0.3}/>
-                            <stop offset="95%" stopColor="#0d9488" stopOpacity={0}/>
+                          <linearGradient id="gDark" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor={stage===TEST_STAGES.DOWNLOAD?'#2dd4bf':'#818cf8'} stopOpacity={0.6}/>
+                            <stop offset="95%" stopColor={stage===TEST_STAGES.DOWNLOAD?'#2dd4bf':'#818cf8'} stopOpacity={0}/>
                           </linearGradient>
                         </defs>
-                        <Area type="monotone" dataKey="speed" stroke="#0d9488" strokeWidth={3} fill="url(#g1)" isAnimationActive={false}/>
+                        <Area type="monotone" dataKey="speed" stroke={stage===TEST_STAGES.DOWNLOAD?'#2dd4bf':'#818cf8'} strokeWidth={4} fill="url(#gDark)" isAnimationActive={false} style={{filter:'drop-shadow(0 0 10px rgba(45,212,191,0.5))'}}/>
                       </AreaChart>
                     </ResponsiveContainer>
                   </div>
@@ -245,39 +297,40 @@ export default function Home() {
             </div>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100 flex items-center justify-between">
-              <div className="flex items-center gap-4 min-w-0">
-                <div className="p-2.5 bg-white rounded-xl shadow-sm border border-slate-100 shrink-0"><HugeIconPicker name="globe02Icon" size={18} className="text-teal-600"/></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+            <div className="bg-slate-900/50 backdrop-blur-md p-6 rounded-3xl border border-white/10 flex items-center justify-between shadow-xl group hover:bg-slate-900 transition-colors">
+              <div className="flex items-center gap-5 min-w-0">
+                <div className="p-3.5 bg-white/5 rounded-2xl shadow-inner border border-white/10 shrink-0 group-hover:bg-teal-500/10 group-hover:border-teal-500/30 transition-colors"><HugeIconPicker name="globe02Icon" size={24} className="text-teal-400"/></div>
                 <div className="min-w-0">
-                  <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">Your Provider</p>
-                  <p className="text-sm font-bold truncate">{ipInfo.isp.split(',')[0]} {ipInfo.city?`(${ipInfo.city})`:''}</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Your Provider</p>
+                  <p className="text-sm font-black text-white uppercase tracking-wider truncate">{ipInfo.isp.split(',')[0]} {ipInfo.city?`(${ipInfo.city})`:''}</p>
                 </div>
               </div>
-              <div className="text-right shrink-0 ml-4">
-                <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 whitespace-nowrap">External IP</p>
-                <p className="text-[11px] font-mono font-bold bg-white px-2 py-1 rounded border border-slate-100">{ipInfo.ip}</p>
+              <div className="text-right shrink-0 ml-4 hidden sm:block">
+                <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 whitespace-nowrap mb-1">External IP</p>
+                <p className="text-[11px] font-mono font-bold bg-slate-950 text-teal-400 px-3 py-1.5 rounded-lg border border-white/10">{ipInfo.ip}</p>
               </div>
             </div>
-            <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100 flex items-center justify-between">
-              <div className="flex items-center gap-4 min-w-0">
-                <div className="p-2.5 bg-white rounded-xl shadow-sm border border-slate-100 shrink-0"><HugeIconPicker name="location01Icon" size={18} className="text-teal-600"/></div>
+            
+            <div className="bg-slate-900/50 backdrop-blur-md p-6 rounded-3xl border border-white/10 flex items-center justify-between shadow-xl group hover:bg-slate-900 transition-colors">
+              <div className="flex items-center gap-5 min-w-0">
+                <div className="p-3.5 bg-white/5 rounded-2xl shadow-inner border border-white/10 shrink-0 group-hover:bg-indigo-500/10 group-hover:border-indigo-500/30 transition-colors"><HugeIconPicker name="location01Icon" size={24} className="text-indigo-400"/></div>
                 <div className="min-w-0">
-                  <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">Server Node</p>
-                  <p className="text-sm font-bold truncate">{activeServer.name}</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Server Node</p>
+                  <p className="text-sm font-black text-white uppercase tracking-wider truncate">{activeServer.name}</p>
                 </div>
               </div>
-              <button onClick={()=>setShowSettings(true)} className="text-[10px] font-black text-teal-600 uppercase tracking-widest hover:underline shrink-0 ml-4">Change</button>
+              <button onClick={()=>setShowSettings(true)} className="text-[10px] font-black text-teal-400 bg-teal-500/10 border border-teal-500/20 px-3 py-1.5 rounded-lg uppercase tracking-widest hover:bg-teal-500 hover:text-slate-950 transition-colors shrink-0 ml-4">Change</button>
             </div>
           </div>
 
           {/* Mobile action buttons */}
-          <div className="flex gap-3 md:hidden">
-            <button onClick={()=>setShowHistory(true)} className="flex-1 py-3 bg-slate-100 rounded-2xl font-black text-xs flex items-center justify-center gap-2">
-              <HugeIconPicker name="historyIcon" size={16}/> History
+          <div className="flex gap-4 md:hidden mt-4">
+            <button onClick={()=>setShowHistory(true)} className="flex-1 py-4 bg-white/5 border border-white/10 rounded-2xl font-black text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-white/10 text-white transition-all">
+              <HugeIconPicker name="historyIcon" size={18}/> History
             </button>
-            <button onClick={()=>setShowSettings(true)} className="flex-1 py-3 bg-slate-100 rounded-2xl font-black text-xs flex items-center justify-center gap-2">
-              <HugeIconPicker name="settings01Icon" size={16}/> Settings
+            <button onClick={()=>setShowSettings(true)} className="flex-1 py-4 bg-white/5 border border-white/10 rounded-2xl font-black text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-white/10 text-white transition-all">
+              <HugeIconPicker name="settings01Icon" size={18}/> Settings
             </button>
           </div>
         </div>

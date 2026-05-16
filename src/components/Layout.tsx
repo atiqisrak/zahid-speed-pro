@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import HugeIconPicker from './HugeIconPicker';
 
@@ -60,9 +60,9 @@ export default function Layout() {
           </button>
           
           {/* Contact CTA */}
-          <button onClick={() => navigate('/contact')} className="hidden md:flex items-center gap-2 bg-white text-slate-950 px-6 py-2.5 rounded-full font-bold text-sm tracking-wide hover:bg-teal-400 hover:text-white transition-colors group">
+          <Link to="/contact" className="hidden md:flex items-center gap-2 bg-white text-slate-950 px-6 py-2.5 rounded-full font-bold text-sm tracking-wide hover:bg-teal-400 hover:text-white transition-colors group">
              Let's Talk <HugeIconPicker name="arrowRight01Icon" size={16} className="group-hover:translate-x-1 transition-transform" />
-          </button>
+          </Link>
 
         </div>
       </header>
@@ -135,19 +135,20 @@ export default function Layout() {
             <div>
                <h4 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-8">Platform</h4>
                <ul className="space-y-4">
-                 <li><a href="#" className="font-medium hover:text-teal-400 transition-colors">Speed Test</a></li>
-                 <li><a href="#" className="font-medium hover:text-teal-400 transition-colors">BDIX Hub</a></li>
-                 <li><a href="#" className="font-medium hover:text-teal-400 transition-colors">ISP Finder</a></li>
-                 <li><a href="#" className="font-medium hover:text-teal-400 transition-colors">Enterprise Plans</a></li>
+                 <li><Link to="/speedtest" className="font-medium hover:text-teal-400 transition-colors">Speed Test</Link></li>
+                 <li><Link to="/bdix" className="font-medium hover:text-teal-400 transition-colors">BDIX Hub</Link></li>
+                 <li><Link to="/isp-finder" className="font-medium hover:text-teal-400 transition-colors">ISP Finder</Link></li>
+                 <li><Link to="/packages" className="font-medium hover:text-teal-400 transition-colors">Enterprise Plans</Link></li>
                </ul>
             </div>
             <div>
                <h4 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-8">Company</h4>
                <ul className="space-y-4">
-                 <li><a href="#" className="font-medium hover:text-teal-400 transition-colors">About Us</a></li>
-                 <li><a href="#" className="font-medium hover:text-teal-400 transition-colors">Contact</a></li>
-                 <li><a href="#" className="font-medium hover:text-teal-400 transition-colors">Privacy Policy</a></li>
-                 <li><a href="#" className="font-medium hover:text-teal-400 transition-colors">Terms of Service</a></li>
+                 <li><Link to="/about" className="font-medium hover:text-teal-400 transition-colors">About Us</Link></li>
+                 <li><Link to="/contact" className="font-medium hover:text-teal-400 transition-colors">Contact</Link></li>
+                 <li><Link to="/privacy" className="font-medium hover:text-teal-400 transition-colors">Privacy Policy</Link></li>
+                 <li><Link to="/terms" className="font-medium hover:text-teal-400 transition-colors">Terms of Service</Link></li>
+                 <li><Link to="/compliance" className="font-medium hover:text-teal-400 transition-colors text-rose-400">Compliance</Link></li>
                </ul>
             </div>
           </div>

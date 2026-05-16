@@ -45,19 +45,19 @@ export default function IspFinder() {
             center: { lat: 23.8103, lng: 90.4125 }, // Dhaka
             zoom: 13,
             styles: [
-              { "elementType": "geometry", "stylers": [{"color": "#f5f5f5"}] },
+              { "elementType": "geometry", "stylers": [{"color": "#0f172a"}] },
               { "elementType": "labels.icon", "stylers": [{"visibility": "off"}] },
-              { "elementType": "labels.text.fill", "stylers": [{"color": "#616161"}] },
-              { "elementType": "labels.text.stroke", "stylers": [{"color": "#f5f5f5"}] },
-              { "featureType": "administrative.land_parcel", "elementType": "labels.text.fill", "stylers": [{"color": "#bdbdbd"}] },
-              { "featureType": "poi", "elementType": "geometry", "stylers": [{"color": "#eeeeee"}] },
-              { "featureType": "poi", "elementType": "labels.text.fill", "stylers": [{"color": "#757575"}] },
-              { "featureType": "road", "elementType": "geometry", "stylers": [{"color": "#ffffff"}] },
-              { "featureType": "road.arterial", "elementType": "labels.text.fill", "stylers": [{"color": "#757575"}] },
-              { "featureType": "road.highway", "elementType": "geometry", "stylers": [{"color": "#dadada"}] },
-              { "featureType": "road.highway", "elementType": "labels.text.fill", "stylers": [{"color": "#616161"}] },
-              { "featureType": "water", "elementType": "geometry", "stylers": [{"color": "#c9c9c9"}] },
-              { "featureType": "water", "elementType": "labels.text.fill", "stylers": [{"color": "#9e9e9e"}] }
+              { "elementType": "labels.text.fill", "stylers": [{"color": "#94a3b8"}] },
+              { "elementType": "labels.text.stroke", "stylers": [{"color": "#020617"}] },
+              { "featureType": "administrative.land_parcel", "elementType": "labels.text.fill", "stylers": [{"color": "#64748b"}] },
+              { "featureType": "poi", "elementType": "geometry", "stylers": [{"color": "#1e293b"}] },
+              { "featureType": "poi", "elementType": "labels.text.fill", "stylers": [{"color": "#94a3b8"}] },
+              { "featureType": "road", "elementType": "geometry", "stylers": [{"color": "#334155"}] },
+              { "featureType": "road.arterial", "elementType": "labels.text.fill", "stylers": [{"color": "#94a3b8"}] },
+              { "featureType": "road.highway", "elementType": "geometry", "stylers": [{"color": "#475569"}] },
+              { "featureType": "road.highway", "elementType": "labels.text.fill", "stylers": [{"color": "#cbd5e1"}] },
+              { "featureType": "water", "elementType": "geometry", "stylers": [{"color": "#020617"}] },
+              { "featureType": "water", "elementType": "labels.text.fill", "stylers": [{"color": "#475569"}] }
             ],
             mapTypeControl: false,
             streetViewControl: false,
@@ -100,9 +100,9 @@ export default function IspFinder() {
         icon: {
           path: googleObj.maps.SymbolPath.CIRCLE,
           scale: 10,
-          fillColor: "#4f46e5", // Indigo 600
+          fillColor: "#2dd4bf", // Teal 400
           fillOpacity: 1,
-          strokeColor: "#ffffff",
+          strokeColor: "#020617",
           strokeWeight: 3,
         }
       });
@@ -154,37 +154,37 @@ export default function IspFinder() {
   }, [isps, filterFiber, filterAvailable, sortPrice]);
 
   return (
-    <div className="min-h-full flex flex-col relative bg-slate-100 font-sans">
+    <div className="min-h-screen flex flex-col relative bg-slate-950 font-sans text-slate-100 selection:bg-teal-500/30 selection:text-teal-900">
       
       {/* Absolute Header Panel */}
-      <div className="absolute top-4 left-4 z-10 w-full max-w-[380px] md:max-w-md flex flex-col gap-4 pointer-events-none">
+      <div className="absolute top-32 left-4 md:left-8 z-10 w-[calc(100%-2rem)] md:w-full max-w-[380px] md:max-w-md flex flex-col gap-4 pointer-events-none">
         
         {/* Search Box */}
-        <div className="bg-white/80 backdrop-blur-xl p-5 rounded-[2rem] shadow-2xl shadow-indigo-900/10 border border-white pointer-events-auto">
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-              <span className="bg-indigo-600 text-white p-2 rounded-xl shadow-md"><HugeIconPicker name="map01Icon" size={20} /></span>
-              Coverage Map
+        <div className="bg-slate-950/80 backdrop-blur-xl p-6 rounded-[2rem] shadow-[0_0_40px_rgba(0,0,0,0.5)] border border-white/10 pointer-events-auto">
+          <div className="flex items-center justify-between mb-5">
+            <h1 className="text-xl font-black text-white tracking-wider uppercase flex items-center gap-3">
+              <span className="bg-teal-500/20 text-teal-400 border border-teal-500/30 p-2.5 rounded-xl shadow-[0_0_15px_rgba(20,184,166,0.3)]"><HugeIconPicker name="map01Icon" size={20} /></span>
+              ISP Finder
             </h1>
           </div>
           
-          <div className="relative flex items-center gap-2">
+          <div className="relative flex items-center gap-3">
             <div className="relative flex-1">
               <input
                 ref={inputRef}
                 type="text"
                 placeholder="Enter address..."
-                className="w-full bg-slate-50 border-2 border-slate-100/80 rounded-2xl py-3 pl-10 pr-4 text-sm text-slate-800 font-bold focus:outline-none focus:border-indigo-500 focus:bg-white transition-colors"
+                className="w-full bg-white/5 border-2 border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-sm text-white font-bold placeholder:text-slate-500 placeholder:uppercase placeholder:tracking-widest focus:outline-none focus:border-teal-500 focus:bg-white/10 transition-all uppercase tracking-wider"
                 disabled={loading || !!error}
               />
-              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
                 <HugeIconPicker name="search01Icon" size={18} />
               </div>
             </div>
             <button 
               onClick={getUserLocation}
               disabled={loading || !!error}
-              className="p-3 bg-slate-50 border-2 border-slate-100/80 rounded-2xl text-slate-600 hover:text-indigo-600 hover:border-indigo-200 transition-colors"
+              className="p-3.5 bg-white/5 border-2 border-white/10 rounded-2xl text-slate-400 hover:text-teal-400 hover:border-teal-500/50 hover:bg-teal-500/10 transition-all shadow-inner hover:shadow-[0_0_15px_rgba(20,184,166,0.3)]"
               title="Use My Location"
             >
               <HugeIconPicker name="location04Icon" size={20} />
@@ -194,83 +194,83 @@ export default function IspFinder() {
 
         {/* Results Sidebar */}
         {(selectedLocation || searching) && (
-          <div className="bg-white/90 backdrop-blur-xl rounded-[2rem] shadow-2xl shadow-indigo-900/10 border border-white pointer-events-auto flex flex-col max-h-[calc(100vh-180px)] overflow-hidden transition-all duration-300">
+          <div className="bg-slate-950/80 backdrop-blur-xl rounded-[2rem] shadow-[0_0_40px_rgba(0,0,0,0.5)] border border-white/10 pointer-events-auto flex flex-col max-h-[calc(100vh-280px)] overflow-hidden transition-all duration-300">
             {searching ? (
               <div className="p-10 flex flex-col items-center justify-center text-center">
                 <div className="relative w-16 h-16 mb-4">
-                  <div className="absolute inset-0 border-4 border-indigo-100 rounded-full" />
-                  <div className="absolute inset-0 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin" />
-                  <HugeIconPicker name="radar01Icon" size={24} className="absolute inset-0 m-auto text-indigo-600 animate-pulse" />
+                  <div className="absolute inset-0 border-4 border-white/10 rounded-full" />
+                  <div className="absolute inset-0 border-4 border-teal-500 rounded-full border-t-transparent animate-spin" />
+                  <HugeIconPicker name="radar01Icon" size={24} className="absolute inset-0 m-auto text-teal-400 animate-pulse drop-shadow-[0_0_10px_currentColor]" />
                 </div>
-                <h3 className="text-lg font-black text-slate-800">Scanning Area...</h3>
-                <p className="text-xs font-bold text-slate-500 mt-2 truncate w-full">{selectedLocation}</p>
+                <h3 className="text-lg font-black text-white uppercase tracking-wider">Scanning Area...</h3>
+                <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400 mt-2 truncate w-full">{selectedLocation}</p>
               </div>
             ) : (
               <>
-                <div className="p-5 border-b border-slate-100 bg-white/50">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-indigo-500 mb-1">Coverage Results</p>
-                  <p className="text-sm font-bold text-slate-800 truncate">{selectedLocation}</p>
+                <div className="p-6 border-b border-white/10 bg-white/5">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-teal-400 mb-1">Coverage Results</p>
+                  <p className="text-sm font-bold text-white uppercase tracking-wider truncate">{selectedLocation}</p>
                   
                   {/* Filters */}
                   <div className="flex flex-wrap gap-2 mt-4">
                     <button 
                       onClick={() => setFilterAvailable(!filterAvailable)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors ${filterAvailable ? 'bg-indigo-50 border-indigo-200 text-indigo-700' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'}`}
+                      className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-colors ${filterAvailable ? 'bg-teal-500/20 border-teal-500/30 text-teal-400 shadow-[0_0_10px_rgba(20,184,166,0.2)]' : 'bg-white/5 border-white/10 text-slate-400 hover:bg-white/10 hover:text-white'}`}
                     >
                       Available Only
                     </button>
                     <button 
                       onClick={() => setFilterFiber(!filterFiber)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors ${filterFiber ? 'bg-indigo-50 border-indigo-200 text-indigo-700' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'}`}
+                      className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-colors ${filterFiber ? 'bg-teal-500/20 border-teal-500/30 text-teal-400 shadow-[0_0_10px_rgba(20,184,166,0.2)]' : 'bg-white/5 border-white/10 text-slate-400 hover:bg-white/10 hover:text-white'}`}
                     >
                       Fiber Optics
                     </button>
                     <button 
                       onClick={() => setSortPrice(prev => prev === 'none' ? 'asc' : prev === 'asc' ? 'desc' : 'none')}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors flex items-center gap-1 ${sortPrice !== 'none' ? 'bg-indigo-50 border-indigo-200 text-indigo-700' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'}`}
+                      className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-colors flex items-center gap-1 ${sortPrice !== 'none' ? 'bg-teal-500/20 border-teal-500/30 text-teal-400 shadow-[0_0_10px_rgba(20,184,166,0.2)]' : 'bg-white/5 border-white/10 text-slate-400 hover:bg-white/10 hover:text-white'}`}
                     >
                       Price {sortPrice === 'asc' ? '↑' : sortPrice === 'desc' ? '↓' : ''}
                     </button>
                   </div>
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-3 space-y-3 custom-scrollbar">
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
                   {filteredIsps.length === 0 ? (
-                    <div className="text-center p-8 text-slate-500 font-medium">No ISPs match your filters.</div>
+                    <div className="text-center p-8 text-slate-500 font-black uppercase tracking-widest text-[11px]">No ISPs match your filters.</div>
                   ) : (
                     filteredIsps.map((isp, idx) => (
-                      <div key={idx} className="bg-white border border-slate-100 rounded-2xl p-4 hover:border-indigo-300 hover:shadow-lg hover:shadow-indigo-500/5 transition-all group relative">
-                        <div className="flex justify-between items-start mb-3">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-50 to-slate-100 border border-slate-200 flex items-center justify-center font-black text-indigo-700 text-lg shadow-inner">
+                      <div key={idx} className="bg-white/5 border border-white/10 rounded-[1.5rem] p-5 hover:border-teal-500/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(20,184,166,0.15)] transition-all group relative">
+                        <div className="flex justify-between items-start mb-4">
+                          <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-2xl bg-slate-900 border border-white/10 flex items-center justify-center font-black text-teal-400 text-xl shadow-inner group-hover:border-teal-500/30 transition-colors">
                               {isp.logo}
                             </div>
                             <div>
-                              <h3 className="font-black text-slate-800 text-sm">{isp.name}</h3>
-                              <div className="flex items-center gap-1 text-[10px] font-bold text-slate-400 mt-0.5">
-                                <span className="text-amber-400">★</span> {isp.rating}
+                              <h3 className="font-black text-white text-sm uppercase tracking-wider">{isp.name}</h3>
+                              <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-400 mt-1">
+                                <span className="text-amber-400 drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]">★</span> {isp.rating}
                               </div>
                             </div>
                           </div>
-                          <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-1 rounded-md ${isp.available ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'}`}>
+                          <span className={`text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg border ${isp.available ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-white/5 text-slate-400 border-white/10'}`}>
                             {isp.available ? 'Available' : 'Limited'}
                           </span>
                         </div>
                         
-                        <div className="flex items-center justify-between mt-4 p-3 bg-slate-50 rounded-xl border border-slate-100 group-hover:bg-indigo-50/50 transition-colors">
-                          <div className="flex items-center gap-2">
-                            <HugeIconPicker name="zapIcon" size={16} className="text-indigo-500" />
+                        <div className="flex items-center justify-between mt-4 p-3.5 bg-slate-950/50 rounded-xl border border-white/5 group-hover:bg-white/5 transition-colors">
+                          <div className="flex items-center gap-3">
+                            <HugeIconPicker name="zapIcon" size={18} className="text-teal-400 drop-shadow-[0_0_8px_rgba(45,212,191,0.5)]" />
                             <div>
-                              <p className="text-[9px] font-black text-slate-400 uppercase">Speed</p>
-                              <p className="text-xs font-bold text-slate-800">{isp.speed}</p>
+                              <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Speed</p>
+                              <p className="text-sm font-bold text-white">{isp.speed}</p>
                             </div>
                           </div>
-                          <div className="h-6 w-px bg-slate-200" />
-                          <div className="flex items-center gap-2">
-                            <HugeIconPicker name="bankNote01Icon" size={16} className="text-teal-500" />
+                          <div className="h-8 w-px bg-white/10" />
+                          <div className="flex items-center gap-3">
+                            <HugeIconPicker name="bankNote01Icon" size={18} className="text-indigo-400 drop-shadow-[0_0_8px_rgba(129,140,248,0.5)]" />
                             <div>
-                              <p className="text-[9px] font-black text-slate-400 uppercase">From</p>
-                              <p className="text-xs font-bold text-slate-800">{isp.price}</p>
+                              <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">From</p>
+                              <p className="text-sm font-bold text-white">{isp.price}</p>
                             </div>
                           </div>
                         </div>
@@ -287,27 +287,27 @@ export default function IspFinder() {
       {/* Map Container */}
       <div className="absolute inset-0 w-full h-full z-0">
         {loading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-slate-100 z-20">
+          <div className="absolute inset-0 flex items-center justify-center bg-slate-950 z-20">
             <div className="text-center">
-              <div className="w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4" />
-              <p className="font-bold text-slate-600 text-sm">Loading Maps Engine...</p>
+              <div className="w-14 h-14 border-4 border-white/10 border-t-teal-500 rounded-full animate-spin mx-auto mb-6" />
+              <p className="font-black uppercase tracking-widest text-slate-400 text-xs">Loading Maps Engine...</p>
             </div>
           </div>
         )}
         
         {error && (
-          <div className="absolute inset-0 flex items-center justify-center bg-red-50 z-20">
-            <div className="text-center p-6 bg-white rounded-3xl shadow-xl border border-red-100">
-              <div className="bg-red-100 text-red-600 p-3 rounded-full inline-block mb-3">
-                <HugeIconPicker name="alertCircleIcon" size={28} />
+          <div className="absolute inset-0 flex items-center justify-center bg-slate-950 z-20">
+            <div className="text-center p-8 bg-white/5 rounded-[2rem] shadow-2xl border border-rose-500/20 backdrop-blur-md">
+              <div className="bg-rose-500/10 text-rose-400 p-4 rounded-full inline-block mb-4 shadow-[0_0_20px_rgba(244,63,94,0.3)]">
+                <HugeIconPicker name="alertCircleIcon" size={32} />
               </div>
-              <h2 className="text-lg font-black text-slate-900 mb-1">Map Error</h2>
-              <p className="text-sm font-medium text-slate-500">{error}</p>
+              <h2 className="text-xl font-black text-white uppercase tracking-wider mb-2">Map Error</h2>
+              <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{error}</p>
             </div>
           </div>
         )}
         
-        <div ref={mapRef} className="w-full h-full" />
+        <div ref={mapRef} className="w-full h-full opacity-80 mix-blend-screen" />
       </div>
     </div>
   );

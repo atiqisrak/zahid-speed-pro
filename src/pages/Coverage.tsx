@@ -1,6 +1,6 @@
 import HugeIconPicker from '../components/HugeIconPicker';
-import { useState } from 'react';
-
+import { useState, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 
 const SECTIONS = [
@@ -20,17 +20,17 @@ const SECTIONS = [
 
 const ALL_ISPS = ['MirpurNet','MNET','BAS Network','Info ISP','Mirpur Online','Inspire Broadband'];
 const ISP_COLORS: Record<string,string> = {
-  'MirpurNet':'#6366f1','MNET':'#0891b2','BAS Network':'#059669',
-  'Info ISP':'#7c3aed','Mirpur Online':'#dc2626','Inspire Broadband':'#f59e0b',
+  'MirpurNet':'#818cf8','MNET':'#22d3ee','BAS Network':'#34d399',
+  'Info ISP':'#a78bfa','Mirpur Online':'#fb7185','Inspire Broadband':'#fbbf24',
 };
 
 const MARKET_SHARE = [
-  { name:'MirpurNet', value:28, color:'#6366f1' },
-  { name:'MNET',      value:24, color:'#0891b2' },
-  { name:'BAS Net',   value:17, color:'#059669' },
-  { name:'Info ISP',  value:14, color:'#7c3aed' },
-  { name:'Mirpur OL', value:11, color:'#dc2626' },
-  { name:'Inspire',   value:6,  color:'#f59e0b' },
+  { name:'MirpurNet', value:28, color:'#818cf8' },
+  { name:'MNET',      value:24, color:'#22d3ee' },
+  { name:'BAS Net',   value:17, color:'#34d399' },
+  { name:'Info ISP',  value:14, color:'#a78bfa' },
+  { name:'Mirpur OL', value:11, color:'#fb7185' },
+  { name:'Inspire',   value:6,  color:'#fbbf24' },
 ];
 
 export default function Coverage() {
@@ -43,196 +43,243 @@ export default function Coverage() {
     filterIsp === 'All' || s.isps.some(i => i.includes(filterIsp.split(' ')[0])) || s.isps.includes('All ISPs')
   );
 
-  return (
-    <div className="min-h-full bg-slate-50 font-sans">
-      {/* Header */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-teal-700 via-teal-600 to-cyan-600 text-white">
-        <div className="absolute inset-0 opacity-10"
-          style={{backgroundImage:'radial-gradient(circle at 20% 80%, #2dd4bf 0%, transparent 50%)'}}/>
-        <div className="relative max-w-5xl mx-auto px-4 md:px-8 py-10">
-          <div className="flex items-center gap-2 text-teal-200 text-xs font-bold uppercase tracking-widest mb-3">
-            <HugeIconPicker name="location01Icon" size={14}/> Coverage Map
-          </div>
-          <h1 className="text-3xl md:text-4xl font-black tracking-tight mb-2">ISP Coverage in Mirpur</h1>
-          <p className="text-teal-100 text-sm">Interactive map showing broadband coverage by section · Community-sourced</p>
-        </div>
-      </div>
+  const heroRef = useRef(null);
+  const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const scale = useTransform(heroScroll, [0, 1], [1, 1.2]);
+  const y = useTransform(heroScroll, [0, 1], [0, 200]);
+  const opacity = useTransform(heroScroll, [0, 0.8], [1, 0]);
 
-      <div className="max-w-5xl mx-auto px-4 md:px-8 py-8 space-y-6">
-        {/* View toggle + filter */}
-        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
-          <div className="flex gap-1.5 bg-white rounded-2xl p-1.5 border border-slate-100 shadow-sm">
+  return (
+    <div className="min-h-screen font-sans selection:bg-teal-500/30 selection:text-teal-900 bg-slate-50">
+      
+      {/* 1. DARK HERO SECTION */}
+      <section ref={heroRef} className="relative min-h-[85vh] pt-32 px-6 flex flex-col justify-center overflow-hidden bg-slate-950">
+        <motion.div style={{ opacity }} className="max-w-screen-2xl mx-auto w-full z-10 text-white relative pointer-events-none text-center">
+          <div className="inline-flex items-center justify-center gap-2 text-teal-400 text-xs font-black uppercase tracking-widest mb-6 bg-teal-500/10 px-4 py-2 rounded-full border border-teal-500/20 backdrop-blur-sm">
+            <HugeIconPicker name="location01Icon" size={16} /> Coverage Map
+          </div>
+          <h1 className="text-[14vw] md:text-[10vw] leading-[0.85] font-black tracking-tighter mb-8 uppercase drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] text-white">
+            NETWORK <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-indigo-400">COVERAGE</span>
+          </h1>
+          <p className="text-xl md:text-3xl text-slate-400 max-w-4xl mx-auto font-medium tracking-tight mb-16 drop-shadow-[0_5px_15px_rgba(0,0,0,0.8)]">
+            Interactive map showing broadband coverage by section. Community-sourced data for Mirpur & surrounding areas.
+          </p>
+        </motion.div>
+        
+        <motion.div style={{ scale, y }} className="absolute inset-0 z-0 overflow-hidden bg-slate-950 origin-bottom">
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/40 via-slate-950/80 to-slate-950 z-10 pointer-events-none" />
+          <img 
+            src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=2000&q=80" 
+            alt="Map network" 
+            className="w-full h-full object-cover opacity-20 mix-blend-luminosity scale-105"
+          />
+          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-teal-500/10 rounded-full blur-[150px] z-10" />
+          <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] bg-indigo-500/10 rounded-full blur-[120px] z-10" />
+        </motion.div>
+      </section>
+
+      {/* 2. LIGHT FILTER/TOGGLE SECTION */}
+      <section className="relative z-20 bg-white py-12 px-6 border-b border-slate-200 shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
+        <div className="max-w-screen-xl mx-auto flex flex-col sm:flex-row gap-6 items-center justify-between">
+          <div className="flex gap-3 w-full sm:w-auto bg-slate-100 p-2 rounded-[1.5rem] border border-slate-200">
             <button onClick={()=>setView('map')}
-              className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 ${view==='map'?'bg-teal-600 text-white shadow-sm':'text-slate-500 hover:text-slate-800'}`}>
-              <HugeIconPicker name="location01Icon" size={13}/> Map View
+              className={`flex-1 sm:flex-none px-8 py-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 border shadow-sm ${view==='map'?'bg-white text-teal-600 border-slate-200 shadow-md':'border-transparent text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'}`}>
+              <HugeIconPicker name="location01Icon" size={18}/> Map View
             </button>
             <button onClick={()=>setView('chart')}
-              className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 ${view==='chart'?'bg-teal-600 text-white shadow-sm':'text-slate-500 hover:text-slate-800'}`}>
-              <HugeIconPicker name="pieChartIcon" size={13}/> Market Share
+              className={`flex-1 sm:flex-none px-8 py-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 border shadow-sm ${view==='chart'?'bg-white text-teal-600 border-slate-200 shadow-md':'border-transparent text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'}`}>
+              <HugeIconPicker name="pieChartIcon" size={18}/> Market Share
             </button>
           </div>
-          <div className="flex flex-wrap gap-1.5">
+          
+          <div className="flex flex-wrap gap-2 w-full sm:w-auto justify-center">
             {['All',...ALL_ISPS].map(isp=>(
               <button key={isp} onClick={()=>setFilterIsp(isp)}
-                className={`px-3 py-1.5 rounded-xl text-[10px] font-bold border transition-all ${
-                  filterIsp===isp?'text-white border-transparent shadow-sm':'bg-white border-slate-200 text-slate-600 hover:border-teal-300'
+                className={`px-5 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${
+                  filterIsp===isp?'text-white border-transparent shadow-md':'bg-white border-slate-200 text-slate-500 hover:border-teal-500/50 hover:text-slate-900'
                 }`}
-                style={filterIsp===isp?{backgroundColor: ISP_COLORS[isp]||'#0d9488'}:{}}
+                style={filterIsp===isp?{backgroundColor: ISP_COLORS[isp]||'#0f172a'}:{}}
               >{isp==='All'?'All ISPs':isp}</button>
             ))}
           </div>
         </div>
+      </section>
 
-        {view==='map' && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {/* SVG Map */}
-            <div className="lg:col-span-2 bg-white rounded-[1.5rem] border border-slate-100 p-5 shadow-sm">
-              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4">Mirpur — Click a section to explore</p>
-              <svg viewBox="0 0 100 100" className="w-full h-72">
-                <defs>
-                  <radialGradient id="mapbg" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="#f0fdf4"/>
-                    <stop offset="100%" stopColor="#e0f2fe"/>
-                  </radialGradient>
-                </defs>
-                <ellipse cx="45" cy="50" rx="42" ry="44" fill="url(#mapbg)" stroke="#e2e8f0" strokeWidth="0.5"/>
-                {SECTIONS.map(s=>{
-                  const isVis = filterIsp==='All'||s.isps.some(i=>i.includes(filterIsp.split(' ')[0]))||s.isps.includes('All ISPs');
-                  const isSel = selected===s.id;
-                  const dotColor = s.coverage>=5?'#6366f1':s.coverage>=3?'#0d9488':'#64748b';
-                  return (
-                    <g key={s.id} onClick={()=>setSelected(s.id===selected?null:s.id)} style={{cursor:'pointer'}} opacity={isVis?1:0.2}>
-                      {isSel&&<circle cx={s.x} cy={s.y} r={9} fill={dotColor} opacity="0.15"/>}
-                      <circle cx={s.x} cy={s.y} r={isSel?5:3.5} fill={dotColor} stroke="white" strokeWidth={isSel?1.5:1}/>
-                      <text x={s.x} y={s.y+8} textAnchor="middle" fontSize="3.2" fill="#475569" fontWeight="700">
-                        {s.label.replace('Section ','')}
-                      </text>
-                    </g>
-                  );
-                })}
-              </svg>
-              <div className="flex gap-4 mt-3 flex-wrap">
-                {[{c:'#6366f1',l:'6 ISPs (Best)'},{c:'#0d9488',l:'3+ ISPs'},{c:'#64748b',l:'1–2 ISPs'}].map(d=>(
-                  <div key={d.l} className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500">
-                    <div className="w-2.5 h-2.5 rounded-full" style={{backgroundColor:d.c}}/>
-                    {d.l}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Detail + list */}
-            <div className="space-y-3">
-              {active?(
-                <div className="bg-white rounded-[1.5rem] border border-slate-100 p-5 shadow-sm space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-teal-50 rounded-2xl flex items-center justify-center">
-                      <HugeIconPicker name="location01Icon" size={18} className="text-teal-600"/>
+      {/* 3. LIGHT CONTENT SECTION */}
+      <section className="relative bg-slate-50 py-24 px-6 pb-40">
+        <div className="max-w-screen-xl mx-auto space-y-12">
+          
+          {view==='map' && (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* SVG Map (Dark element on light background) */}
+              <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="lg:col-span-2 bg-slate-950 rounded-[3rem] p-8 shadow-2xl relative overflow-hidden border border-slate-800">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/10 rounded-full blur-[80px] pointer-events-none mix-blend-screen" />
+                <p className="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2"><HugeIconPicker name="cursorPointer02Icon" size={16} className="text-teal-400"/> Mirpur — Click a section to explore</p>
+                <svg viewBox="0 0 100 100" className="w-full h-96 drop-shadow-[0_0_30px_rgba(0,0,0,0.8)]">
+                  <defs>
+                    <radialGradient id="mapbg" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#1e293b" stopOpacity={0.8}/>
+                      <stop offset="100%" stopColor="#020617" stopOpacity={0.9}/>
+                    </radialGradient>
+                    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="1.5" result="blur" />
+                      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                  </defs>
+                  <ellipse cx="45" cy="50" rx="42" ry="44" fill="url(#mapbg)" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5"/>
+                  {SECTIONS.map(s=>{
+                    const isVis = filterIsp==='All'||s.isps.some(i=>i.includes(filterIsp.split(' ')[0]))||s.isps.includes('All ISPs');
+                    const isSel = selected===s.id;
+                    const dotColor = s.coverage>=5?'#818cf8':s.coverage>=3?'#2dd4bf':'#94a3b8';
+                    return (
+                      <g key={s.id} onClick={()=>setSelected(s.id===selected?null:s.id)} style={{cursor:'pointer'}} opacity={isVis?1:0.15} className="transition-all duration-300 hover:opacity-100">
+                        {isSel&&<circle cx={s.x} cy={s.y} r={10} fill={dotColor} opacity="0.2" filter="url(#glow)"/>}
+                        <circle cx={s.x} cy={s.y} r={isSel?5:3.5} fill={dotColor} stroke="#020617" strokeWidth={isSel?1.5:1} filter={isSel?"url(#glow)":""}/>
+                        <text x={s.x} y={s.y+8} textAnchor="middle" fontSize="3.5" fill="#f8fafc" fontWeight="900" style={{textTransform:'uppercase', letterSpacing:'0.05em', textShadow:'0 2px 4px rgba(0,0,0,0.9)'}}>
+                          {s.label.replace('Section ','')}
+                        </text>
+                      </g>
+                    );
+                  })}
+                </svg>
+                <div className="flex gap-6 mt-8 flex-wrap justify-center border-t border-white/10 pt-6">
+                  {[{c:'#818cf8',l:'6 ISPs (Best)'},{c:'#2dd4bf',l:'3+ ISPs'},{c:'#94a3b8',l:'1–2 ISPs'}].map(d=>(
+                    <div key={d.l} className="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-slate-400">
+                      <div className="w-3 h-3 rounded-full shadow-[0_0_10px_currentColor]" style={{backgroundColor:d.c, color:d.c}}/>
+                      {d.l}
                     </div>
-                    <div>
-                      <h3 className="font-black text-sm">{active.label}</h3>
-                      <p className="text-[10px] text-teal-600 font-bold uppercase">{active.coverage} ISPs available</p>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    {ALL_ISPS.map(isp=>{
-                      const covered=active.isps.includes(isp)||active.isps.includes('All ISPs');
-                      return (
-                        <div key={isp} className={`flex items-center gap-2.5 p-2.5 rounded-xl ${covered?'bg-teal-50':'bg-slate-50'}`}>
-                          {covered
-                            ?<HugeIconPicker name="tickCircleIcon" size={14} className="text-teal-600 shrink-0"/>
-                            :<HugeIconPicker name="circleIcon" size={14} className="text-slate-300 shrink-0"/>}
-                          <span className={`text-xs font-bold ${covered?'text-slate-800':'text-slate-300'}`}>{isp}</span>
-                          {covered&&<div className="ml-auto w-2 h-2 rounded-full" style={{backgroundColor:ISP_COLORS[isp]||'#0d9488'}}/>}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              ):(
-                <div className="bg-white rounded-[1.5rem] border border-slate-100 p-5 text-center shadow-sm">
-                  <HugeIconPicker name="location01Icon" size={28} className="text-slate-200 mx-auto mb-2"/>
-                  <p className="text-xs font-bold text-slate-400">Click a section on the map to see which ISPs cover that area</p>
-                </div>
-              )}
-
-              <div className="bg-white rounded-[1.5rem] border border-slate-100 overflow-hidden shadow-sm">
-                <div className="px-4 py-3 border-b border-slate-50 flex items-center gap-1.5">
-                  <HugeIconPicker name="userMultipleIcon" size={12} className="text-slate-400"/>
-                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">All Sections</p>
-                </div>
-                <div className="divide-y divide-slate-50 max-h-48 overflow-y-auto">
-                  {visible.map(s=>(
-                    <button key={s.id} onClick={()=>setSelected(s.id===selected?null:s.id)}
-                      className={`w-full px-4 py-2.5 flex items-center justify-between text-left hover:bg-slate-50 transition-colors ${selected===s.id?'bg-teal-50':''}`}>
-                      <span className="text-xs font-bold">{s.label}</span>
-                      <span className="text-[10px] font-black text-teal-600">{s.coverage} ISPs</span>
-                    </button>
                   ))}
                 </div>
-              </div>
-            </div>
-          </div>
-        )}
+              </motion.div>
 
-        {view==='chart' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Pie chart */}
-            <div className="bg-white rounded-[1.5rem] border border-slate-100 p-6 shadow-sm">
-              <h2 className="font-black text-sm uppercase tracking-wider mb-1">Market Share in Mirpur</h2>
-              <p className="text-slate-400 text-xs mb-4">% of speed test users per ISP · May 2026</p>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie data={MARKET_SHARE} cx="50%" cy="50%" innerRadius={60} outerRadius={100}
-                      paddingAngle={3} dataKey="value" label={({name,value})=>`${value}%`} labelLine={false}>
-                      {MARKET_SHARE.map((entry,i)=><Cell key={i} fill={entry.color}/>)}
-                    </Pie>
-                    <Tooltip formatter={(v)=>`${v}%`} contentStyle={{borderRadius:12,border:'none',boxShadow:'0 10px 40px rgba(0,0,0,.1)',fontSize:11,fontWeight:700}}/>
-                    <Legend wrapperStyle={{fontSize:11,fontWeight:700}}/>
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-
-            {/* ISP coverage bars */}
-            <div className="bg-white rounded-[1.5rem] border border-slate-100 p-6 shadow-sm">
-              <h2 className="font-black text-sm uppercase tracking-wider mb-1">Coverage by ISP</h2>
-              <p className="text-slate-400 text-xs mb-5">Sections covered out of 12 total</p>
-              <div className="space-y-3">
-                {[
-                  {isp:'MirpurNet',sections:7,color:'#6366f1'},
-                  {isp:'MNET',sections:7,color:'#0891b2'},
-                  {isp:'BAS Network',sections:6,color:'#059669'},
-                  {isp:'Info ISP',sections:6,color:'#7c3aed'},
-                  {isp:'Mirpur Online',sections:6,color:'#dc2626'},
-                  {isp:'Inspire Broadband',sections:6,color:'#f59e0b'},
-                ].map(d=>(
-                  <div key={d.isp}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-bold text-slate-700">{d.isp}</span>
-                      <span className="text-xs font-black" style={{color:d.color}}>{d.sections}/12 sections</span>
+              {/* Detail + list (Light background) */}
+              <div className="space-y-8">
+                {active?(
+                  <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} className="bg-white rounded-[2.5rem] border border-slate-200 p-8 shadow-xl space-y-8">
+                    <div className="flex items-center gap-5">
+                      <div className="w-16 h-16 bg-teal-50 border border-teal-100 rounded-2xl flex items-center justify-center shadow-inner">
+                        <HugeIconPicker name="location01Icon" size={28} className="text-teal-500 drop-shadow-sm"/>
+                      </div>
+                      <div>
+                        <h3 className="font-black text-2xl text-slate-900 uppercase tracking-tighter">{active.label}</h3>
+                        <p className="text-xs text-teal-600 font-black uppercase tracking-widest mt-1">{active.coverage} ISPs available</p>
+                      </div>
                     </div>
-                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                      <div className="h-full rounded-full transition-all" style={{width:`${(d.sections/12)*100}%`,backgroundColor:d.color}}/>
+                    <div className="space-y-4">
+                      {ALL_ISPS.map(isp=>{
+                        const covered=active.isps.includes(isp)||active.isps.includes('All ISPs');
+                        return (
+                          <div key={isp} className={`flex items-center gap-4 p-4 rounded-xl transition-colors border ${covered?'bg-slate-50 border-slate-200 shadow-sm':'bg-white border-transparent opacity-50 grayscale'}`}>
+                            {covered
+                              ?<HugeIconPicker name="tickCircleIcon" size={20} className="text-teal-500 shrink-0"/>
+                              :<HugeIconPicker name="circleIcon" size={20} className="text-slate-300 shrink-0"/>}
+                            <span className={`text-xs font-black uppercase tracking-wider ${covered?'text-slate-900':'text-slate-500'}`}>{isp}</span>
+                            {covered&&<div className="ml-auto w-3 h-3 rounded-full shadow-sm" style={{backgroundColor:ISP_COLORS[isp]||'#2dd4bf'}}/>}
+                          </div>
+                        );
+                      })}
                     </div>
+                  </motion.div>
+                ):(
+                  <div className="bg-white rounded-[2.5rem] border border-slate-200 p-10 text-center shadow-xl h-[400px] flex flex-col items-center justify-center">
+                    <HugeIconPicker name="location01Icon" size={64} className="text-slate-300 mx-auto mb-6"/>
+                    <p className="text-xs font-black uppercase tracking-widest text-slate-500 leading-relaxed max-w-[200px]">Click a section on the map to see which ISPs cover that area</p>
                   </div>
-                ))}
+                )}
+
+                <div className="bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden shadow-xl">
+                  <div className="px-8 py-5 border-b border-slate-100 flex items-center gap-3 bg-slate-50">
+                    <HugeIconPicker name="userMultipleIcon" size={18} className="text-slate-500"/>
+                    <p className="text-[11px] font-black uppercase tracking-widest text-slate-600">All Sections Directory</p>
+                  </div>
+                  <div className="divide-y divide-slate-100 max-h-[350px] overflow-y-auto">
+                    {visible.map(s=>(
+                      <button key={s.id} onClick={()=>setSelected(s.id===selected?null:s.id)}
+                        className={`w-full px-8 py-5 flex items-center justify-between text-left hover:bg-slate-50 transition-colors ${selected===s.id?'bg-teal-50 border-l-4 border-teal-500':'border-l-4 border-transparent'}`}>
+                        <span className="text-xs font-black text-slate-900 uppercase tracking-wider">{s.label}</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest text-teal-600 bg-white shadow-sm px-3 py-1.5 rounded-lg border border-teal-100">{s.coverage} ISPs</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        <div className="bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-100 rounded-2xl p-5 flex items-center gap-3">
-          <HugeIconPicker name="location01Icon" size={20} className="text-teal-600 shrink-0"/>
-          <p className="text-xs text-teal-700 font-medium flex-1 flex items-center gap-1.5">
-            <HugeIconPicker name="location01Icon" size={12} /> Coverage data is community-sourced and updated monthly.
-          </p>
-          <button className="shrink-0 bg-teal-600 text-white text-xs font-black px-4 py-2 rounded-xl hover:bg-teal-700 transition-colors">
-            Submit Your Area →
-          </button>
+          {view==='chart' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Pie chart */}
+              <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-slate-950 text-white rounded-[3rem] border border-slate-800 p-10 shadow-2xl relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/10 rounded-full blur-[80px] pointer-events-none mix-blend-screen" />
+                <h2 className="font-black text-2xl uppercase tracking-wider mb-2">Market Share in Mirpur</h2>
+                <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-10">% of speed test users per ISP · May 2026</p>
+                <div className="h-96">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie data={MARKET_SHARE} cx="50%" cy="50%" innerRadius={90} outerRadius={140} stroke="rgba(255,255,255,0.05)" strokeWidth={2}
+                        paddingAngle={5} dataKey="value" label={({name,value})=>`${value}%`} labelLine={false}>
+                        {MARKET_SHARE.map((entry,i)=><Cell key={i} fill={entry.color}/>)}
+                      </Pie>
+                      <Tooltip formatter={(v)=>`${v}%`} contentStyle={{backgroundColor: '#020617', borderRadius:16, border:'1px solid rgba(255,255,255,0.1)', boxShadow:'0 20px 40px rgba(0,0,0,0.5)', fontSize:12, fontWeight:900, color: '#fff'}} itemStyle={{fontWeight: 900}} />
+                      <Legend wrapperStyle={{fontSize:12,fontWeight:900, textTransform:'uppercase', color:'#fff'}}/>
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+              </motion.div>
+
+              {/* ISP coverage bars */}
+              <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="bg-white rounded-[3rem] border border-slate-200 p-10 shadow-xl relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-64 h-64 bg-indigo-50 rounded-full blur-[80px] pointer-events-none" />
+                <h2 className="font-black text-2xl uppercase tracking-wider mb-2 text-slate-900">Coverage footprint by ISP</h2>
+                <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-10">Sections covered out of 12 total</p>
+                <div className="space-y-8 relative z-10">
+                  {[
+                    {isp:'MirpurNet',sections:7,color:'#818cf8'},
+                    {isp:'MNET',sections:7,color:'#22d3ee'},
+                    {isp:'BAS Network',sections:6,color:'#34d399'},
+                    {isp:'Info ISP',sections:6,color:'#a78bfa'},
+                    {isp:'Mirpur Online',sections:6,color:'#fb7185'},
+                    {isp:'Inspire Broadband',sections:6,color:'#fbbf24'},
+                  ].map(d=>(
+                    <div key={d.isp}>
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-sm font-black text-slate-900 uppercase tracking-wider">{d.isp}</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest" style={{color:d.color}}>{d.sections}/12 sections</span>
+                      </div>
+                      <div className="h-4 bg-slate-100 rounded-full overflow-hidden shadow-inner">
+                        <div className="h-full rounded-full transition-all shadow-sm" style={{width:`${(d.sections/12)*100}%`,backgroundColor:d.color}}/>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+          )}
+
         </div>
-      </div>
+      </section>
+
+      {/* 4. DARK FOOTER CTA */}
+      <section className="bg-slate-950 py-24 px-6 border-t border-slate-800">
+        <div className="max-w-screen-xl mx-auto">
+          <div className="bg-teal-900/20 border border-teal-500/30 rounded-[3rem] p-10 md:p-16 flex flex-col sm:flex-row sm:items-center gap-10 shadow-[0_0_50px_rgba(20,184,166,0.1)]">
+            <div className="w-24 h-24 bg-teal-500/10 border border-teal-500/30 rounded-[2rem] flex items-center justify-center shrink-0 shadow-[0_0_20px_rgba(20,184,166,0.2)]">
+              <HugeIconPicker name="location01Icon" size={48} className="text-teal-400 drop-shadow-[0_0_15px_rgba(45,212,191,0.5)]"/>
+            </div>
+            <div className="flex-1">
+              <h3 className="font-black text-3xl uppercase tracking-tighter text-white drop-shadow-md mb-2">Help Improve Our Maps</h3>
+              <p className="text-teal-400 text-sm font-black uppercase tracking-widest leading-relaxed drop-shadow-[0_0_8px_currentColor]">
+                Coverage data is community-sourced and updated monthly. Submit your area's information to help others.
+              </p>
+            </div>
+            <button className="shrink-0 bg-teal-500 text-slate-950 text-sm font-black uppercase tracking-widest px-10 py-5 rounded-2xl hover:bg-teal-400 transition-all shadow-[0_0_20px_rgba(20,184,166,0.4)] hover:-translate-y-1">
+              Submit Area →
+            </button>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }

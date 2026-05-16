@@ -1,3 +1,11 @@
+/// <reference types="@types/google.maps" />
+
+declare global {
+  interface Window {
+    google: typeof google;
+  }
+}
+
 export const loadGoogleMaps = (apiKey: string): Promise<typeof google> => {
   return new Promise((resolve, reject) => {
     if (window.google && window.google.maps) {

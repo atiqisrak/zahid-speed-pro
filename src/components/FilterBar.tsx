@@ -13,8 +13,8 @@ export const FilterBar = ({ label, opts, val, set }: FilterBarProps) => (
     <div className="flex flex-wrap gap-1.5">
       {opts.map(o => (
         <button key={o} onClick={() => set(o)}
-          className={`px-2.5 py-1 rounded-lg text-[11px] font-bold border transition-all
-            ${val===o ? 'bg-teal-600 text-white border-teal-600' : 'border-slate-200 text-slate-600 hover:border-teal-300 bg-white'}`}>
+          className={`px-3 py-1.5 rounded-lg text-[11px] font-black uppercase tracking-wider border transition-all
+            ${val===o ? 'bg-teal-500 text-slate-950 border-teal-500 shadow-[0_0_15px_rgba(20,184,166,0.4)]' : 'bg-white/5 border-white/10 text-slate-300 hover:border-teal-400/50 hover:bg-white/10 hover:text-white'}`}>
           {o}
         </button>
       ))}

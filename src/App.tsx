@@ -15,6 +15,13 @@ import IspFinder from './pages/IspFinder';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 
+import AboutUs from './pages/AboutUs';
+import Contact from './pages/Contact';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+import Compliance from './pages/Compliance';
+import NotFound from './pages/NotFound';
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -34,6 +41,12 @@ export default function App() {
           <Route path="isp-finder" element={<IspFinder />} />
           <Route path="blog" element={<Blog />} />
           <Route path="blog/:slug" element={<BlogPost />} />
+          <Route path="about" element={<AboutUs />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="privacy" element={<PrivacyPolicy />} />
+          <Route path="terms" element={<TermsOfService />} />
+          <Route path="compliance" element={<Compliance />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
